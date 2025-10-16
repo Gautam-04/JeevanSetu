@@ -1,0 +1,40 @@
+
+.donation-page {
+  min-height: 100vh;
+  background-color: #f9fafb;
+  padding: 40px 20px;
+}
+
+.donation-page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.donation-page-title {
+  font-size: 36px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 12px;
+  color: #000;
+  border-bottom: 2px solid #000;
+  padding-bottom: 12px;
+  display: inline-block;
+  width: 100%;
+}
+
+.donation-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+@media (max-width: 768px) {
+  .donation-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .donation-page-title {
+    font-size: 28px;
+  }
+}

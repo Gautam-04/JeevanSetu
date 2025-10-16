@@ -1,0 +1,174 @@
+.donation-container {
+  max-width: 400px;
+  background: white;
+  border: 3px solid #00a884;
+  border-radius: 16px;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+}
+
+.donation-image {
+  width: 100%;
+  height: 280px;
+  overflow: hidden;
+}
+
+.donation-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.donation-content {
+  padding: 24px;
+}
+
+.donation-title {
+  font-size: 26px;
+  font-weight: bold;
+  margin: 0 0 12px 0;
+  color: #000;
+  line-height: 1.3;
+}
+
+.donation-description {
+  font-size: 15px;
+  color: #333;
+  line-height: 1.6;
+  margin: 0 0 20px 0;
+}
+
+.progress-section {
+  margin-bottom: 20px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 32px;
+  background: #e8e8e8;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #00a884;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  transition: width 0.3s ease;
+}
+
+.progress-amount {
+  color: white;
+  font-size: 13px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.stats-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.goal-stats {
+  display: flex;
+  flex-direction: column;
+}
+
+.goal-percentage {
+  font-size: 32px;
+  font-weight: bold;
+  color: #000;
+  line-height: 1;
+}
+
+.goal-label {
+  font-size: 14px;
+  color: #000;
+  margin: 4px 0;
+}
+
+.goal-target {
+  font-size: 13px;
+  color: #666;
+}
+
+.member-stats {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.member-avatars {
+  display: flex;
+  gap: -8px;
+}
+
+.avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #d4d4d4;
+  border: 2px solid white;
+  margin-left: -8px;
+}
+
+.avatar:first-child {
+  margin-left: 0;
+}
+
+.member-count {
+  font-size: 13px;
+  color: #000;
+  font-weight: 500;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 16px;
+}
+
+.donate-button {
+  flex: 1;
+  background: #ff9800;
+  color: white;
+  border: none;
+  padding: 16px 24px;
+  border-radius: 50px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.donate-button:hover {
+  background: #f57c00;
+}
+
+.share-button {
+  width: 60px;
+  height: 60px;
+  background: #00a884;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.share-button:hover {
+  background: #008f6f;
+}
+
+.share-button svg {
+  width: 24px;
+  height: 24px;
+}
