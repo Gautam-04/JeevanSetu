@@ -262,6 +262,129 @@ function Donation() {
     []
   );
 
+  const donationsDummy = [
+    {
+      serialNumber: 1,
+      paymentId: "PAY123456",
+      userId: "USR001",
+      amount: 500.0,
+      paymentDate: "2025-10-15T10:30:00Z",
+      blockchain: {
+        transactionHash: "0xa4b1e89f7d34f5c98adabf91c1a7f3b0a25f42d9",
+        blockNumber: 189234,
+        dataHash: "0x3c8f9e77ad4b8f27c0b3a5e2a9f63a9a1b12fcd8",
+      },
+    },
+    {
+      serialNumber: 2,
+      paymentId: "PAY123457",
+      userId: "USR002",
+      amount: 1200.75,
+      paymentDate: "2025-10-16T12:45:00Z",
+      blockchain: {
+        transactionHash: "0xb5d4e31fae9d7a2f9c6a9d3c0f2b1a5a8f1e2c7d",
+        blockNumber: 189235,
+        dataHash: "0x9d3f2b7ac4a6b8e1f2d9a5e0c4b7d3a8f9e6b2d4",
+      },
+    },
+    {
+      serialNumber: 3,
+      paymentId: "PAY123458",
+      userId: "USR003",
+      amount: 250.5,
+      paymentDate: "2025-10-16T14:10:00Z",
+      blockchain: {
+        transactionHash: "0xc2e3f7b8a1d4c9e2f0b3a7c8d1f6a2e9b4c5d7e8",
+        blockNumber: 189236,
+        dataHash: "0xa8b7c9d2e1f4a3b6c5d8e9f0b7a3c2d1e9f6b5a4",
+      },
+    },
+    {
+      serialNumber: 4,
+      paymentId: "PAY123459",
+      userId: "USR004",
+      amount: 750.0,
+      paymentDate: "2025-10-17T09:00:00Z",
+      blockchain: {
+        transactionHash: "0xd9a2b4c6e8f0a1b3c5d7e9f2a4b6c8d1e3f5a7b9",
+        blockNumber: 189237,
+        dataHash: "0xf3a1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+      },
+    },
+    {
+      serialNumber: 5,
+      paymentId: "PAY123460",
+      userId: "USR005",
+      amount: 999.99,
+      paymentDate: "2025-10-17T11:20:00Z",
+      blockchain: {
+        transactionHash: "0xe4c7f2b9a3d1b8e0c5f6a2d9b3c4e7f1a8b9c0d2",
+        blockNumber: 189238,
+        dataHash: "0xb7d3e9a5c2f8b1d4a6c0e3f2b5a8c9d0e7f6a1b4",
+      },
+    },
+    {
+      serialNumber: 6,
+      paymentId: "PAY123461",
+      userId: "USR006",
+      amount: 1500.0,
+      paymentDate: "2025-10-17T13:10:00Z",
+      blockchain: {
+        transactionHash: "0xf1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a1",
+        blockNumber: 189239,
+        dataHash: "0xc5d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5",
+      },
+    },
+    {
+      serialNumber: 7,
+      paymentId: "PAY123462",
+      userId: "USR007",
+      amount: 300.0,
+      paymentDate: "2025-10-17T14:40:00Z",
+      blockchain: {
+        transactionHash: "0xa3d4b5c6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2",
+        blockNumber: 189240,
+        dataHash: "0xf7a6b5c4d3e2f1a0b9c8d7e6f5a4b3c2d1e0f9a8",
+      },
+    },
+    {
+      serialNumber: 8,
+      paymentId: "PAY123463",
+      userId: "USR008",
+      amount: 1850.25,
+      paymentDate: "2025-10-17T15:25:00Z",
+      blockchain: {
+        transactionHash: "0xb8e7c6d5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9",
+        blockNumber: 189241,
+        dataHash: "0xe1d2c3b4a5f6e7d8c9b0a1f2e3d4c5b6a7f8e9d0",
+      },
+    },
+    {
+      serialNumber: 9,
+      paymentId: "PAY123464",
+      userId: "USR009",
+      amount: 600.0,
+      paymentDate: "2025-10-17T16:00:00Z",
+      blockchain: {
+        transactionHash: "0xc0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9",
+        blockNumber: 189242,
+        dataHash: "0xa9b8c7d6e5f4a3b2c1d0f9e8d7c6b5a4f3e2d1c0",
+      },
+    },
+    {
+      serialNumber: 10,
+      paymentId: "PAY123465",
+      userId: "USR010",
+      amount: 450.75,
+      paymentDate: "2025-10-17T17:10:00Z",
+      blockchain: {
+        transactionHash: "0xd1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0",
+        blockNumber: 189243,
+        dataHash: "0xf0e1d2c3b4a5f6e7d8c9b0a1f2e3d4c5b6a7f8e9",
+      },
+    },
+  ];
+
   return (
     <>
       <Header />
@@ -295,7 +418,7 @@ function Donation() {
         <div className="donation-container">
           <MaterialReactTable
             columns={columns}
-            data={donations}
+            data={donationsDummy}
             enablePagination={true}
             enableSorting={true}
             enableGlobalFilter={true}

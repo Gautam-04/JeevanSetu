@@ -1,0 +1,65 @@
+.info-card-wrapper {
+  width: 40%;
+  height: 350px;
+  display: flex;
+  background-color: var(--background);
+  border-radius: 25px;
+  border: 5px solid var(--accent-01);
+}
+
+.info-card-image {
+  width: 40%;
+  object-fit: contain;
+  border-radius: 0px 25px 25px 0px;
+  object-position: center;
+}
+
+.info-card-image img {
+  height: 100%;
+  width: auto;
+}
+
+.info-card-content {
+  width: 60%;
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.info-card-title {
+  font-family: "Monomaniac One", sans-serif;
+  font-size: 2rem;
+  color: var(--accent-01);
+  width: 100%;
+}
+
+.info-card-desc {
+  padding-top: 1rem;
+  font-family: "Atkinson Hyperlegible", sans-serif;
+  font-size: 1.1rem;
+  color: var(--foreground);
+  text-align: left;
+}
+
+.info-card-link {
+  border-radius: 2rem;
+  font-weight: 700;
+  font-family: "Outfit", sans-serif;
+  color: var(--foreground-inverted) !important;
+  background-color: var(--accent-02);
+  font-size: 1.2rem;
+  width: 100%;
+  text-align: center;
+  transition: all 0.2s ease-in-out;
+  border: 2px solid transparent !important;
+}
+
+.info-card-link:hover {
+  color: var(--foreground) !important;
+  background-color: var(--background);
+  border: 2px solid var(--accent-02) !important;
+  transform: scale(1.02);
+}

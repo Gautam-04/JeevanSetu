@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "../../components/Header/Header";
+import Header from "../../components/Header-legacy/Header-legacy";
 import Footer from "../../components/Footer/Footer";
 import "./AboutUs.css";
 
@@ -31,9 +31,7 @@ function AboutUs() {
                 Giving them the experience of the sweetness of a relationship by
                 giving them love like a family.
               </li>
-              <li>
-                Awakening of social responsibility through patriotism.
-              </li>
+              <li>Awakening of social responsibility through patriotism.</li>
             </ul>
           </div>
         </div>
@@ -82,8 +80,8 @@ function AboutUs() {
                 habit cultivation.
               </li>
               <li>
-                • And lastly, for final development, vocational training to youth
-                and ladies.
+                • And lastly, for final development, vocational training to
+                youth and ladies.
               </li>
               <li>• Skill training for livelihood.</li>
             </ul>

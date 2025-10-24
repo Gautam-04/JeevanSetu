@@ -1,80 +1,78 @@
-.header-container {
-  flex-grow: 1;
-}
-
-/* Top contact bar */
-.top-bar {
-  background-color: #fca00c;
-  color: #ffffff;
+.header-wrapper {
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 24px;
-  padding: 6px 32px;
-  font-size: 14px;
+  flex-direction: column;
 }
 
-.contact-item {
+.header-top {
   display: flex;
+  background-color: var(--accent-02);
+  color: var(--foreground-inverted);
+  font-family: "Inter", sans-serif;
+  font-size: 1rem;
+  font-weight: medium;
+  justify-content: right;
+}
+
+.header-contacts {
+  padding-right: 1rem;
+  display: flex;
+  justify-content: center;
   align-items: center;
-  gap: 6px;
+  gap: 1.5rem;
 }
 
-.icon {
-  font-size: 18px;
+.header-contact {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Navbar */
-.navbar {
+.header-bottom {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 32px;
+  padding: 0rem 2rem;
 }
 
-.logo-section {
+.header-title {
+  font-family: "Outfit", sans-serif;
+  font-weight: 800;
+  font-size: 1.5rem;
+}
+
+.header-title img {
+  width: 10rem;
+}
+
+.header-links {
   display: flex;
+  justify-content: center;
   align-items: center;
-  gap: 8px;
+  gap: 2rem;
+  font-family: "Inter", sans-serif;
+  font-size: 1.4rem;
+  overflow: visible;
 }
 
-.logo-img {
-  height: 45px;
+.header-links a {
+  transition: all 0.2s ease-in-out;
 }
 
-.logo-text {
-  color: #000000;
-  font-weight: 600;
+.header-links a:hover {
+  color: var(--accent-01) !important;
+  font-weight: 700;
 }
 
-/* Nav links */
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 32px;
+.header-links button {
+  border-radius: 2rem;
+  font-weight: 700;
+  color: var(--foreground-inverted);
+  transition: all 0.2s ease-in-out;
 }
 
-.nav-link {
-  color: #000000;
-  font-weight: 500;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.nav-link:hover {
-  color: #0e926b;
-}
-
-/* Donate button */
-.donate-btn {
-  background-color: #0e926b !important;
-  color: #ffffff !important;
-  text-transform: none !important;
-  font-weight: 600 !important;
-  border-radius: 30px !important;
-  padding: 6px 24px !important;
-}
-
-.donate-btn:hover {
-  background-color: #097658 !important;
+.header-links button:hover {
+  color: var(--accent-01);
+  background-color: var(--background);
+  transform: scale(1.02);
 }
