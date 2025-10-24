@@ -2,6 +2,7 @@ import { Donation, Fundraiser } from "../model/donation.model.js";
 import { createHmac } from "node:crypto";
 import Razorpay from "razorpay";
 import Web3 from "web3";
+import moment from "moment-timezone";
 
 const razorpay = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,
@@ -29,6 +30,16 @@ class BlockchainService {
     this.web3 = new Web3(
       new Web3.providers.HttpProvider("http://127.0.0.1:7545")
     );
+  }
+
+  // ✅ Added missing getAccounts() method
+  async getAccounts() {
+    try {
+      const accounts = await this.web3.eth.getAccounts();
+      return accounts;
+    } catch (error) {
+      throw new Error("Error fetching accounts: " + error.message);
+    }
   }
 
   async signTransaction(fromAddress, toAddress, data) {
@@ -73,7 +84,10 @@ class BlockchainService {
       throw new Error("Error signing transaction: " + error.message);
     }
   }
+  
 }
+
+
 
 const verifyPayment = async (req, res) => {
   const {
@@ -93,6 +107,8 @@ const verifyPayment = async (req, res) => {
       .update(`${razorpay_order_id}|${razorpay_payment_id}`)
       .digest("hex");
 
+      console.log(generate_signature)
+
     if (generate_signature !== razorpay_signature) {
       return res
         .status(400)
@@ -100,7 +116,7 @@ const verifyPayment = async (req, res) => {
     }
 
     const blockchainService = new BlockchainService();
-    const accounts = await blockchainService.getAccounts();
+    const accounts = await blockchainService.getAccounts(); 
     const fromAddress = accounts[0];
 
     const donationCount = await Donation.countDocuments();
@@ -134,11 +150,23 @@ const verifyPayment = async (req, res) => {
 
     if (fundraiserId) {
       const fundraiser = await Fundraiser.findById(fundraiserId);
-      if (fundraiser) {
-        fundraiser.donations.push(newDonation._id);
-        await fundraiser.save();
+      const updatedAmount = fundraiser.amountCollected + amount;
+      const newResponse = await Fundraiser.findByIdAndUpdate(
+        fundraiserId,
+        { amountCollected: updatedAmount },
+        { new: true }
+      );
+      if (!fundraiser || !newResponse) {
+        return res
+          .status(404)
+          .json({ success: false, message: "Fundraiser not found" });
       }
+      fundraiser.donations.push(newDonation._id);
+      await fundraiser.save();
     }
+
+    await newDonation.save();
+    console.log(newDonation);
 
     res.status(200).json({
       success: true,
@@ -168,20 +196,34 @@ const getDonations = async (req, res) => {
 };
 
 const createFundraiser = async (req, res) => {
-  const { name, description, logo } = req.body;
-  if (!name || !description || !logo) {
-    return res
-      .status(400)
-      .json({ success: false, message: "All fields are required" });
-  }
   try {
-    const fundraiser = await Fundraiser.create({ name, description, logo });
+    const { name, description, logo, hasGoal = false, goal } = req.body;
 
-    if (!fundraiser) {
-      return res
-        .status(500)
-        .json({ success: false, message: "Error creating fundraiser" });
+    // Check mandatory fields
+    if (!name || !description || !logo) {
+      return res.status(400).json({
+        success: false,
+        message: "Name, description, and logo are required",
+      });
     }
+
+    // If hasGoal is true, goal must be provided and valid
+    if (hasGoal && (goal === undefined || goal === null)) {
+      return res.status(400).json({
+        success: false,
+        message: "Goal amount is required when hasGoal is true",
+      });
+    }
+
+    // Create fundraiser with conditional goal handling
+    const fundraiser = await Fundraiser.create({
+      name,
+      description,
+      logo,
+      image: image || "",
+      hasGoal,
+      goal: hasGoal ? goal : Number.MAX_SAFE_INTEGER,
+    });
 
     return res.status(201).json({
       success: true,
@@ -189,7 +231,7 @@ const createFundraiser = async (req, res) => {
       fundraiser,
     });
   } catch (error) {
-    console.log(error);
+    console.error("Error creating fundraiser:", error);
     return res
       .status(500)
       .json({ success: false, message: "Internal server error" });
@@ -231,6 +273,10 @@ const getFundraisers = async (req, res) => {
   }
 };
 
+const getFundraisersAnalytics = async(req,res) =>{
+
+}
+
 export {
   createFundraiser,
   deleteFundraiser,
@@ -238,4 +284,5 @@ export {
   createOrder,
   verifyPayment,
   getDonations,
+  getFundraisersAnalytics
 };
