@@ -21,6 +21,9 @@ const fundraiserSchema = new mongoose.Schema({
     name: { type: String, required: true }, 
     description: { type: String, required: true },
     logo: { type: String, required: true }, 
+    hasGoal: { type: Boolean, default: false },
+    goal: { type: Number, default: Number.MAX_SAFE_INTEGER },
+    amountRaised: { type: Number, default: 0 },
     donations: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Donation' }] 
 },{
     timestamps:true,
