@@ -84,10 +84,7 @@ class BlockchainService {
       throw new Error("Error signing transaction: " + error.message);
     }
   }
-  
 }
-
-
 
 const verifyPayment = async (req, res) => {
   const {
@@ -107,7 +104,7 @@ const verifyPayment = async (req, res) => {
       .update(`${razorpay_order_id}|${razorpay_payment_id}`)
       .digest("hex");
 
-      console.log(generate_signature)
+    console.log(generate_signature);
 
     if (generate_signature !== razorpay_signature) {
       return res
@@ -116,7 +113,7 @@ const verifyPayment = async (req, res) => {
     }
 
     const blockchainService = new BlockchainService();
-    const accounts = await blockchainService.getAccounts(); 
+    const accounts = await blockchainService.getAccounts();
     const fromAddress = accounts[0];
 
     const donationCount = await Donation.countDocuments();
@@ -180,7 +177,7 @@ const verifyPayment = async (req, res) => {
 };
 
 const getDonations = async (req, res) => {
-  const { fundraiserId } = req.query;
+  const { fundraiserId } = req.params;
   try {
     const query = fundraiserId ? { _id: fundraiserId } : {};
     const donations = await Fundraiser.find(query)
@@ -220,7 +217,6 @@ const createFundraiser = async (req, res) => {
       name,
       description,
       logo,
-      image: image || "",
       hasGoal,
       goal: hasGoal ? goal : Number.MAX_SAFE_INTEGER,
     });
@@ -273,9 +269,7 @@ const getFundraisers = async (req, res) => {
   }
 };
 
-const getFundraisersAnalytics = async(req,res) =>{
-
-}
+const getFundraisersAnalytics = async (req, res) => {};
 
 export {
   createFundraiser,
@@ -284,5 +278,5 @@ export {
   createOrder,
   verifyPayment,
   getDonations,
-  getFundraisersAnalytics
+  getFundraisersAnalytics,
 };

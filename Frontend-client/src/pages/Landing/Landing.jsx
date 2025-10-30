@@ -1,4 +1,6 @@
+import ContactUs from "../../components/ContactUs/ContactUs";
 import DonationContainer from "../../components/DonationContainer/DonationContainer";
+import FeaturedCampaigns from "../../components/FeaturedCampaigns/FeaturedCampaigns";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import InfoCard from "../../components/InfoCard/InfoCard";
@@ -17,7 +19,7 @@ const card = {
 const Landing = () => {
   return (
     <div>
-      <Header />
+      {/* <Header /> */}
       <div className="hero-section">
         <div className="hero-content">
           <div className="hero-typography">
@@ -30,8 +32,10 @@ const Landing = () => {
         </div>
       </div>
       <WelcomeBanner />
+      <FeaturedCampaigns />
+      <ContactUs />
       <Transparency />
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

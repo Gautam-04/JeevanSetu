@@ -1,0 +1,99 @@
+.donation-card-wrapper {
+  width: 350px;
+  min-height: 500px;
+  background-color: var(--creme);
+  border-radius: 1rem;
+  margin: 1rem;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform 0.2s;
+}
+
+.donation-card-image {
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+  overflow: hidden;
+}
+
+.donation-card-image img {
+  width: auto;
+  height: auto;
+}
+
+.donation-card-content {
+  padding: 1rem;
+  height: calc(100% - 200px);
+  font-family: "Outfit", sans-serif;
+  color: var(--foreground);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 4px solid var(--accent-01);
+  border-top: none;
+  border-radius: 0rem 0rem 1rem 1rem;
+
+  .title {
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.donation-card-statistics {
+  padding-block: 1rem;
+}
+
+.donation-stat-bottom {
+  margin-top: 1rem;
+  display: flex;
+}
+
+.total-percentage {
+  font-weight: 600;
+  font-size: 1rem;
+
+  span {
+    font-weight: 800;
+    font-size: 1.6rem;
+  }
+}
+
+.donation-card-buttons {
+  margin-top: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.donation-card-button.donate-now-button {
+  border-radius: 2rem;
+  font-weight: 800;
+  font-family: "Outfit", sans-serif;
+  color: var(--foreground-inverted) !important;
+  background-color: var(--dark);
+  font-size: 1.7rem;
+  text-align: center;
+  transition: all 0.2s ease-in-out;
+  padding: 0.5rem 2rem;
+  border: 2px solid transparent !important;
+  color: var(--foreground-inverted) !important;
+  background-color: var(--accent-02);
+  border: 2px solid var(--foreground-inverted) !important;
+}
+
+.donation-card-button.donate-now-button:hover {
+  color: var(--accent-01) !important;
+  background-color: var(--foreground-inverted);
+  border: 2px solid var(--accent-02) !important;
+}
+
+.share-button {
+  width: 63px;
+  height: 63px;
+}
+
+.share-button svg {
+  width: 100px;
+  height: 100px;
+}

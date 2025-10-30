@@ -6,8 +6,8 @@ import "./Donation.css";
 import axios from "axios";
 import { MaterialReactTable } from "material-react-table";
 import { useParams } from "react-router-dom";
-// import LineChart from "../../components/lineChart/LineChart";
-// import DoughnutChart from "../../components/doughnutChart/DoughnutChart";
+import LineChart from "../../components/lineChart/LineChart";
+import DoughnutChart from "../../components/doughnutChart/DoughnutChart";
 
 function Donation() {
   const [donations, setDonations] = useState([]);
@@ -404,11 +404,12 @@ function Donation() {
               {fundraiserInfo.createdAt &&
                 fundraiserInfo.createdAt.split("T")[0]}{" "}
             </div>
-            <div className="fundraiser-goal">
-              <span>Progress:</span> ₹
-              {fundraiserInfo.fundraiser?.amountCollected || 15000} / ₹
-              {fundraiserInfo.fundraiser?.goal || 120000}{" "}
-            </div>
+            {fundraiserInfo?.hasGoal && (
+              <div className="fundraiser-goal">
+                <span>Progress:</span> ₹{fundraiserInfo?.amountCollected || 0} /
+                ₹{fundraiserInfo.goal}{" "}
+              </div>
+            )}
           </div>
           <div className="fundraiser-image">
             <img src={fundraiserInfo.logo} />
@@ -432,7 +433,7 @@ function Donation() {
             }}
           />
         </div>
-        {/* <div className="donation-charts">
+        <div className="donation-charts">
           <div className="charts-donation-timeline">
             <LineChart
               chartData={lineChartSchema}
@@ -442,7 +443,7 @@ function Donation() {
           <div className="charts-donation-progress">
             <DoughnutChart chartData={pieChartSchema} title={"Goal Achieved"} />
           </div>
-        </div> */}
+        </div>
       </div>
     </>
   );

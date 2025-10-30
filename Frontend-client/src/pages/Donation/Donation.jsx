@@ -73,8 +73,6 @@ function Donation() {
 
   return (
     <>
-      <Header />
-
       <div className="donation-page">
         <div className="donation-page-container">
           <h1 className="donation-page-title">Donate Now</h1>
@@ -94,8 +92,6 @@ function Donation() {
           </div>
         </div>
       </div>
-
-      <Footer />
     </>
   );
 }
