@@ -1,0 +1,22 @@
+.transparency-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 6rem;
+  font-family: "Outfit", sans-serif;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+}
+
+.transparency-title {
+  font-size: 2rem;
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+.transparency-desc {
+  width: 50%;
+  min-width: 700px;
+  font-size: 1.2rem;
+  color: var(--foreground);
+}

@@ -14,7 +14,7 @@ function Footer() {
         <Box className="footer-left">
           <Box className="footer-logo-section">
             <img
-              src="/src/assets/logoback.png"
+              src="/src/assets/JSLogoNoBG.png"
               alt="Jeevan Samvardhan Logo"
               className="footer-logo"
             />

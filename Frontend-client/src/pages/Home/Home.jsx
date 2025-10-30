@@ -2,7 +2,7 @@ import React from "react";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import DonationContainer from "../../components/DonationContainer/DonationContainer";
-import "./Home.css";
+// import "./Home.css";
 
 import { Box, Typography, Button, Card, CardContent } from "@mui/material";
 
@@ -29,7 +29,7 @@ function Home() {
           <Typography variant="h2" className="hero-title">
             We change the lives of those who have no hope.
           </Typography>
-          
+
           <Box className="hero-cards">
             <Card className="hero-card">
               <img src={chalaGhariImg} alt="Chala Ghari" />
@@ -38,7 +38,9 @@ function Home() {
                   Chala Ghari Jaudya
                 </Typography>
                 <Typography className="hero-card-description">
-                  We work to protect vulnerable children from child labor, trafficking, and exploitation by reuniting them with families or providing safe rehabilitation.
+                  We work to protect vulnerable children from child labor,
+                  trafficking, and exploitation by reuniting them with families
+                  or providing safe rehabilitation.
                 </Typography>
                 <Button variant="contained" className="hero-card-btn">
                   Learn More
@@ -53,15 +55,14 @@ function Home() {
                   Aamhalahi shikudya
                 </Typography>
                 <Typography className="hero-card-description">
-                  Educational campaigns to guide underprivileged children towards learning, skill development, and a brighter future.
+                  Educational campaigns to guide underprivileged children
+                  towards learning, skill development, and a brighter future.
                 </Typography>
                 <Button variant="contained" className="hero-card-btn">
                   Learn More
                 </Button>
               </CardContent>
             </Card>
-
-
           </Box>
         </Box>
       </Box>
@@ -71,7 +72,12 @@ function Home() {
         <Typography variant="h4">Welcome to Jeevan Samvardhan</Typography>
 
         <Typography variant="body1">
-          Jeevan Samvardhan Foundation (JSJF), founded by Sadeshiv Chavan, is dedicated to uplifting homeless and underprivileged children. Rooted in rural Maharashtra, JSF works to provide education, nutrition, health awareness, sanitation, and vocational training—empowering children, youth, and women towards a dignified and self-reliant future.
+          Jeevan Samvardhan Foundation (JSJF), founded by Sadeshiv Chavan, is
+          dedicated to uplifting homeless and underprivileged children. Rooted
+          in rural Maharashtra, JSF works to provide education, nutrition,
+          health awareness, sanitation, and vocational training—empowering
+          children, youth, and women towards a dignified and self-reliant
+          future.
         </Typography>
 
         <Box className="welcome-buttons">
@@ -85,20 +91,25 @@ function Home() {
         <Box className="empowering-image">
           <img src={croppedCircleImg} alt="Children" />
         </Box>
-        
+
         <Box className="empowering-content">
           <Typography variant="h4" className="empowering-title">
             Empowering Homeless & Underprivileged Children
           </Typography>
-          
+
           <Typography variant="h5" className="empowering-subtitle">
             Help us bring education, health, and dignity to every child.
           </Typography>
-          
+
           <Typography variant="body1" className="empowering-description">
-            <strong>J</strong>eevan Samvardhan Foundation (JSF), founded by Sadashiv Chavan, is dedicated to rescuing, rehabilitating, and uplifting homeless and vulnerable children in urban and rural communities. We provide education, nutrition, healthcare, sanitation awareness, and vocational training—helping children, youth, and women move towards a brighter and self-reliant future.
+            <strong>J</strong>eevan Samvardhan Foundation (JSF), founded by
+            Sadashiv Chavan, is dedicated to rescuing, rehabilitating, and
+            uplifting homeless and vulnerable children in urban and rural
+            communities. We provide education, nutrition, healthcare, sanitation
+            awareness, and vocational training—helping children, youth, and
+            women move towards a brighter and self-reliant future.
           </Typography>
-          
+
           <Button variant="contained" className="learn-more-btn">
             Learn More
           </Button>
@@ -114,11 +125,12 @@ function Home() {
           Featured Campaigns
         </Typography>
         <Typography variant="body1" className="section-description">
-          It's through mistakes that you actually can grow you gert rid of everything that is not essential to makhave to get bad.
+          It's through mistakes that you actually can grow you gert rid of
+          everything that is not essential to makhave to get bad.
         </Typography>
 
         <Box className="donation-cards-container">
-          <DonationContainer 
+          <DonationContainer
             image={aamlahiImg}
             title="Aamhalahi shikudya"
             content="Empowers underprivileged children through education and skill development, helping them build a brighter future."
@@ -126,8 +138,8 @@ function Home() {
             goalAmount={240000}
             memberCount={900}
           />
-          
-          <DonationContainer 
+
+          <DonationContainer
             image={bhuk}
             title="One time dinner for all"
             content="Empowers underprivileged children through education and skill development, helping them build a brighter future."
@@ -154,7 +166,9 @@ function Home() {
             Questions? Ask!
           </Typography>
           <Typography variant="body2" className="contact-subtext">
-            When you donate to Jeevan Samvardhan, you can be sure that the money is used responsibly. If you have questions before you make a donation, please feel free to contact us.
+            When you donate to Jeevan Samvardhan, you can be sure that the money
+            is used responsibly. If you have questions before you make a
+            donation, please feel free to contact us.
           </Typography>
 
           <form className="form-fields">
@@ -183,7 +197,10 @@ function Home() {
           Committed to Transparency
         </Typography>
         <Typography variant="body1" className="transparency-text">
-          84% of our total operating expenses fund programs for children in the countries we serve. So when you make a monthly gift or donation to our organization, the majority of your dollars go toward exactly what you intended — supporting children in poverty.
+          84% of our total operating expenses fund programs for children in the
+          countries we serve. So when you make a monthly gift or donation to our
+          organization, the majority of your dollars go toward exactly what you
+          intended — supporting children in poverty.
         </Typography>
       </Box>
 

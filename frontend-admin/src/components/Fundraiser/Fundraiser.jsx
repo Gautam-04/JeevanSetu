@@ -210,7 +210,42 @@ function Fundraiser() {
                 }
               />
             </Form.Group>
-            {/* <Form.Group className="mb-3">
+            <Form.Group className="mb-3">
+              <Form.Label>Does this campaign have a Goal?</Form.Label>
+
+              <div>
+                <Form.Check
+                  inline
+                  label="Yes"
+                  type="radio"
+                  name="hasGoal"
+                  value="true"
+                  checked={newFundraiser.hasGoal === true}
+                  onChange={(e) =>
+                    setNewFundraiser({
+                      ...newFundraiser,
+                      hasGoal: e.target.value === "true",
+                    })
+                  }
+                />
+
+                <Form.Check
+                  inline
+                  label="No"
+                  type="radio"
+                  name="hasGoal"
+                  value="false"
+                  checked={newFundraiser.hasGoal === false}
+                  onChange={(e) =>
+                    setNewFundraiser({
+                      ...newFundraiser,
+                      hasGoal: e.target.value === "true",
+                    })
+                  }
+                />
+              </div>
+            </Form.Group>
+            <Form.Group className="mb-3">
               <Form.Label>{"Goal Amount"}</Form.Label>
               <Form.Control
                 type="text"
@@ -222,8 +257,9 @@ function Fundraiser() {
                     goal: e.target.value,
                   })
                 }
+                disabled={newFundraiser.hasGoal !== true}
               />
-            </Form.Group> */}
+            </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>{"Fundraiser Thumbnail"}</Form.Label>
               <Form.Control type="file" onChange={handleFileUpload} />

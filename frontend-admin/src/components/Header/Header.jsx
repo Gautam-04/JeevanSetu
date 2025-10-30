@@ -39,7 +39,7 @@ function Header() {
             to={"/dashboard/housing"}
             style={{ textDecoration: "None", color: "black" }}
           >
-            DASHBOARD
+            Housing
           </Link>
         </div>
         <div className="header-nav-item">

@@ -5,3 +5,24 @@
   scroll-behavior: smooth;
   overflow-x: hidden;
 }
+
+a {
+  text-decoration: none !important;
+  color: var(--foreground) !important;
+}
+
+button {
+  cursor: pointer;
+  padding: 0.5rem 1.2rem;
+  background-color: var(--accent-01);
+  border: 3px solid var(--foreground);
+  outline: none;
+}
+
+.buttonized-link {
+  cursor: pointer;
+  padding: 0.5rem 1.2rem;
+  background-color: var(--accent-01);
+  border: 3px solid var(--foreground);
+  outline: none;
+}
