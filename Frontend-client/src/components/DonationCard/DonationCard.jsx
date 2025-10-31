@@ -37,7 +37,7 @@ const DonationCard = ({ donation }) => {
         <div className="donation-card-buttons">
           <a
             className="donation-card-button buttonized-link donate-now-button"
-            href="#"
+            href={`/donate-to-fundraiser/${donation._id}`}
           >
             Donate Now
           </a>

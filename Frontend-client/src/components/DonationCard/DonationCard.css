@@ -91,6 +91,7 @@
 .share-button {
   width: 63px;
   height: 63px;
+  overflow: hidden;
 }
 
 .share-button svg {

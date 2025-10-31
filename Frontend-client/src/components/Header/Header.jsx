@@ -23,8 +23,8 @@ const Header = () => {
           Jeevan Samvardhan
         </div>
         <div className="header-links">
-          <a href="#">Home</a>
-          <a href="#">About</a>
+          <a href="/">Home</a>
+          <a href="/about">About</a>
           <a href="#">Drives</a>
           <a href="#">Join Us</a>
           <a href="#">Contact</a>
