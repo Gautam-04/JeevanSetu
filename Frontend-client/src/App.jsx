@@ -6,6 +6,7 @@ import Landing from "./pages/Landing/Landing";
 import { Slide, ToastContainer } from "react-toastify";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
+import News from "./pages/News/News";
 
 function App() {
   return (
@@ -14,7 +15,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/legacy" element={<Home />} />
-
+<Route path="/News" element={<News />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/donations" element={<Donation />} />
       </Routes>
