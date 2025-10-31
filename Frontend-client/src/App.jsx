@@ -7,6 +7,7 @@ import { Slide, ToastContainer } from "react-toastify";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import DonateToFundraiser from "./pages/DonateToFundraiser/DonateToFundraiser";
+import News from "./pages/News/News";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           element={<DonateToFundraiser />}
         />
 
+        <Route path="/News" element={<News />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/donations" element={<Donation />} />
       </Routes>
