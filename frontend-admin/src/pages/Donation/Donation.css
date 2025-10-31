@@ -28,7 +28,7 @@
 
 .fundraiser-info {
   padding-left: 1rem;
-  max-width: 60%;
+  max-width: 50%;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -80,15 +80,14 @@
 
 .donation-charts {
   width: 80%;
-  height: fit-content;
+  height: 500px;
   /* min-height: 40vh; */
   flex-wrap: wrap;
-  padding-block: 1.2rem;
   /* background-color: salmon; */
   display: flex;
   gap: 1rem;
-  padding-block: 1rem;
-  justify-content: center;
+  padding: 2rem;
+  justify-content: space-between;
   align-items: center;
   position: relative;
 }
@@ -96,20 +95,15 @@
 .charts-donation-timeline {
   position: relative;
   background-color: white;
-  /* min-height: ; */
-  max-width: 90%;
-  max-height: 60%;
-  /* height: 100% !important; */
+  width: 50%;
+  height: 100%;
   box-shadow: 2px 2px 4px var(--light-gray);
-  aspect-ratio: 16 / 9.25;
   /* padding: 2rem; */
   border-radius: 25px;
-  width: 55%;
-  flex: 1 1 auto;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid whitesmoke;
+  border: 1px solid var(--primary-color-light);
 }
 
 .charts-donation-progress {
@@ -117,14 +111,28 @@
   box-shadow: 2px 2px 4px var(--light-gray);
   /* padding: 2rem; */
   border-radius: 25px;
-  width: 40% !important;
-  min-width: 390px;
-  aspect-ratio: 5 / 4;
-  flex: 1 1 auto;
+  width: 45% !important;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  border: 1px solid var(--primary-color-light);
+}
+
+.chart-container {
+  width: 100%;
   height: 100%;
-  max-width: 90%;
-  border: 1px solid whitesmoke;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.charts-donation-progress .chart-container {
+  width: 80%;
+  height: 80%;
+}
+
+.Mui-TableHeadCell-Content-Actions,
+.MuiButtonBase-root {
+  overflow: hidden;
 }
