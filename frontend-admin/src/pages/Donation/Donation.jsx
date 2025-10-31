@@ -11,7 +11,7 @@ import LineChart from "../../components/lineChart/LineChart";
 import DoughnutChart from "../../components/doughnutChart/DoughnutChart";
 import { useRef } from "react";
 
-const DUMMY_DONATIONS_FLAG = true;
+const DUMMY_DONATIONS_FLAG = false;
 
 function Donation() {
   const [donations, setDonations] = useState([]);
@@ -115,7 +115,7 @@ function Donation() {
             setFundraiserStat({
               data: response.data?.donations[0]?.donations,
               fundraiser: {
-                amountCollected: fundraiserInfoTemp.amountCollected,
+                amountCollected: fundraiserInfoTemp.amountRaised,
                 goal: fundraiserInfoTemp.goal,
               },
             });
@@ -472,13 +472,28 @@ function Donation() {
               </div>
               {fundraiserInfo?.hasGoal && (
                 <div className="fundraiser-goal">
-                  <span>Progress:</span> ₹{fundraiserInfo?.amountCollected || 0}{" "}
-                  / ₹{fundraiserInfo.goal}{" "}
+                  <span>Progress:</span> ₹{fundraiserInfo?.amountRaised || 0} /
+                  ₹{fundraiserInfo.goal}{" "}
                 </div>
               )}
             </div>
             <div className="fundraiser-image">
               <img src={fundraiserInfo.logo} />
+            </div>
+          </div>
+
+          <div className="donation-charts">
+            <div className="charts-donation-timeline">
+              <LineChart
+                chartData={lineChartSchema}
+                title={"Donation Timeline"}
+              />
+            </div>
+            <div className="charts-donation-progress">
+              <DoughnutChart
+                chartData={pieChartSchema}
+                title={"Goal Achieved"}
+              />
             </div>
           </div>
 
@@ -498,20 +513,6 @@ function Donation() {
                 ],
               }}
             />
-          </div>
-          <div className="donation-charts">
-            <div className="charts-donation-timeline">
-              <LineChart
-                chartData={lineChartSchema}
-                title={"Donation Timeline"}
-              />
-            </div>
-            <div className="charts-donation-progress">
-              <DoughnutChart
-                chartData={pieChartSchema}
-                title={"Goal Achieved"}
-              />
-            </div>
           </div>
         </div>
       </div>
