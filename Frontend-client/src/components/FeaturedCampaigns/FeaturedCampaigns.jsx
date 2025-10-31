@@ -3,7 +3,7 @@ import DonationCard from "../DonationCard/DonationCard";
 import "./FeaturedCampaigns.css";
 import axios from "axios";
 
-const DUMMY_DONATIONS_FLAG = true;
+const DUMMY_DONATIONS_FLAG = false;
 
 const dummyDonationData = [
   {

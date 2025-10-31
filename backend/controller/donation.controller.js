@@ -153,10 +153,10 @@ const verifyPayment = async (req, res) => {
 
     if (fundraiserId) {
       const fundraiser = await Fundraiser.findById(fundraiserId);
-      const updatedAmount = fundraiser.amountCollected + amount;
+      const updatedAmount = fundraiser.amountRaised + Number(amount);
       const newResponse = await Fundraiser.findByIdAndUpdate(
         fundraiserId,
-        { amountCollected: updatedAmount },
+        { amountRaised: updatedAmount },
         { new: true }
       );
       if (!fundraiser || !newResponse) {

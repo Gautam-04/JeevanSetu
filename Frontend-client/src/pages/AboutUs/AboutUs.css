@@ -1,145 +1,333 @@
-/* General Page Styling */
-.about-section,
-.who-section,
-.needs-section {
+/* ===== MISSION & VISION SECTION ===== */
+.mission-vision-section {
+  display: block;
+  margin: 64px 0 40px 0;
   width: 100%;
-  padding: 60px 10%;
-  box-sizing: border-box;
-  overflow: hidden; /* Changed from visible to hidden to remove scroll arrows */
 }
 
-.about-title,
-.who-title,
-.needs-title {
-  font-size: 2rem;
-  font-weight: 700;
-  text-align: center;
-  margin-bottom: 30px;
+.mission-block {
+  margin-left: 8vw;
+  margin-bottom: 44px;
+  max-width: 100%;
+  padding: 0 10px 0 10px;
+
+  box-shadow: none;
+  border-bottom: none;
+  padding-bottom: 38px;
+  overflow: hidden;
+  text-align: left;
+  position: relative;
 }
 
-/* ===== ABOUT SECTION ===== */
-.about-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 40px;
-  flex-wrap: wrap;
+.mission-block h2,
+.vision-block h2 {
+  overflow: hidden;
+  font-size: 2.2rem;
+  width: 100%;
+  font-weight: 900;
+  margin-bottom: 22px;
+  letter-spacing: 0.07em;
+  color: black;
+  text-transform: uppercase;
+  display: block;
+  text-align: left;
 }
 
-.about-image img {
-  width: 400px;
-  height: auto;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+.mission-block ul {
+  margin: 0;
+  padding-left: 38px !important;
+  list-style: none !important;
 }
 
-.about-points ul {
-  list-style-type: none;
-  padding-left: 0;
-  font-size: 1.1rem;
+.mission-block ul li {
+  margin-bottom: 18px;
+  font-size: 1.25rem;
   line-height: 1.8;
-  color: #333;
+  color: #2d3851;
+  position: relative;
+  padding-left: 24px;
+}
+
+.mission-block ul li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.8em;
+  width: 11px;
+  height: 11px;
+  background: #ff9545;
+  border-radius: 50%;
+  display: inline-block;
+  transform: translateY(-50%);
+}
+
+/* Vision block unchanged */
+.vision-block {
+  margin-left: 8vw;
+  margin-bottom: 44px;
+  max-width: 100%;
+  padding: 0 10px 0 10px;
+  text-align: left;
+}
+
+.vision-block p {
+  width: 100%;
+  font-size: 1.25rem;
+  color: #2d3851;
+  line-height: 1.8;
+}
+
+.mission-block::after {
+  content: "";
+  display: block;
+  width: 50%;
+  margin: 35px auto 0 auto;
+  border-bottom: 2px solid #e5e8ef;
+}
+
+/* Responsive Design */
+@media (max-width: 950px) {
+  .mission-block,
+  .vision-block {
+    max-width: 98%;
+    margin-left: 2vw;
+    padding: 0 4px;
+  }
+  .mission-block h2,
+  .vision-block h2 {
+    font-size: 1.4rem;
+  }
+  .mission-block ul li,
+  .vision-block p {
+    font-size: 1.07rem;
+  }
+  .mission-block::after {
+    width: 80%;
+  }
 }
 
 /* ===== WHO WE ARE SECTION ===== */
-.who-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 40px;
-  flex-wrap: wrap;
+.who-we-are-section {
+  margin: 64px 0 40px 0;
+  width: 100%;
 }
 
-.who-text {
+.who-we-are-section h3 {
+  overflow: hidden;
+  margin-left: 8.5vw;
+  margin-bottom: 44px;
+  max-width: 100%;
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: black;
+  letter-spacing: 0.09em;
+  margin-bottom: 22px;
+}
+
+.about-summary {
+  overflow: hidden;
+  margin-left: 8vw;
+  margin-bottom: 44px;
+  max-width: 80%;
+  display: flex;
+  gap: 44px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 38px;
+  background: #e1e3e7;
+  border-radius: 22px;
+  box-shadow: 0 2px 24px rgba(48, 64, 117, 0.08);
+  padding: 38px 32px;
+  position: relative;
+}
+
+.summary-text {
+  flex: 2;
+  min-width: 50px;
+}
+
+.summary-text h4 {
+  overflow: hidden;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: black;
+  margin-bottom: 12px;
+}
+
+.summary-text p {
+  font-size: 1.3rem;
+  line-height: 1.75;
+  color: #32353b;
+  margin-bottom: 18px;
+}
+
+.founder-name {
+  display: block;
+  font-size: 1.8rem;
+  font-weight: bolder;
+  color: black;
+  margin-top: 8px;
+  letter-spacing: 0.08em;
+}
+
+.summary-image {
   flex: 1;
-  min-width: 300px;
-  font-size: 1.1rem;
-  color: #333;
-  line-height: 1.8;
-}
-
-.who-image img {
-  width: 350px;
-  height: auto;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-}
-
-/* ===== BASIC NEEDS SECTION ===== */
-.needs-container {
+  min-width: 220px;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 25px;
+  justify-content: flex-end;
 }
 
-.needs-points ul {
-  list-style: disc !important;
-  list-style-type: disc !important;
-  list-style-position: outside !important;
-  padding-left: 40px !important;
-  margin-left: 20px !important;
-  font-size: 1.1rem;
-  font-weight: 600;
-  line-height: 1.8;
-  color: #333;
-  max-width: 800px;
+.summary-image img {
+  overflow: hidden;
+  width: 400px;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 18px;
+  background: #f7f9fb;
+  margin-left: 18px;
+  box-shadow: 0 2px 16px rgba(80, 80, 80, 0.11);
+  transition: transform 0.18s;
 }
 
-.needs-points ul li {
-  display: list-item !important;
-  list-style: inherit !important;
-  list-style-type: disc !important;
-  list-style-position: outside !important;
-  margin-bottom: 10px;
-  margin-left: 0 !important;
-  padding-left: 5px !important;
+.summary-image img:hover {
+  transform: scale(1.05);
 }
 
-/* Override Material-UI's list reset */
-.needs-points ul li::before {
-  content: none !important;
+/* Responsive Design for WHO WE ARE */
+@media (max-width: 1000px) {
+  .about-summary {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 28px;
+    padding: 28px 10px;
+  }
+  .summary-image {
+    justify-content: flex-start;
+    margin-top: 18px;
+  }
+  .summary-image img {
+    width: 170px;
+    height: 170px;
+  }
 }
 
-.needs-points ul li::marker {
-  color: #333 !important;
-  font-size: 1em !important;
+@media (max-width: 600px) {
+  .summary-image img {
+    width: 120px;
+    height: 120px;
+  }
 }
 
-.needs-images {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  flex-wrap: wrap;
+/* ===== BASIC NEEDS SECTION (Styled to Match WHO WE ARE) ===== */
+.basic-needs-section {
+  background: #e1e3e7;
+  border-radius: 22px;
+  box-shadow: 0 2px 24px rgba(48, 64, 117, 0.08);
+  padding: 38px 32px;
+  margin: 42px 0 0 8vw;
+  max-width: 80%;
+  overflow: hidden;
+  position: relative;
 }
 
-.needs-images img {
-  width: 320px;
-  height: auto;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+.basic-needs-section h4 {
+  overflow: hidden;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: black;
+  margin-bottom: 18px;
+  letter-spacing: 0.09em;
 }
 
-/* ===== GLOBAL SCROLLBAR AND OVERFLOW FIX ===== */
-html, body {
-  overflow-x: hidden;
-  overflow-y: auto;
+.basic-needs-section ul {
+  padding-left: 32px;
   margin: 0;
-  padding: 0;
-  scrollbar-width: none; /* Firefox */
+  list-style: none !important;
 }
 
-html::-webkit-scrollbar, 
-body::-webkit-scrollbar {
-  display: none; /* Chrome/Safari/Edge */
+.basic-needs-section ul li {
+  font-size: 1.3rem;
+  margin-bottom: 18px;
+  line-height: 1.75;
+  position: relative;
+  padding-left: 24px;
+  color: #32353b;
 }
 
-/* Remove scroll arrows from containers */
-*::-webkit-scrollbar-button {
-  display: none;
+.basic-needs-section ul li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.8em;
+  width: 11px;
+  height: 11px;
+  background: #ff9545;
+  border-radius: 50%;
+  display: inline-block;
+  transform: translateY(-50%);
 }
 
-* {
-  scrollbar-width: none;
+/* Responsive Design to match WHO WE ARE */
+@media (max-width: 1000px) {
+  .basic-needs-section {
+    padding: 28px 10px;
+    max-width: 97%;
+    margin-left: 2vw;
+    border-radius: 12px;
+  }
+}
+
+@media (max-width: 600px) {
+  .basic-needs-section {
+    padding: 12px 3px;
+  }
+  .basic-needs-section ul li {
+    font-size: 1rem;
+  }
+}
+
+/* Documents Section - Center images horizontally */
+.documents-section {
+  margin: 42px 0 0 0;
+  padding: 0 16px;
+}
+
+.documents-gallery {
+  display: flex;
+  gap: 38px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 18px;
+  margin-bottom: 30px;
+}
+
+.documents-gallery img {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 18px rgba(48, 64, 117, 0.09);
+  object-fit: contain;
+  width: 230px;
+  height: 310px;
+  border: 1px solid #e7eaf1;
+  transition: transform 0.18s, box-shadow 0.18s;
+  display: block;
+}
+
+/* Responsive Design for Documents */
+@media (max-width: 1100px) {
+  .documents-gallery {
+    gap: 20px;
+  }
+  .documents-gallery img {
+    width: 150px;
+    height: 210px;
+  }
+}
+
+@media (max-width: 500px) {
+  .documents-gallery img {
+    width: 100px;
+    height: 140px;
+  }
 }

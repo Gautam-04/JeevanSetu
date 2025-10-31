@@ -1,0 +1,166 @@
+.donate-to-fundraiser-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-block: 1rem;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+.fundraiser-info-container {
+  background-color: var(--accent-01);
+  width: 80%;
+  padding: 2rem;
+  display: flex;
+  justify-content: space-between;
+  font-family: "Inter", sans-serif;
+  flex-wrap: wrap;
+  gap: 1rem;
+  border-radius: 25px;
+  border: 3px solid var(--accent-02);
+  /* padding: 1rem; */
+}
+
+.fundraiser-info {
+  padding-left: 1rem;
+  max-width: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-top: 2rem;
+  /* justify-content: center; */
+}
+
+.fundraiser-name {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: white;
+  padding-bottom: 0.5rem;
+}
+
+.fundraiser-description,
+.fundraiser-date,
+.fundraiser-goal {
+  max-width: 700px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: white;
+}
+
+.fundraiser-description span,
+.fundraiser-date span {
+  font-weight: 300;
+  color: whitesmoke;
+}
+
+.fundraiser-goal {
+  padding-top: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+}
+
+.fundraiser-goal span {
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: whitesmoke;
+}
+
+.fundraiser-image img {
+  width: 350px;
+  margin-right: 1.5rem;
+  border-radius: 25px;
+  border: 2px solid whitesmoke;
+}
+
+.donation-info-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  text-align: left;
+  width: 80%;
+  margin-top: 30px;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.donation-info-container h3 {
+  overflow: hidden;
+}
+
+.donation-info-container h3 span {
+  font-weight: 700;
+  color: var(--accent-02);
+  text-decoration: underline;
+}
+
+.donation-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.form-group input {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.donate-button {
+  background-color: #00a86b;
+  color: white;
+  font-weight: 600;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.donate-button:hover {
+  background-color: #008f5a;
+}
+
+.quick-amounts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.amount-badge {
+  border: 1px solid var(--accent-01);
+  background-color: #fff;
+  color: var(--accent-01);
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.amount-badge:hover {
+  background-color: var(--accent-01);
+  color: #fff;
+}
+
+.amount-badge.selected {
+  background-color: var(--accent-01);
+  color: #fff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+}
