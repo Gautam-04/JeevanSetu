@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState, useMemo } from "react";
+import { useReactToPrint } from "react-to-print";
 import Footer from "../../components/footer/Footer";
 import Header from "../../components/Header/Header";
 import "./Donation.css";
@@ -8,6 +9,9 @@ import { MaterialReactTable } from "material-react-table";
 import { useParams } from "react-router-dom";
 import LineChart from "../../components/lineChart/LineChart";
 import DoughnutChart from "../../components/doughnutChart/DoughnutChart";
+import { useRef } from "react";
+
+const DUMMY_DONATIONS_FLAG = true;
 
 function Donation() {
   const [donations, setDonations] = useState([]);
@@ -18,7 +22,28 @@ function Donation() {
     data: [],
     fundraiser: { amountCollected: 0, goal: 0 },
   });
+
   const { fundraiserId } = useParams();
+
+  // 🖨️ Create ref for printable area
+  const componentRef = useRef();
+
+  // 🖨️ Hook for printing
+  const handlePrint = useReactToPrint({
+    contentRef: componentRef,
+    documentTitle: `Fundraiser_Report_${fundraiserId}`,
+    pageStyle: `
+      @page {
+        size: A4;
+        margin: 0mm;
+      }
+      @media print {
+        body {
+          -webkit-print-color-adjust: exact;
+        }
+      }
+    `,
+  });
 
   const [pieChartSchema, setPieChartSchema] = useState({
     labels: Object.keys(fundraiserStat.fundraiser).map((data) => data),
@@ -40,7 +65,13 @@ function Donation() {
   });
 
   const [lineChartSchema, setLineChartSchema] = useState({
-    labels: fundraiserStat.data.map((data) => data["date"]),
+    labels: fundraiserStat.data.map((data) =>
+      new Date(data["paymentDate"]).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      })
+    ),
     datasets: [
       {
         label: "Amount(₹)",
@@ -76,7 +107,20 @@ function Donation() {
           response.data?.donations[0];
         console.log(fundraiserInfoTemp);
         setFundraiserInfo(fundraiserInfoTemp);
-        setDonations(response.data?.donations[0]?.donations);
+        if (DUMMY_DONATIONS_FLAG) {
+          injectDummyDonations();
+        } else {
+          setDonations(response.data?.donations[0]?.donations);
+          if (fundraiserInfoTemp.hasGoal) {
+            setFundraiserStat({
+              data: response.data?.donations[0]?.donations,
+              fundraiser: {
+                amountCollected: fundraiserInfoTemp.amountCollected,
+                goal: fundraiserInfoTemp.goal,
+              },
+            });
+          }
+        }
         // console.log(response.data.donations[0].donations);
       }
     } catch (error) {
@@ -134,6 +178,16 @@ function Donation() {
   //   }
   // };
 
+  const injectDummyDonations = () => {
+    setFundraiserStat({
+      fundraiser: {
+        amountCollected: 12000,
+        goal: 120000,
+      },
+      data: donationsDummy,
+    });
+  };
+
   useEffect(() => {
     fetchDonations();
     // fetchFundraiserInfo();
@@ -142,7 +196,13 @@ function Donation() {
 
   useEffect(() => {
     setLineChartSchema({
-      labels: fundraiserStat.data.map((data) => data["date"]),
+      labels: fundraiserStat.data.map((data) =>
+        new Date(data["paymentDate"]).toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+        })
+      ),
       datasets: [
         {
           label: "Amount(₹)",
@@ -388,60 +448,70 @@ function Donation() {
   return (
     <>
       <Header />
-      <div className="fundraiser-wrapper">
-        <div className="fundraiser-info-container">
-          <div className="fundraiser-info">
-            <div className="fundraiser-name">
-              {/* {fundraiserInfo.fundraiser.fullForm} ( */}
-              {fundraiserInfo.name}
-              {/* ) */}
-            </div>
-            <div className="fundraiser-description">
-              <span>Description:</span> {fundraiserInfo.description}{" "}
-            </div>
-            <div className="fundraiser-date">
-              <span>Creation Date:</span>{" "}
-              {fundraiserInfo.createdAt &&
-                fundraiserInfo.createdAt.split("T")[0]}{" "}
-            </div>
-            {fundraiserInfo?.hasGoal && (
-              <div className="fundraiser-goal">
-                <span>Progress:</span> ₹{fundraiserInfo?.amountCollected || 0} /
-                ₹{fundraiserInfo.goal}{" "}
+      <div style={{ textAlign: "right", margin: "20px" }}>
+        <button onClick={handlePrint} className="print-btn">
+          🖨️ Print Report
+        </button>
+      </div>
+      <div ref={componentRef}>
+        <div className="fundraiser-wrapper">
+          <div className="fundraiser-info-container">
+            <div className="fundraiser-info">
+              <div className="fundraiser-name">
+                {/* {fundraiserInfo.fundraiser.fullForm} ( */}
+                {fundraiserInfo.name}
+                {/* ) */}
               </div>
-            )}
+              <div className="fundraiser-description">
+                <span>Description:</span> {fundraiserInfo.description}{" "}
+              </div>
+              <div className="fundraiser-date">
+                <span>Creation Date:</span>{" "}
+                {fundraiserInfo.createdAt &&
+                  fundraiserInfo.createdAt.split("T")[0]}{" "}
+              </div>
+              {fundraiserInfo?.hasGoal && (
+                <div className="fundraiser-goal">
+                  <span>Progress:</span> ₹{fundraiserInfo?.amountCollected || 0}{" "}
+                  / ₹{fundraiserInfo.goal}{" "}
+                </div>
+              )}
+            </div>
+            <div className="fundraiser-image">
+              <img src={fundraiserInfo.logo} />
+            </div>
           </div>
-          <div className="fundraiser-image">
-            <img src={fundraiserInfo.logo} />
-          </div>
-        </div>
 
-        <div className="donation-container">
-          <MaterialReactTable
-            columns={columns}
-            data={donationsDummy}
-            enablePagination={true}
-            enableSorting={true}
-            enableGlobalFilter={true}
-            initialState={{
-              sorting: [
-                {
-                  id: "serialNumber",
-                  desc: true,
-                },
-              ],
-            }}
-          />
-        </div>
-        <div className="donation-charts">
-          <div className="charts-donation-timeline">
-            <LineChart
-              chartData={lineChartSchema}
-              title={"Donation Timeline"}
+          <div className="donation-container">
+            <MaterialReactTable
+              columns={columns}
+              data={fundraiserStat.data}
+              enablePagination={true}
+              enableSorting={true}
+              enableGlobalFilter={true}
+              initialState={{
+                sorting: [
+                  {
+                    id: "serialNumber",
+                    desc: true,
+                  },
+                ],
+              }}
             />
           </div>
-          <div className="charts-donation-progress">
-            <DoughnutChart chartData={pieChartSchema} title={"Goal Achieved"} />
+          <div className="donation-charts">
+            <div className="charts-donation-timeline">
+              <LineChart
+                chartData={lineChartSchema}
+                title={"Donation Timeline"}
+              />
+            </div>
+            <div className="charts-donation-progress">
+              <DoughnutChart
+                chartData={pieChartSchema}
+                title={"Goal Achieved"}
+              />
+            </div>
           </div>
         </div>
       </div>

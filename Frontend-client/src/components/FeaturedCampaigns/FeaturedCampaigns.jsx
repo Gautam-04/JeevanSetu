@@ -3,6 +3,8 @@ import DonationCard from "../DonationCard/DonationCard";
 import "./FeaturedCampaigns.css";
 import axios from "axios";
 
+const DUMMY_DONATIONS_FLAG = true;
+
 const dummyDonationData = [
   {
     name: "Save the Oceans",
@@ -70,7 +72,9 @@ const FeaturedCampaigns = () => {
   };
 
   useEffect(() => {
-    getAllFundraisers();
+    if (DUMMY_DONATIONS_FLAG == false) {
+      getAllFundraisers();
+    }
   }, []);
 
   return (
