@@ -3,7 +3,9 @@ import mongoose from "mongoose";
 const donationSchema  = new mongoose.Schema({
     serialNumber: Number,
     paymentId: String,
-    userId: String,
+    name: String,
+    email: String,
+    mobileNo: String,
     amount: Number,
     paymentDate: { type: Date, default: Date.now },
     blockchain: {

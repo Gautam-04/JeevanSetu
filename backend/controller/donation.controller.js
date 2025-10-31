@@ -91,7 +91,9 @@ const verifyPayment = async (req, res) => {
     razorpay_order_id,
     razorpay_payment_id,
     razorpay_signature,
-    userId,
+    name,
+    email,
+    mobileNo,
     amount,
     fundraiserId,
   } = req.body;
@@ -122,7 +124,9 @@ const verifyPayment = async (req, res) => {
       JSON.stringify({
         serialNumber,
         paymentId: razorpay_payment_id,
-        userId,
+        name,
+        email,
+        mobileNo,
         amount,
       })
     );
@@ -136,7 +140,9 @@ const verifyPayment = async (req, res) => {
     const newDonation = await Donation.create({
       serialNumber,
       paymentId: razorpay_payment_id,
-      userId,
+      name,
+      email,
+      mobileNo,
       amount,
       blockchain: {
         transactionHash: blockchainReceipt.transactionHash,
