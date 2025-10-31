@@ -17,13 +17,13 @@
   align-items: center;
   margin-block: 10vw;
   gap: 10rem;
-  width: 70%;
+  width: 80%;
   /* min-width: 1250px; */
 }
 
 .hero-typography {
   font-family: "Orelega One", cursive;
-  font-size: clamp(1rem, 10vw, 6rem);
+  font-size: clamp(1rem, 10vw, 5rem);
   max-width: 1000px;
   text-align: center;
   color: var(--foreground-inverted);

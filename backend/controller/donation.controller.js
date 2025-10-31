@@ -3,10 +3,19 @@ import { createHmac } from "node:crypto";
 import Razorpay from "razorpay";
 import Web3 from "web3";
 import moment from "moment-timezone";
+import nodemailer from "nodemailer";
 
 const razorpay = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,
   key_secret: process.env.RAZORPAY_KEY_SECRET,
+});
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
 });
 
 const createOrder = async (req, res) => {
@@ -170,6 +179,49 @@ const verifyPayment = async (req, res) => {
 
     await newDonation.save();
     console.log(newDonation);
+
+    const mailOptions = {
+      from: `"Jeevan Samvardhan Foundation" <${process.env.EMAIL_USER}>`,
+      to: email,
+      subject: "Donation Confirmation - Jeevan Samvardhan Foundation",
+      html: `
+      <html>
+      <head>
+        <style>
+          @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap');
+        </style>
+      </head>
+      <body>
+        <div style="font-family: 'Outfit', sans-serif; line-height: 1.6;">
+          <h2 style="color: #0e926b;">Thank You for Your Donation To <span style="font-weight: 700; color: #fca00c">Jeevan Samvardhan Foundation<span>!</h2>
+          <p>Dear <strong>${name}</strong>,</p>
+          <p>We have successfully received your donation. Below are your transaction details:</p>
+          <ul>
+            <li><strong>Payment ID:</strong> ${razorpay_payment_id}</li>
+            <li><strong>Amount:</strong> ₹${amount}</li>
+            <li><strong>Transaction Hash:</strong> ${
+              newDonation.blockchain.transactionHash
+            }</li>
+            <li><strong>Date:</strong> ${new Date().toLocaleString()}</li>
+          </ul>
+          <p>Your contribution helps us continue our mission to support underprivileged children and communities.</p>
+          <p>Warm regards, <br>
+          <strong>Jeevan Samvardhan Foundation</strong>
+          </p>
+          <img src="https://www.jeevansamvardhan.org/images/my-images/logo3.png" width="150">
+        </div>
+      </body>
+    </html>
+  `,
+    };
+
+    transporter.sendMail(mailOptions, (err, info) => {
+      if (err) {
+        console.error("Error sending email:", err);
+      } else {
+        console.log("Email sent:", info.response);
+      }
+    });
 
     res.status(200).json({
       success: true,

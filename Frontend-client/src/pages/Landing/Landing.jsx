@@ -8,13 +8,20 @@ import Transparency from "../../components/Transparency/Transparency";
 import WelcomeBanner from "../../components/WelcomeBanner/WelcomeBanner";
 import "./Landing.css";
 
-const card = {
-  title: "The Wonders of Space",
-  content:
-    "Explore the vastness of the universe, from distant galaxies to the mysteries of black holes. Learn fascinating facts and keep your curiosity alive!",
-  image_url:
-    "https://images.unsplash.com/photo-1761162816810-fe0e8e36ea40?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1470",
-};
+const hero_cards = [
+  {
+    title: "Chala Ghari Jaudya",
+    content:
+      "We work to protect vulnerable children from child labor, trafficking, and exploitation by reuniting them with families or providing safe rehabilitation.",
+    image_url: "/src/assets/lostandfound.jpg",
+  },
+  {
+    title: "Aamhalahi shikudya",
+    content:
+      "Educational campaigns to guide underprivileged children towards learning, skill development, and a brighter future.",
+    image_url: "/src/assets/q5.jpg",
+  },
+];
 
 const Landing = () => {
   return (
@@ -26,8 +33,8 @@ const Landing = () => {
             We change the lives of those who have no hope.{" "}
           </div>
           <div className="hero-info-cards">
-            <InfoCard info={card} />
-            <InfoCard info={card} />
+            <InfoCard info={hero_cards[0]} />
+            <InfoCard info={hero_cards[1]} />
           </div>
         </div>
       </div>

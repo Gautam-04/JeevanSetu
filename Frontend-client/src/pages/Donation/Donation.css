@@ -1,40 +1,95 @@
-
-.donation-page {
-  min-height: 100vh;
-  background-color: #f9fafb;
-  padding: 40px 20px;
+.ongoing-campaigns,
+.bank-credentials {
+  width: 80%;
+  margin-bottom: 1.5rem;
+  font-family: "Outfit", sans-serif;
 }
 
-.donation-page-container {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.donation-page-title {
-  font-size: 36px;
+.ongoing-campaigns h3,
+.bank-credentials h3 {
   font-weight: 700;
-  text-align: center;
-  margin-bottom: 12px;
-  color: #000;
-  border-bottom: 2px solid #000;
-  padding-bottom: 12px;
-  display: inline-block;
-  width: 100%;
+  margin-bottom: 1rem;
 }
 
-.donation-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 30px;
-  margin-top: 40px;
+.details-wrapper {
+  display: flex;
 }
 
-@media (max-width: 768px) {
-  .donation-grid {
-    grid-template-columns: 1fr;
+.neft-details {
+  width: 50%;
+  font-family: "Atkinson Hyperlegible", sans-serif;
+}
+
+.neft-details div {
+  width: fit-content;
+  border: 1px solid var(--dark);
+  padding: 0.75rem 1.25rem;
+  margin-block: 0.75rem;
+  font-size: 1.1rem;
+  border-radius: 25px;
+
+  span {
+    font-weight: 600;
+    font-family: "Outfit";
   }
-  
-  .donation-page-title {
-    font-size: 28px;
+}
+
+.upi-details {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  padding-block: 1rem 2rem;
+}
+
+.upi-card {
+  width: 350px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1rem 2rem;
+  border-radius: 25px;
+  gap: 3rem;
+
+  /* --- Dark Platinum Gradient --- */
+  background: linear-gradient(
+      135deg,
+      #141517 0%,
+      #2a2b2f 40%,
+      #3d3f43 50%,
+      #2a2b2f 60%,
+      #141517 100%
+    )
+    padding-box;
+
+  border: 2px solid rgba(255, 255, 255, 0.06);
+
+  /* --- Subtle metallic depth --- */
+  box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.08),
+    0px 8px 20px rgba(0, 0, 0, 0.6);
+}
+
+.upi-qr-code {
+  width: 85%;
+
+  img {
+    width: 100%;
+    margin: auto;
+    border-radius: 10px;
   }
+}
+
+.upi-id {
+  width: fit-content;
+  color: var(--foreground-inverted);
+  overflow: hidden;
+  font-family: "Atkinson Hyperlegible", sans-serif;
+  text-decoration: underline;
+  font-size: 1.2rem;
+  color: var(--foreground-inverted);
+  background-color: var(--accent-02);
+  padding: 0.35rem 1rem;
+  border-radius: 25px;
 }

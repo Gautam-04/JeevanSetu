@@ -1,98 +1,165 @@
-import React from "react";
-import DonationContainer from "../../components/DonationContainer/DonationContainer";
-import Header from "../../components/Header-legacy/Header-legacy";
-import Footer from "../../components/Footer/Footer";
+import { useEffect, useState } from "react";
 import "./Donation.css";
+import PageBlueprint from "../../components/utilities/PageBlueprint/PageBlueprint";
+import DonationCard from "../../components/DonationCard/DonationCard";
+import { MdOutlineContentCopy } from "react-icons/md";
+import { toast } from "react-toastify";
+import axios from "axios";
 
-import heroBg from "../../assets/figmachildrens.jpg";
-import chalaGhariImg from "../../assets/lostandfound.jpg";
-import aamlahiImg from "../../assets/4.png";
-import empoweringImg from "../../assets/q1.jpg";
+const DUMMY_DONATIONS_FLAG = false;
+
+const dummyDonationData = [
+  {
+    name: "Save the Oceans",
+    description:
+      "A global initiative to clean and protect our oceans from plastic waste.",
+    logo: "/src/assets/gal-2.jpg",
+    hasGoal: true,
+    goal: 500000,
+    amountRaised: 235000,
+    donations: [
+      "6720a2d9b8c1d2a4f8e3a912",
+      "6720a2e7b8c1d2a4f8e3a913",
+      "6720a2f3b8c1d2a4f8e3a914",
+    ],
+  },
+  {
+    name: "Feed the Hungry",
+    description:
+      "Helping underprivileged families get access to nutritious food.",
+    logo: "/src/assets/gal-3.jpg",
+    hasGoal: false,
+    goal: 9007199254740991,
+    amountRaised: 12000,
+    donations: ["6720a310b8c1d2a4f8e3a915", "6720a320b8c1d2a4f8e3a916"],
+  },
+  {
+    name: "Education for All",
+    description:
+      "Providing scholarships and resources to children in rural areas.",
+    logo: "/src/assets/bhuk.jpg",
+    hasGoal: true,
+    goal: 1000000,
+    amountRaised: 754320,
+    donations: [
+      "6720a332b8c1d2a4f8e3a917",
+      "6720a345b8c1d2a4f8e3a918",
+      "6720a358b8c1d2a4f8e3a919",
+      "6720a36cb8c1d2a4f8e3a91a",
+    ],
+  },
+];
 
 function Donation() {
-  const donations = [
-    {
-      image: heroBg, // Replace with aamlahiImg
-      title: "Aamhalahi shikudya",
-      content:
-        "Empowers underprivileged children through education and skill development, helping them build a brighter future.",
-      amountRaised: 120000,
-      goalAmount: 240000,
-      memberCount: 900,
-    },
-    {
-      image:
-        "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=400",
-      title: "One time lunch or dinner for all",
-      content:
-        "Empowers underprivileged children through education and skill development, helping them build a brighter future.",
-      amountRaised: 120000,
-      goalAmount: 240000,
-      memberCount: 900,
-    },
-    {
-      image:
-        "https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=400",
-      title: "Sponsor milk for 1 month",
-      content:
-        "Empowers underprivileged children through education and skill development, helping them build a brighter future.",
-      amountRaised: 120000,
-      goalAmount: 240000,
-      memberCount: 900,
-    },
-    {
-      image:
-        "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400",
-      title: "All festival celebration yearly",
-      content:
-        "Empowers underprivileged children through education and skill development, helping them build a brighter future.",
-      amountRaised: 120000,
-      goalAmount: 240000,
-      memberCount: 900,
-    },
-    {
-      image:
-        "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=400",
-      title: "Diwali dress for a child",
-      content:
-        "Empowers underprivileged children through education and skill development, helping them build a brighter future.",
-      amountRaised: 120000,
-      goalAmount: 240000,
-      memberCount: 900,
-    },
-    {
-      image: "https://images.unsplash.com/photo-1542810634-71277d95dcbb?w=400",
-      title: "Child Sponsor",
-      content:
-        "Empowers underprivileged children through education and skill development, helping them build a brighter future.",
-      amountRaised: 120000,
-      goalAmount: 240000,
-      memberCount: 900,
-    },
-  ];
+  const [fundraisers, setFundraisers] = useState(dummyDonationData);
+  const upiId = "jeeva75069@barodampay";
+
+  const handleCopy = () => {
+    navigator.clipboard
+      .writeText(upiId)
+      .then(() => {
+        toast.success("Copied to clipboard!", {
+          position: "bottom-center",
+          autoClose: 1500,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+          theme: "dark",
+        });
+      })
+      .catch(() => {
+        toast.error("Failed to copy!");
+      });
+  };
+
+  const getAllFundraisers = async () => {
+    try {
+      const fundraiserURL =
+        "http://127.0.0.1:8000/api/donation/get-fundraisers";
+      try {
+        const response = await axios({
+          method: "get",
+          url: fundraiserURL,
+          headers: { "Access-Control-Allow-Origin": "*" },
+        });
+
+        console.log(response);
+        setFundraisers(response.data.fundraisers);
+      } catch (error) {
+        console.log(error);
+      }
+    } catch (error) {
+      console.log("Error fetching fundraisers:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (DUMMY_DONATIONS_FLAG == false) {
+      getAllFundraisers();
+    }
+  }, []);
 
   return (
-    <>
-      <div className="donation-page">
-        <div className="donation-page-container">
-          <h1 className="donation-page-title">Donate Now</h1>
-
-          <div className="donation-grid">
-            {donations.map((donation, index) => (
-              <DonationContainer
-                key={index}
-                image={donation.image}
-                title={donation.title}
-                content={donation.content}
-                amountRaised={donation.amountRaised}
-                goalAmount={donation.goalAmount}
-                memberCount={donation.memberCount}
-              />
+    <PageBlueprint title={"Donate To Us"}>
+      <div className="ongoing-campaigns">
+        <h3>Our Ongoing Campaigns:</h3>
+        {fundraisers && (
+          <div className="featured-campaigns-cards">
+            {fundraisers.map((donation, index) => (
+              <DonationCard key={index} donation={donation} />
             ))}
+          </div>
+        )}
+      </div>
+      <div className="bank-credentials">
+        <h3>Our direct Bank credentials:</h3>
+        <div className="credentials-wrapper">
+          <div className="details-wrapper">
+            <div className="neft-details">
+              If you prefer to donate directly through your bank, please use the
+              details below:
+              <br />
+              <div>
+                Account Name: <span>Jeevan Samvardhan Foundation Bank</span>
+                <br />
+                Name: <span>State Bank of India</span>
+                <br />
+                Account Number: <span>123456789012</span>
+                <br />
+                Account Type: <span>Current Account</span>
+                <br />
+                IFSC Code: <span>SBIN0001234</span>
+                <br />
+                Branch: <span>Shivaji Nagar Branch, Pune</span>
+                <br />
+                MICR Code: <span>411002345</span>
+              </div>
+              💡 After making the transfer, please share your transaction
+              details and contact information with us at
+              donations@jeevansamvardhan.org for receipt and acknowledgment.
+            </div>
+            <div className="upi-details">
+              <div className="upi-card">
+                <div className="upi-qr-code">
+                  <img
+                    src="https://cdn.qrcode-ai.com/qrcode/preview/33e0a6f0cad9822a49ecf1c58385051a-1761940257840.png"
+                    alt=""
+                  />
+                </div>
+                <div className="upi-id">
+                  {upiId}
+                  <MdOutlineContentCopy
+                    style={{ cursor: "pointer" }}
+                    onClick={handleCopy}
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </>
+    </PageBlueprint>
   );
 }
 

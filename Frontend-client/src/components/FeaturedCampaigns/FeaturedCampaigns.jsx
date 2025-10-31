@@ -88,7 +88,7 @@ const FeaturedCampaigns = () => {
             everything that is not essential to makihave to get bad.
           </div>
         </div>
-        {dummyDonationData && (
+        {fundraisers && (
           <div className="featured-campaigns-cards">
             {fundraisers.map((donation, index) => (
               <DonationCard key={index} donation={donation} />
