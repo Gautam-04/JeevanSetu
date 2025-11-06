@@ -37,11 +37,10 @@ const createOrder = async (req, res) => {
 class BlockchainService {
   constructor() {
     this.web3 = new Web3(
-      new Web3.providers.HttpProvider("http://127.0.0.1:7545")
+      new Web3.providers.HttpProvider(process.env.BLOCKCHAIN_RPC_URL)
     );
   }
 
-  // ✅ Added missing getAccounts() method
   async getAccounts() {
     try {
       const accounts = await this.web3.eth.getAccounts();

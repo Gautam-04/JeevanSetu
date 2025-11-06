@@ -22,6 +22,10 @@ function Donation() {
     data: [],
     fundraiser: { amountCollected: 0, goal: 0 },
   });
+  const [pieChartData, setPieChartData] = useState({
+    amountCollected: 0,
+    amountRemaining: 0,
+  });
   const [isPrinting, setIsPrinting] = useState(false);
 
   const { fundraiserId } = useParams();
@@ -57,11 +61,11 @@ function Donation() {
   });
 
   const [pieChartSchema, setPieChartSchema] = useState({
-    labels: Object.keys(fundraiserStat.fundraiser).map((data) => data),
+    labels: Object.keys(pieChartData).map((data) => data),
     datasets: [
       {
         label: "Amount(₹)",
-        data: Object.values(fundraiserStat.fundraiser).map((data) => data),
+        data: Object.values(pieChartData).map((data) => data),
         backgroundColor: [
           "rgba(75,192,192,1)",
           "#ecf0f1",
@@ -129,6 +133,11 @@ function Donation() {
                 amountCollected: fundraiserInfoTemp.amountRaised,
                 goal: fundraiserInfoTemp.goal,
               },
+            });
+            setPieChartData({
+              amountCollected: fundraiserInfoTemp.amountRaised,
+              amountRemaining:
+                fundraiserInfoTemp.goal - fundraiserInfoTemp.amountRaised,
             });
           }
         }
@@ -233,11 +242,11 @@ function Donation() {
 
   useEffect(() => {
     setPieChartSchema({
-      labels: Object.keys(fundraiserStat.fundraiser).map((data) => data),
+      labels: Object.keys(pieChartData).map((data) => data),
       datasets: [
         {
           label: "Amount(₹)",
-          data: Object.values(fundraiserStat.fundraiser).map((data) => data),
+          data: Object.values(pieChartData).map((data) => data),
           backgroundColor: [
             "#2b3674",
             "whitesmoke",
