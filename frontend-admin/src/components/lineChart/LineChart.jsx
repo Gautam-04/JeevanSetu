@@ -42,9 +42,7 @@ function LineChart({ chartData, title }) {
           scales: {
             y: {
               beginAtZero: true,
-              ticks: {
-                stepSize: 1,
-              },
+              ticks: {},
             },
           },
         }}

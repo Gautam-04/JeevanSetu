@@ -23,7 +23,7 @@ const WelcomeBanner = () => {
         </a>
         <a
           className="welcome-banner-button buttonized-link donate-now-button"
-          href="#"
+          href="/donations"
         >
           Donate Now
         </a>

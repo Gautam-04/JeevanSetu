@@ -22,15 +22,27 @@ function Donation() {
     data: [],
     fundraiser: { amountCollected: 0, goal: 0 },
   });
+  const [pieChartData, setPieChartData] = useState({
+    amountCollected: 0,
+    amountRemaining: 0,
+  });
+  const [isPrinting, setIsPrinting] = useState(false);
 
   const { fundraiserId } = useParams();
 
-  // 🖨️ Create ref for printable area
   const componentRef = useRef();
 
-  // 🖨️ Hook for printing
   const handlePrint = useReactToPrint({
     contentRef: componentRef,
+    onBeforePrint: () => {
+      return new Promise((resolve) => {
+        setIsPrinting(true);
+        setTimeout(resolve, 300); // wait for re-render
+      });
+    },
+    onAfterPrint: () => {
+      setIsPrinting(false);
+    },
     documentTitle: `Fundraiser_Report_${fundraiserId}`,
     pageStyle: `
       @page {
@@ -41,16 +53,19 @@ function Donation() {
         body {
           -webkit-print-color-adjust: exact;
         }
+        .print-hide {
+          display: none !important;
+        }
       }
     `,
   });
 
   const [pieChartSchema, setPieChartSchema] = useState({
-    labels: Object.keys(fundraiserStat.fundraiser).map((data) => data),
+    labels: Object.keys(pieChartData).map((data) => data),
     datasets: [
       {
         label: "Amount(₹)",
-        data: Object.values(fundraiserStat.fundraiser).map((data) => data),
+        data: Object.values(pieChartData).map((data) => data),
         backgroundColor: [
           "rgba(75,192,192,1)",
           "#ecf0f1",
@@ -118,6 +133,11 @@ function Donation() {
                 amountCollected: fundraiserInfoTemp.amountRaised,
                 goal: fundraiserInfoTemp.goal,
               },
+            });
+            setPieChartData({
+              amountCollected: fundraiserInfoTemp.amountRaised,
+              amountRemaining:
+                fundraiserInfoTemp.goal - fundraiserInfoTemp.amountRaised,
             });
           }
         }
@@ -222,11 +242,11 @@ function Donation() {
 
   useEffect(() => {
     setPieChartSchema({
-      labels: Object.keys(fundraiserStat.fundraiser).map((data) => data),
+      labels: Object.keys(pieChartData).map((data) => data),
       datasets: [
         {
           label: "Amount(₹)",
-          data: Object.values(fundraiserStat.fundraiser).map((data) => data),
+          data: Object.values(pieChartData).map((data) => data),
           backgroundColor: [
             "#2b3674",
             "whitesmoke",
@@ -257,14 +277,16 @@ function Donation() {
         size: 100,
         muiTableBodyCellProps: {
           align: "center",
+          className: "print-hide",
         },
+        muiTableHeadCellProps: { className: "print-hide" },
       },
       {
-        accessorKey: "userId",
-        header: "User ID",
-        size: 100,
+        accessorKey: "name",
+        header: "Donor Name",
+        // size: 100,
         muiTableBodyCellProps: {
-          align: "center",
+          align: "left",
         },
       },
       {
@@ -300,7 +322,9 @@ function Donation() {
         size: 100,
         muiTableBodyCellProps: {
           align: "center",
+          className: "print-hide",
         },
+        muiTableHeadCellProps: { className: "print-hide" },
       },
       {
         accessorKey: "blockchain.blockNumber",
@@ -308,7 +332,9 @@ function Donation() {
         size: 100,
         muiTableBodyCellProps: {
           align: "center",
+          className: "print-hide",
         },
+        muiTableHeadCellProps: { className: "print-hide" },
       },
       {
         accessorKey: "blockchain.dataHash",
@@ -316,7 +342,9 @@ function Donation() {
         size: 100,
         muiTableBodyCellProps: {
           align: "center",
+          className: "print-hide",
         },
+        muiTableHeadCellProps: { className: "print-hide" },
       },
     ],
     []
@@ -448,11 +476,6 @@ function Donation() {
   return (
     <>
       <Header />
-      <div style={{ textAlign: "right", margin: "20px" }}>
-        <button onClick={handlePrint} className="print-btn">
-          🖨️ Print Report
-        </button>
-      </div>
       <div ref={componentRef}>
         <div className="fundraiser-wrapper">
           <div className="fundraiser-info-container">
@@ -501,7 +524,7 @@ function Donation() {
             <MaterialReactTable
               columns={columns}
               data={fundraiserStat.data}
-              enablePagination={true}
+              enablePagination={!isPrinting}
               enableSorting={true}
               enableGlobalFilter={true}
               initialState={{
@@ -515,6 +538,11 @@ function Donation() {
             />
           </div>
         </div>
+      </div>
+      <div className="report-print">
+        <button onClick={handlePrint} className="report-print-button">
+          🖨️ Print Report
+        </button>
       </div>
     </>
   );

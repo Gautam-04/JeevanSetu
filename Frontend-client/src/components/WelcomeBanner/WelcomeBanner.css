@@ -21,8 +21,8 @@
 .welcome-banner-desc {
   width: 50%;
   min-width: 700px;
-  font-family: "Monomaniac One", sans-serif;
-  font-size: 1.5rem;
+  font-family: "Outfit", sans-serif;
+  font-size: 1.2rem;
   color: var(--foreground-inverted);
 }
 

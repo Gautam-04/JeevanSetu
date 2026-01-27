@@ -71,8 +71,15 @@
   color: whitesmoke;
 }
 
+.fundraiser-image {
+  max-width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .fundraiser-image img {
-  width: 350px;
+  width: 100%;
   margin-right: 1.5rem;
   border-radius: 25px;
   border: 2px solid whitesmoke;
@@ -87,6 +94,7 @@
   display: flex;
   gap: 1rem;
   padding: 2rem;
+  padding-inline: 0rem;
   justify-content: space-between;
   align-items: center;
   position: relative;
@@ -135,4 +143,73 @@
 .Mui-TableHeadCell-Content-Actions,
 .MuiButtonBase-root {
   overflow: hidden;
+}
+
+.report-print {
+  padding-bottom: 2rem;
+  width: 80%;
+  text-align: right;
+  margin: auto;
+
+  .report-print-button {
+    background-color: #2b3674ef;
+    color: white;
+    font-family: "Outfit", sans-serif;
+    padding: 0.5rem 1rem;
+    outline: none;
+    border: none;
+    border-radius: 25px;
+    font-size: 1.15rem;
+    transition: background-color 0.2s ease-in-out;
+  }
+
+  .report-print-button:hover {
+    background-color: #212958;
+  }
+}
+
+@media print {
+  .fundraiser-info-container,
+  .donation-charts,
+  .donation-container {
+    width: 95%;
+  }
+
+  .fundraiser-info {
+    width: 50%;
+    padding-top: 0rem;
+
+    .fundraiser-name {
+      font-size: 2rem;
+    }
+  }
+
+  .fundraiser-image {
+    width: 45%;
+  }
+
+  .donation-charts {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    height: fit-content;
+    padding-inline: 0rem;
+
+    .charts-donation-timeline {
+      width: 100%;
+      height: fit-content;
+    }
+
+    .charts-donation-progress {
+      width: 100% !important;
+      height: fit-content;
+    }
+  }
+
+  .donation-container {
+    break-before: page;
+
+    .MuiBox-root.css-zrlv9q {
+      display: none;
+    }
+  }
 }

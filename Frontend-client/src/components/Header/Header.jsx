@@ -1,8 +1,11 @@
 import "./Header.css";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { FaPhoneVolume } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="header-wrapper">
       <div className="header-top">
@@ -24,11 +27,18 @@ const Header = () => {
         </div>
         <div className="header-links">
           <a href="/">Home</a>
-          <a href="/about">About</a>
-          <a href="#">Drives</a>
+          <a href="/about">About Us</a>
+          <a href="/news">News</a>
           <a href="#">Join Us</a>
           <a href="#">Contact</a>
-          <button className="header-donate-now">Donate Now</button>
+          <button
+            className="header-donate-now"
+            onClick={() => {
+              navigate("/donations");
+            }}
+          >
+            Donate Now
+          </button>
         </div>
       </div>
     </div>

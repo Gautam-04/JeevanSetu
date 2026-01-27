@@ -9,6 +9,7 @@
 a {
   text-decoration: none !important;
   color: var(--foreground) !important;
+  overflow: hidden;
 }
 
 button {
@@ -28,5 +29,5 @@ button {
 }
 
 h3 {
-  height: fit-content;
+  overflow: hidden;
 }
