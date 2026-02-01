@@ -24,9 +24,13 @@ const PORT = process.env.PORT || 8000;
 // import all routers
 import userRouter from "./routes/user.routes.js";
 import donationRouter from "./routes/donation.routes.js";
+import childrenRouter from "./routes/children.routes.js";
+import centreRouter from "./routes/centre.routes.js";
 
 app.use("/api/user", userRouter);
 app.use("/api/donation", donationRouter);
+app.use("/api/", childrenRouter);
+app.use("/api/centre", centreRouter);
 
 //app commmands
 app.listen(PORT, () => {
