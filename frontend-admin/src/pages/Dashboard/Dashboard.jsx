@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./Dashboard.css";
 import Header from "../../components/Header/Header";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 // import Footer from "../../components/footer/Footer";
 // import Analytics from "../../components/analytics/Analytics";
 // import Searchbar from "../../components/searchbar/searchbar";
@@ -21,15 +21,41 @@ import { MdOutlineInventory2 } from "react-icons/md";
 // import Forecasting from "../../components/forecasting/Forecasting";
 // import { TbReportAnalytics } from "react-icons/tb";
 // import ReportGen from "../../components/report-gen/ReportGen";
+import CentreForm from "../Centre/CentreForm";
+// import CentreForm from "../Centre/CentreForm";
+import ChildrenFilterPage from "../ChildrenFilter/ChildrenFilterPage";
+// import ChildrenFilterPage from "../Children/ChildrenFilterPage";
+import ChildDetailsPage from "../ChildrenDetails/ChildDetailsPage";
+// import ChildDetailsPage from "../Children/ChildDetailsPage";
+import EditChildPage from "../UpdateChildren/EditChildPage";
+import CentresPage from "../Centre/CentresPage";
+import CentreDetails from "../Centre/CentreDetails";
+import VaultPage from "../ChildrenFilter/VaultPage";
+// import EditChildPage from "../Children/EditChildPage";
+// import CentrePage from "../Centre/CentrePage";
+// import ManageCentres from "../Centre/ManageCentres";
 
 const Dashboard = () => {
   //   const { t } = useTranslation();
   const { tab } = useParams();
+  const location = useLocation();
   const [dashboardPage, setDashboardPage] = useState(tab);
-  let navigateContent = useNavigate();
+  // let navigateContent = useNavigate();
+  const navigate = useNavigate();
+
+  /* 🔹 read query params */
+  const searchParams = new URLSearchParams(location.search);
+  const mode = searchParams.get("mode"); // view | edit | null
+  const childId = searchParams.get("id"); // child ObjectId
+  const centreId = searchParams.get("id");
+
+  /* 🔹 keep dashboardPage in sync with URL */
+  useEffect(() => {
+    setDashboardPage(tab);
+  }, [tab, location.search]);
 
   const changeSidebarContent = (path) => {
-    navigateContent(`/dashboard/${path}`);
+    navigate(`/dashboard/${path}`);
     setDashboardPage(path);
   };
 
@@ -62,6 +88,26 @@ const Dashboard = () => {
       name: "Inventory",
       icon: <MdOutlineInventory2 className="sidebar-icon" />,
       to: "inventory",
+      color: "white",
+    },
+
+    {
+      name: "CentrePage",
+      icon: <MdOutlineInventory2 className="sidebar-icon" />,
+      to: "centrepage",
+      color: "white",
+    },
+
+    {
+      name: "Childrens",
+      icon: <MdOutlineInventory2 className="sidebar-icon" />,
+      to: "childrenfilter",
+      color: "white",
+    },
+    {
+      name: "vault",
+      icon: <MdOutlineInventory2 className="sidebar-icon" />,
+      to: "vault",
       color: "white",
     },
   ];
@@ -177,6 +223,27 @@ const Dashboard = () => {
           {/* {dashboardPage === "analytics" && <Analytics />}
           {dashboardPage === "search" && <Search />} */}
           {dashboardPage === "donations" && <Fundraiser />}
+
+          {/* 🔥 CHILDREN LOGIC */}
+          {dashboardPage === "childrenfilter" && !mode && (
+            <ChildrenFilterPage />
+          )}
+
+          {dashboardPage === "childrenfilter" && mode === "view" && (
+            <ChildDetailsPage childId={childId} />
+          )}
+
+          {dashboardPage === "childrenfilter" && mode === "edit" && (
+            <EditChildPage childId={childId} />
+          )}
+          {dashboardPage === "centre" && <CentreForm />}
+          {dashboardPage === "centrepage" && !mode && <CentresPage />}
+
+          {dashboardPage === "centrepage" && mode === "view" && (
+            <CentreDetails centreId={centreId} />
+          )}
+          {dashboardPage === "vault" && <VaultPage />}
+
           {/* {dashboardPage === "forecasting" && <Forecasting />}
           {dashboardPage === "report-gen" && <ReportGen />} */}
           {dashboardPage === "housing" && (
