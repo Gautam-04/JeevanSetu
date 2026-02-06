@@ -18,7 +18,7 @@ const uploadToCloudinary = async (file) => {
     {
       method: "POST",
       body: data,
-    }
+    },
   );
 
   const result = await res.json();
@@ -394,15 +394,11 @@ function ChildrenForm() {
               {uploading
                 ? "Processing..."
                 : selectedId
-                ? "Update Child"
-                : "Register Child"}
+                  ? "Update Child"
+                  : "Register Child"}
             </button>
             {selectedId && (
-              <button
-                type="button"
-                className="cancel-btn"
-                onClick={resetForm}
-              >
+              <button type="button" className="cancel-btn" onClick={resetForm}>
                 Cancel Edit
               </button>
             )}

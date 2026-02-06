@@ -6,6 +6,25 @@ import "./EditChildPage.css";
 const CHILD_API = "http://localhost:8000/api";
 const CENTRE_API = "http://localhost:8000/api/centre";
 
+/* ---------- CLOUDINARY UPLOAD ---------- */
+const uploadToCloudinary = async (file) => {
+  const data = new FormData();
+  data.append("file", file);
+  data.append("upload_preset", "Jeevansetu");
+  data.append("cloud_name", "dph8v2aug");
+
+  const res = await fetch(
+    "https://api.cloudinary.com/v1_1/dph8v2aug/image/upload",
+    {
+      method: "POST",
+      body: data,
+    }
+  );
+
+  const result = await res.json();
+  return result.secure_url;
+};
+
 const EditChildPage = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -13,6 +32,15 @@ const EditChildPage = () => {
 
   const [loading, setLoading] = useState(true);
   const [centres, setCentres] = useState([]);
+
+  /* ---------- IMAGE STATES ---------- */
+  const [childImage, setChildImage] = useState(null);
+  const [aadharImage, setAadharImage] = useState(null);
+
+  const [existingImages, setExistingImages] = useState({
+    childrenImage: "",
+    aadharCardImage: "",
+  });
 
   const [formData, setFormData] = useState({
     name: "",
@@ -70,6 +98,15 @@ const EditChildPage = () => {
           detailsOfChild: child.detailsOfChild || "",
           achievementsOfChild: child.achievementsOfChild || "",
         });
+
+        setExistingImages({
+          childrenImage:
+            child.childrenImage === "No Image" ? "" : child.childrenImage,
+          aadharCardImage:
+            child.aadharCardImage === "No Aadhar Image"
+              ? ""
+              : child.aadharCardImage,
+        });
       } catch (error) {
         console.error("Failed to fetch child details", error);
       } finally {
@@ -87,7 +124,6 @@ const EditChildPage = () => {
     setFormData((prev) => ({
       ...prev,
       [name]: value,
-      // optional cleanup (nice UX)
       ...(name === "standardofEducation" &&
         value.toLowerCase() !== "ssc" && { sscMarks: "" }),
       ...(name === "standardofEducation" &&
@@ -100,14 +136,29 @@ const EditChildPage = () => {
     e.preventDefault();
 
     try {
-      await axios.put(
-        `${CHILD_API}/updatechild/${childId}`,
-        formData
-      );
+      let childImageUrl = existingImages.childrenImage;
+      let aadharImageUrl = existingImages.aadharCardImage;
 
-      navigate(`/dashboard/childrenfilter?mode=view&id=${childId}`);
+      if (childImage) {
+        childImageUrl = await uploadToCloudinary(childImage);
+      }
+
+      if (aadharImage) {
+        aadharImageUrl = await uploadToCloudinary(aadharImage);
+      }
+
+      const payload = {
+        ...formData,
+        childrenImage: childImageUrl,
+        aadharCardImage: aadharImageUrl,
+      };
+
+      await axios.put(`${CHILD_API}/updatechild/${childId}`, payload);
+
+      navigate(`/dashboard/childrenfilter`);
     } catch (error) {
       console.error("Failed to update child", error);
+      alert("Update failed. Please try again.");
     }
   };
 
@@ -128,21 +179,11 @@ const EditChildPage = () => {
         <form onSubmit={handleSubmit}>
           <div className="edit-form-grid">
             <Field label="Name">
-              <input
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-              />
+              <input name="name" value={formData.name} onChange={handleChange} required />
             </Field>
 
             <Field label="Gender">
-              <select
-                name="gender"
-                value={formData.gender}
-                onChange={handleChange}
-                required
-              >
+              <select name="gender" value={formData.gender} onChange={handleChange} required>
                 <option value="">Select</option>
                 <option value="male">Male</option>
                 <option value="female">Female</option>
@@ -150,41 +191,19 @@ const EditChildPage = () => {
             </Field>
 
             <Field label="Date of Birth">
-              <input
-                type="date"
-                name="dob"
-                value={formData.dob}
-                onChange={handleChange}
-                required
-              />
+              <input type="date" name="dob" value={formData.dob} onChange={handleChange} required />
             </Field>
 
             <Field label="Height (cm)">
-              <input
-                type="number"
-                name="height"
-                value={formData.height}
-                onChange={handleChange}
-              />
+              <input type="number" name="height" value={formData.height} onChange={handleChange} />
             </Field>
 
             <Field label="Weight (kg)">
-              <input
-                type="number"
-                name="weight"
-                value={formData.weight}
-                onChange={handleChange}
-              />
+              <input type="number" name="weight" value={formData.weight} onChange={handleChange} />
             </Field>
 
-            {/* CENTRE */}
             <Field label="Centre">
-              <select
-                name="centre"
-                value={formData.centre}
-                onChange={handleChange}
-                required
-              >
+              <select name="centre" value={formData.centre} onChange={handleChange} required>
                 <option value="">Select Centre</option>
                 {centres.map((c) => (
                   <option key={c._id} value={c._id}>
@@ -203,82 +222,53 @@ const EditChildPage = () => {
               />
             </Field>
 
-            {/* ✅ CONDITIONAL SSC */}
             {formData.standardofEducation?.toLowerCase() === "ssc" && (
               <Field label="SSC Marks (%)">
-                <input
-                  type="number"
-                  name="sscMarks"
-                  min="0"
-                  max="100"
-                  value={formData.sscMarks}
-                  onChange={handleChange}
-                />
+                <input type="number" name="sscMarks" min="0" max="100" value={formData.sscMarks} onChange={handleChange} />
               </Field>
             )}
 
-            {/* ✅ CONDITIONAL HSC */}
             {formData.standardofEducation?.toLowerCase() === "hsc" && (
               <Field label="HSC Marks (%)">
-                <input
-                  type="number"
-                  name="hscMarks"
-                  min="0"
-                  max="100"
-                  value={formData.hscMarks}
-                  onChange={handleChange}
-                />
+                <input type="number" name="hscMarks" min="0" max="100" value={formData.hscMarks} onChange={handleChange} />
               </Field>
             )}
 
             <Field label="Parent Name">
-              <input
-                name="parentName"
-                value={formData.parentName}
-                onChange={handleChange}
-              />
+              <input name="parentName" value={formData.parentName} onChange={handleChange} />
             </Field>
 
             <Field label="Parent Contact">
-              <input
-                name="parentContact"
-                value={formData.parentContact}
-                onChange={handleChange}
-              />
+              <input name="parentContact" value={formData.parentContact} onChange={handleChange} />
+            </Field>
+
+            {/* 📸 IMAGE UPLOADS */}
+            <Field label="Child Photo">
+              <input type="file" accept="image/*" onChange={(e) => setChildImage(e.target.files[0])} />
+              {existingImages.childrenImage && <small>Current image will be kept</small>}
+            </Field>
+
+            <Field label="Aadhaar Card Image">
+              <input type="file" accept="image/*" onChange={(e) => setAadharImage(e.target.files[0])} />
+              {existingImages.aadharCardImage && <small>Current image will be kept</small>}
             </Field>
 
             <Field full label="Medical History">
-              <textarea
-                name="medicalHistory"
-                value={formData.medicalHistory}
-                onChange={handleChange}
-              />
+              <textarea name="medicalHistory" value={formData.medicalHistory} onChange={handleChange} />
             </Field>
 
             <Field full label="Details of Child">
-              <textarea
-                name="detailsOfChild"
-                value={formData.detailsOfChild}
-                onChange={handleChange}
-              />
+              <textarea name="detailsOfChild" value={formData.detailsOfChild} onChange={handleChange} />
             </Field>
 
             <Field full label="Achievements">
-              <textarea
-                name="achievementsOfChild"
-                value={formData.achievementsOfChild}
-                onChange={handleChange}
-              />
+              <textarea name="achievementsOfChild" value={formData.achievementsOfChild} onChange={handleChange} />
             </Field>
           </div>
 
           <div className="edit-form-actions">
             <button type="submit">Update</button>
-            <button
-              type="button"
-              className="cancel-btn"
-              onClick={() => navigate(-1)}
-            >
+            <button type="button" className="cancel-btn" onClick={() => navigate(-1)}>
               Cancel
             </button>
           </div>
@@ -290,7 +280,7 @@ const EditChildPage = () => {
 
 export default EditChildPage;
 
-/* ---------- HELPER ---------- */
+/* ---------- FIELD HELPER ---------- */
 const Field = ({ label, children, full }) => (
   <div style={full ? { gridColumn: "span 3" } : undefined}>
     <label>{label}</label>

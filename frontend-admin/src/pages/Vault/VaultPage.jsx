@@ -2,11 +2,11 @@ import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { MaterialReactTable } from "material-react-table";
 import Slider from "@mui/material/Slider";
-import "./ChildrenFilterPage.css"; 
+import "./VaultPage.css";
 
 const API_URL = "http://localhost:8000/api/filterchildren/filter";
 const CENTRE_API = "http://localhost:8000/api/centre/allcentre";
-const BASE_URL = "http://localhost:8000"; 
+const BASE_URL = "http://localhost:8000";
 
 /* ---------- helper to calculate age ---------- */
 const calculateAge = (dob) => {
@@ -42,8 +42,8 @@ export default function VaultPage() {
       .get(CENTRE_API)
       .then((res) => setCentres(res.data.data || []))
       .catch((err) => console.error("Vault: Failed to fetch centres", err));
-    
-    fetchChildren(filters); 
+
+    fetchChildren(filters);
   }, []);
 
   /* ---------- FETCH CHILDREN ---------- */
@@ -51,7 +51,7 @@ export default function VaultPage() {
     try {
       setLoading(true);
       const params = Object.fromEntries(
-        Object.entries(activeFilters).filter(([, v]) => v !== "" && v !== null)
+        Object.entries(activeFilters).filter(([, v]) => v !== "" && v !== null),
       );
 
       const res = await axios.get(API_URL, { params });
@@ -69,8 +69,10 @@ export default function VaultPage() {
     setFilters((prev) => ({
       ...prev,
       [name]: value,
-      ...(name === "standardofEducation" && value !== "SSC" && { minSSC: "", maxSSC: "" }),
-      ...(name === "standardofEducation" && value !== "HSC" && { minHSC: "", maxHSC: "" }),
+      ...(name === "standardofEducation" &&
+        value !== "SSC" && { minSSC: "", maxSSC: "" }),
+      ...(name === "standardofEducation" &&
+        value !== "HSC" && { minHSC: "", maxHSC: "" }),
     }));
   };
 
@@ -92,8 +94,10 @@ export default function VaultPage() {
     }
 
     if (key === "standardofEducation") {
-      updated.minSSC = ""; updated.maxSSC = "";
-      updated.minHSC = ""; updated.maxHSC = "";
+      updated.minSSC = "";
+      updated.maxSSC = "";
+      updated.minHSC = "";
+      updated.maxHSC = "";
     }
 
     setFilters(updated);
@@ -103,7 +107,7 @@ export default function VaultPage() {
   const handleOpenImage = (path) => {
     // Extra safety check
     if (!path || path.startsWith("No ")) return;
-    
+
     const fullUrl = path.startsWith("http") ? path : `${BASE_URL}/${path}`;
     window.open(fullUrl, "_blank", "noopener,noreferrer");
   };
@@ -128,7 +132,7 @@ export default function VaultPage() {
         id: "aadhaar",
         Cell: ({ row }) => {
           const path = row.original.aadharCardImage;
-          const hasDoc = path && !path.startsWith("No "); 
+          const hasDoc = path && !path.startsWith("No ");
           return (
             <button
               type="button"
@@ -166,7 +170,7 @@ export default function VaultPage() {
         },
       },
     ],
-    [centres]
+    [centres],
   );
 
   return (
@@ -181,7 +185,9 @@ export default function VaultPage() {
           <option value="female">Female</option>
         </select>
 
-        <label>Age Range: {filters.minAge} – {filters.maxAge}</label>
+        <label>
+          Age Range: {filters.minAge} – {filters.maxAge}
+        </label>
         <Slider
           value={[filters.minAge, filters.maxAge]}
           onChange={handleAgeRangeChange}
@@ -194,12 +200,18 @@ export default function VaultPage() {
         <select name="centre" value={filters.centre} onChange={handleChange}>
           <option value="">None</option>
           {centres.map((c) => (
-            <option key={c._id} value={c._id}>{c.centreName}</option>
+            <option key={c._id} value={c._id}>
+              {c.centreName}
+            </option>
           ))}
         </select>
 
         <label>Standard</label>
-        <select name="standardofEducation" value={filters.standardofEducation} onChange={handleChange}>
+        <select
+          name="standardofEducation"
+          value={filters.standardofEducation}
+          onChange={handleChange}
+        >
           <option value="">None</option>
           <option value="SSC">SSC</option>
           <option value="HSC">HSC</option>
@@ -209,8 +221,20 @@ export default function VaultPage() {
           <div className="marks-filter-group">
             <label>SSC Marks (%)</label>
             <div className="age-row">
-              <input type="number" name="minSSC" placeholder="Min" value={filters.minSSC} onChange={handleChange} />
-              <input type="number" name="maxSSC" placeholder="Max" value={filters.maxSSC} onChange={handleChange} />
+              <input
+                type="number"
+                name="minSSC"
+                placeholder="Min"
+                value={filters.minSSC}
+                onChange={handleChange}
+              />
+              <input
+                type="number"
+                name="maxSSC"
+                placeholder="Max"
+                value={filters.maxSSC}
+                onChange={handleChange}
+              />
             </div>
           </div>
         )}
@@ -219,8 +243,20 @@ export default function VaultPage() {
           <div className="marks-filter-group">
             <label>HSC Marks (%)</label>
             <div className="age-row">
-              <input type="number" name="minHSC" placeholder="Min" value={filters.minHSC} onChange={handleChange} />
-              <input type="number" name="maxHSC" placeholder="Max" value={filters.maxHSC} onChange={handleChange} />
+              <input
+                type="number"
+                name="minHSC"
+                placeholder="Min"
+                value={filters.minHSC}
+                onChange={handleChange}
+              />
+              <input
+                type="number"
+                name="maxHSC"
+                placeholder="Max"
+                value={filters.maxHSC}
+                onChange={handleChange}
+              />
             </div>
           </div>
         )}
@@ -238,23 +274,27 @@ export default function VaultPage() {
         <div className="active-filters">
           {filters.gender && (
             <div className="filter-chip">
-              Gender: {filters.gender} <span onClick={() => removeFilter("gender")}>×</span>
+              Gender: {filters.gender}{" "}
+              <span onClick={() => removeFilter("gender")}>×</span>
             </div>
           )}
           {(filters.minAge !== 0 || filters.maxAge !== 25) && (
             <div className="filter-chip">
-              Age: {filters.minAge}–{filters.maxAge} <span onClick={() => removeFilter("age")}>×</span>
+              Age: {filters.minAge}–{filters.maxAge}{" "}
+              <span onClick={() => removeFilter("age")}>×</span>
             </div>
           )}
           {filters.centre && (
             <div className="filter-chip">
-              Centre: {centres.find((c) => c._id === filters.centre)?.centreName}
+              Centre:{" "}
+              {centres.find((c) => c._id === filters.centre)?.centreName}
               <span onClick={() => removeFilter("centre")}>×</span>
             </div>
           )}
           {filters.standardofEducation && (
             <div className="filter-chip">
-              Std: {filters.standardofEducation} <span onClick={() => removeFilter("standardofEducation")}>×</span>
+              Std: {filters.standardofEducation}{" "}
+              <span onClick={() => removeFilter("standardofEducation")}>×</span>
             </div>
           )}
         </div>
