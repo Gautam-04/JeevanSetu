@@ -3,6 +3,11 @@ import Home from "./pages/Home/Home";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import { Slide, ToastContainer } from "react-toastify";
 import Donation from "./pages/Donation/Donation";
+// import ChildrenAddPage from "./pages/Children/ChildrenAddPage";
+// import ChildrenFilterPage from "./pages/Children/ChildrenFilterPage";
+// import CentresPage from "./pages/Centre/CentresPage";
+// import CentreForm from "./pages/Centre/CentreForm";
+import ChildrenForm from "./pages/AddChildren/ChildrenForm";
 
 function App() {
   return (
@@ -10,6 +15,10 @@ function App() {
       <Routes>
         <Route path="/dashboard/:tab" element={<Dashboard />} />
         <Route path="/donations/:fundraiserId" element={<Donation />} />
+        <Route
+          path="/dashboard/childrenfilter/children"
+          element={<ChildrenForm />}
+        />
       </Routes>
       <ToastContainer
         position="top-right"

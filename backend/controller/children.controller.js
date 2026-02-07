@@ -19,6 +19,8 @@ const registerChild = async (req, res) => {
       detailsOfChild,
       achievementsOfChild,
       standardofEducation,
+        childrenImage,
+  aadharCardImage,
     } = req.body;
 
     if (!name ||!dob ||!gender ||!height ||!weight ||!centre ||!dateofjoining) {
@@ -60,6 +62,8 @@ const registerChild = async (req, res) => {
       detailsOfChild,
       achievementsOfChild,
       standardofEducation,
+        childrenImage,
+  aadharCardImage,
     });
 
     centreData.currentOccupancy += 1;
