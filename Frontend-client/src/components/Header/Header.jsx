@@ -2,9 +2,12 @@ import "./Header.css";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { FaPhoneVolume } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
+import LanguageDropdown from "../../utils/LanguageDropdown";
+import { useTranslation } from "react-i18next";
 
 const Header = () => {
   const navigate = useNavigate();
+  const {t} = useTranslation();
 
   return (
     <div className="header-wrapper">
@@ -18,26 +21,29 @@ const Header = () => {
             <FaPhoneVolume />
             +91 75069 27704{" "}
           </div>
+          <div className="headerTopLanguageDropDown">
+            <LanguageDropdown />
+          </div>
         </div>
       </div>
       <div className="header-bottom">
         <div className="header-title">
           <img src="/src/assets/JSLogoNoBG.png" alt="JeevanSamvardhan" />
-          Jeevan Samvardhan
+          {t("headerTitle")}
         </div>
         <div className="header-links">
-          <a href="/">Home</a>
-          <a href="/about">About Us</a>
-          <a href="/news">News</a>
-          <a href="#">Join Us</a>
-          <a href="#">Contact</a>
+          <a href="/">{t("HeaderHomeLink")}</a>
+          <a href="/about">{t("HeaderAboutUsLink")}</a>
+          <a href="/news">{t("HeaderNewsLink")}</a>
+          <a href="#">{t("HeaderJoinUsLink")}</a>
+          <a href="#">{t("HeaderContactLink")}</a>
           <button
             className="header-donate-now"
             onClick={() => {
               navigate("/donations");
             }}
           >
-            Donate Now
+            {t("HeaderDonateNowLink")}
           </button>
         </div>
       </div>

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import DonationCard from "../DonationCard/DonationCard";
 import "./FeaturedCampaigns.css";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 const DUMMY_DONATIONS_FLAG = false;
 
@@ -48,6 +49,7 @@ const dummyDonationData = [
 ];
 
 const FeaturedCampaigns = () => {
+  const {t} = useTranslation();
   const [fundraisers, setFundraisers] = useState(dummyDonationData);
 
   const getAllFundraisers = async () => {
@@ -81,12 +83,9 @@ const FeaturedCampaigns = () => {
     <div className="featured-campaigns-wrapper">
       <div className="featured-campaigns-content">
         <div className="featured-campaigns-text">
-          <div className="pre-title">We Need Your Help</div>
-          <div className="title">Featured Campaigns</div>
-          <div className="sub-title">
-            It’s through mistakes that you actually can grow you gert rid of
-            everything that is not essential to makihave to get bad.
-          </div>
+          <div className="pre-title">{t("FeaturedPreTitle")}</div>
+<div className="title">{t("FeaturedTitle")}</div>
+<div className="sub-title">{t("FeaturedSubTitle")}</div>
         </div>
         {fundraisers && (
           <div className="featured-campaigns-cards">

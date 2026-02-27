@@ -1,6 +1,7 @@
 import { toast } from "react-toastify";
 import "./ContactUs.css";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const galleryImages = [
   "/src/assets/q1.jpg",
@@ -32,6 +33,8 @@ const ContactUs = () => {
     setFormData({ name: "", mobile: "", email: "", question: "" });
   };
 
+    const {t} = useTranslation();
+
   return (
     <div className="contact-us-wrapper">
       <div className="contact-us-gallery">
@@ -47,57 +50,51 @@ const ContactUs = () => {
         })}
       </div>
       <div className="contact-us-form">
-        <div className="title">
-          Questions? <span>Ask.</span>
-        </div>
-        <div className="sub-title">
-          When you donate to Jeevan Samvardhan, you can be sure that the money
-          is used responsibly. If you have questions before you make a donation,
-          please feel free to contact us.
-        </div>
+        <div className="title">{t("ContactTitle")}</div>
+        <div className="sub-title">{t("ContactSubTitle")}</div>
 
         <form className="contact-form" onSubmit={handleSubmit}>
-          <label>Name</label>
+          <label>{t("ContactNameLabel")}</label>
           <input
             type="text"
             name="name"
-            placeholder="Your Name"
+            placeholder={t("ContactNamePlaceholder")}
             value={formData.name}
             onChange={handleChange}
             required
           />
 
-          <label>Mobile Number</label>
+          <label>{t("ContactMobileLabel")}</label>
           <input
             type="tel"
             name="mobile"
-            placeholder="Your Mobile Number"
+            placeholder={t("ContactMobilePlaceholder")}
             value={formData.mobile}
             onChange={handleChange}
             required
           />
 
-          <label>Email Address</label>
+          <label>{t("ContactEmailLabel")}</label>
           <input
             type="email"
             name="email"
-            placeholder="Your Email Address"
+            placeholder={t("ContactEmailPlaceholder")}
             value={formData.email}
             onChange={handleChange}
             required
           />
 
-          <label>Question</label>
+          <label>{t("ContactQuestionLabel")}</label>
           <textarea
             name="question"
-            placeholder="Your Question"
+            placeholder={t("ContactQuestionPlaceholder")}
             rows="4"
             value={formData.question}
             onChange={handleChange}
             required
           />
 
-          <button type="submit">Submit</button>
+          <button type="submit">{t("ContactSubmitButton")}</button>
         </form>
       </div>
     </div>
