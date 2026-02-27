@@ -4,8 +4,10 @@ import { Box, Typography, Link, IconButton } from "@mui/material";
 import { Facebook, YouTube, LinkedIn } from "@mui/icons-material";
 import XIcon from "@mui/icons-material/X"; // You can replace this with a Twitter icon if needed
 import GoogleIcon from "@mui/icons-material/Google";
+import { useTranslation } from "react-i18next";
 
 function Footer() {
+  const { t } = useTranslation();
   return (
     <Box className="footer-container">
       {/* Top Section */}
@@ -19,12 +21,12 @@ function Footer() {
               className="footer-logo"
             />
             <Typography variant="h6" className="footer-logo-text">
-              Jeevan Samvardhan
+              {t("FooterLogoText")}
             </Typography>
           </Box>
 
           <Typography variant="body2" className="connect-text">
-            Connect with Us
+            {t("FooterConnect")}
           </Typography>
           <Box className="social-icons">
             <IconButton href="#" className="social-icon">
@@ -48,9 +50,9 @@ function Footer() {
         {/* Middle - Quick Links */}
         <Box className="footer-links">
           <Typography variant="h6" className="footer-heading">
-            Quick Links
+            {t("FooterQuickLinks")}
           </Typography>
-          {[
+          {/* {[
             "Aamhalahi shikudya",
             "Titwala Campaign",
             "Chala Ghari",
@@ -61,16 +63,25 @@ function Footer() {
             <Link key={index} href="#" underline="none" className="footer-link">
               {text}
             </Link>
-          ))}
+          ))} */}
+          <Link href="#" underline="none" className="footer-link">
+            {t("FooterAllCampaign")}
+          </Link>
+          <Link href="#" underline="none" className="footer-link">
+            {t("FooterWorkWithUs")}
+          </Link>
+          <Link href="#" underline="none" className="footer-link">
+            {t("FooterWhoWeAre")}
+          </Link>
         </Box>
 
         {/* Right - Address */}
         <Box className="footer-address">
           <Typography variant="h6" className="footer-heading">
-            Find us at
+            {t("FooterFindUs")}
           </Typography>
           <Typography variant="body2">
-            Office: <br />
+            {t("FooterOffice")}<br />
             6, Aish Apartment, Near Nikki Nagar, Gandhari, Jail Road, Kalyan(W),
             Dist. Thane
           </Typography>
@@ -80,7 +91,7 @@ function Footer() {
       {/* Bottom Bar */}
       <Box className="footer-bottom">
         <Typography variant="body2" className="footer-bottom-text">
-          Copyright © 2025 Digital Marketing Company All rights reserved
+          C{t("FooterCopyright")}
         </Typography>
       </Box>
     </Box>
