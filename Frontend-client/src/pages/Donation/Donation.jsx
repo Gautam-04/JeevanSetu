@@ -5,6 +5,7 @@ import DonationCard from "../../components/DonationCard/DonationCard";
 import { MdOutlineContentCopy } from "react-icons/md";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 const DUMMY_DONATIONS_FLAG = false;
 
@@ -100,10 +101,12 @@ function Donation() {
     }
   }, []);
 
+  const {t} = useTranslation();
+
   return (
-    <PageBlueprint title={"Donate To Us"}>
+    <PageBlueprint title={t("donateTitle")}>
       <div className="ongoing-campaigns">
-        <h3>Our Ongoing Campaigns:</h3>
+        <h3>{t("ongoingCampaigns")}</h3>
         {fundraisers && (
           <div className="featured-campaigns-cards">
             {fundraisers.map((donation, index) => (
@@ -113,31 +116,28 @@ function Donation() {
         )}
       </div>
       <div className="bank-credentials">
-        <h3>Our direct Bank credentials:</h3>
+        <h3>{t("BankTitle")}</h3>
         <div className="credentials-wrapper">
           <div className="details-wrapper">
             <div className="neft-details">
-              If you prefer to donate directly through your bank, please use the
-              details below:
+              {t("BankIntro")}
               <br />
               <div>
-                Account Name: <span>Jeevan Samvardhan Foundation Bank</span>
+                {t("BankAccountNameLabel")} <span>Jeevan Samvardhan Foundation Bank</span>
                 <br />
-                Name: <span>State Bank of India</span>
+                {t("BankBankNameLabel")}<span>State Bank of India</span>
                 <br />
-                Account Number: <span>123456789012</span>
+                {t("BankAccountNumberLabel")}<span>123456789012</span>
                 <br />
-                Account Type: <span>Current Account</span>
+                {t("BankAccountTypeLabel")} <span>Current Account</span>
                 <br />
-                IFSC Code: <span>SBIN0001234</span>
+                {t("BankIFSCLabel")}<span>SBIN0001234</span>
                 <br />
-                Branch: <span>Shivaji Nagar Branch, Pune</span>
+                {t("BankBranchLabel")} <span>Shivaji Nagar Branch, Pune</span>
                 <br />
-                MICR Code: <span>411002345</span>
+                {t("BankMICRLabel")} <span>411002345</span>
               </div>
-              💡 After making the transfer, please share your transaction
-              details and contact information with us at
-              donations@jeevansamvardhan.org for receipt and acknowledgment.
+              💡 {t("BankNote")}
             </div>
             <div className="upi-details">
               <div className="upi-card">
