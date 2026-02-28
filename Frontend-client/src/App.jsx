@@ -8,6 +8,7 @@ import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import DonateToFundraiser from "./pages/DonateToFundraiser/DonateToFundraiser";
 import News from "./pages/News/News";
+import JoinUs from "./pages/JoinUs/JoinUs";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         />
 
         <Route path="/News" element={<News />} />
+        <Route path="/joinus" element ={<JoinUs />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/donations" element={<Donation />} />
       </Routes>
