@@ -41,7 +41,9 @@ const Landing = () => {
       </div>
       <WelcomeBanner />
       <FeaturedCampaigns />
-      <ContactUs />
+<div id="contact-section">
+  <ContactUs />
+</div>
       <Transparency />
       {/* <Footer /> */}
     </div>

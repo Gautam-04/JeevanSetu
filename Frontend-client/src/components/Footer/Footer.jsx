@@ -1,7 +1,7 @@
 import React from "react";
 import "./Footer.css";
 import { Box, Typography, Link, IconButton } from "@mui/material";
-import { Facebook, YouTube, LinkedIn } from "@mui/icons-material";
+import { Facebook, YouTube, LinkedIn , Instagram } from "@mui/icons-material";
 import XIcon from "@mui/icons-material/X"; // You can replace this with a Twitter icon if needed
 import GoogleIcon from "@mui/icons-material/Google";
 import { useTranslation } from "react-i18next";
@@ -29,20 +29,21 @@ function Footer() {
             {t("FooterConnect")}
           </Typography>
           <Box className="social-icons">
-            <IconButton href="#" className="social-icon">
-              <GoogleIcon />
-            </IconButton>
-            <IconButton href="#" className="social-icon">
+            
+            <IconButton href="https://www.youtube.com/@jeevansamvardhan5963" className="social-icon">
               <YouTube />
             </IconButton>
-            <IconButton href="#" className="social-icon">
+            <IconButton href="https://www.facebook.com/jeevan.samvardhanpriti" className="social-icon">
               <Facebook />
             </IconButton>
-            <IconButton href="#" className="social-icon">
+            <IconButton href="https://x.com/JeevanSamvardh1" className="social-icon">
               <XIcon />
             </IconButton>
-            <IconButton href="#" className="social-icon">
+            <IconButton href="https://www.linkedin.com/in/jeevan-samvardhan-172527326?utm_source=share_via&utm_content=profile&utm_medium=member_android" className="social-icon">
               <LinkedIn />
+            </IconButton>
+            <IconButton href="https://www.instagram.com/jeevansamvardhan/" className="social-icon">
+              <Instagram />
             </IconButton>
           </Box>
         </Box>
@@ -67,10 +68,10 @@ function Footer() {
           <Link href="#" underline="none" className="footer-link">
             {t("FooterAllCampaign")}
           </Link>
-          <Link href="#" underline="none" className="footer-link">
+          <Link href="/joinus" underline="none" className="footer-link">
             {t("FooterWorkWithUs")}
           </Link>
-          <Link href="#" underline="none" className="footer-link">
+          <Link href="/about" underline="none" className="footer-link">
             {t("FooterWhoWeAre")}
           </Link>
         </Box>
