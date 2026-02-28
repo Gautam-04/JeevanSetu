@@ -1,108 +1,120 @@
+/* ===== FUNDRAISER DONATION SECTION ===== */
 .donate-to-fundraiser-wrapper {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  padding-block: 1rem;
-  overflow: hidden;
-  position: relative;
-  z-index: 1;
+  padding: clamp(2rem, 5vw, 4rem) 1.5rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
+/* 1. Fundraiser Info Card */
 .fundraiser-info-container {
-  background-color: var(--accent-01);
-  width: 80%;
-  padding: 2rem;
-  display: flex;
-  justify-content: space-between;
+  background-color: var(--accent-01, #0e926b);
+  width: 100%;
+  max-width: 1100px;
+  display: grid;
+  /* Desktop: Text on left, Image on right */
+  grid-template-columns: 1.2fr 0.8fr; 
+  align-items: center;
+  gap: 30px;
+  padding: clamp(1.5rem, 4vw, 3rem);
   font-family: "Inter", sans-serif;
-  flex-wrap: wrap;
-  gap: 1rem;
-  border-radius: 25px;
-  border: 3px solid var(--accent-02);
-  /* padding: 1rem; */
+  border-radius: 30px;
+  border: 4px solid var(--accent-02, #fca00c);
+  color: white;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
 }
 
 .fundraiser-info {
-  padding-left: 1rem;
-  max-width: 50%;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  padding-top: 2rem;
-  /* justify-content: center; */
+  gap: 1rem;
 }
 
 .fundraiser-name {
-  font-size: 2.4rem;
-  font-weight: 700;
-  color: white;
-  padding-bottom: 0.5rem;
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 0.5rem;
 }
 
 .fundraiser-description,
 .fundraiser-date,
 .fundraiser-goal {
-  max-width: 700px;
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: white;
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  line-height: 1.6;
 }
 
 .fundraiser-description span,
 .fundraiser-date span {
+  opacity: 0.9;
   font-weight: 300;
-  color: whitesmoke;
 }
 
 .fundraiser-goal {
-  padding-top: 0.5rem;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: white;
+  margin-top: 1rem;
+  font-size: 1.6rem;
+  font-weight: 800;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 15px 20px;
+  border-radius: 15px;
+  display: inline-block;
+  width: fit-content;
 }
 
 .fundraiser-goal span {
-  font-size: 1.5rem;
   font-weight: 400;
-  color: whitesmoke;
+  font-size: 1.2rem;
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* Fundraiser Image */
+.fundraiser-image {
+  display: flex;
+  justify-content: center;
 }
 
 .fundraiser-image img {
-  width: 350px;
-  margin-right: 1.5rem;
-  border-radius: 25px;
-  border: 2px solid whitesmoke;
+  width: 100%;
+  max-width: 400px; /* Responsive limit */
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
+/* 2. Donation Form Section */
 .donation-info-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: left;
-  text-align: left;
-  width: 80%;
-  margin-top: 30px;
-  padding: 20px;
-  background: #f9f9f9;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 1100px;
+  margin-top: 40px;
+  padding: clamp(1.5rem, 5vw, 2.5rem);
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  border: 1px solid #eee;
 }
 
 .donation-info-container h3 {
-  overflow: hidden;
+  font-size: 1.4rem;
+  margin-bottom: 1.5rem;
+  color: #333;
 }
 
 .donation-info-container h3 span {
-  font-weight: 700;
-  color: var(--accent-02);
-  text-decoration: underline;
+  color: var(--accent-01, #0e926b);
+  border-bottom: 2px solid var(--accent-02, #fca00c);
 }
 
+/* Donation Form */
 .donation-form {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-top: 16px;
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two column form */
+  gap: 20px;
 }
 
 .form-group {
@@ -110,57 +122,121 @@
   flex-direction: column;
 }
 
+.form-group.full-width {
+  grid-column: span 2;
+}
+
 .form-group label {
   font-weight: 600;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
 }
 
 .form-group input {
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-}
-
-.donate-button {
-  background-color: #00a86b;
-  color: white;
-  font-weight: 600;
-  padding: 12px;
-  border: none;
+  padding: 12px 15px;
   border-radius: 10px;
-  cursor: pointer;
-  transition: 0.3s;
+  border: 2px solid #eee;
+  font-size: 1rem;
+  transition: border-color 0.3s;
 }
 
-.donate-button:hover {
-  background-color: #008f5a;
+.form-group input:focus {
+  outline: none;
+  border-color: var(--accent-01, #0e926b);
 }
 
+/* Quick Amount Badges */
 .quick-amounts {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 10px;
+  gap: 12px;
+  margin-bottom: 5px;
 }
 
 .amount-badge {
-  border: 1px solid var(--accent-01);
+  flex: 1;
+  min-width: 80px;
+  text-align: center;
+  border: 2px solid #eee;
   background-color: #fff;
-  color: var(--accent-01);
-  padding: 8px 14px;
-  border-radius: 20px;
-  font-weight: 500;
+  color: #444;
+  padding: 10px 15px;
+  border-radius: 12px;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease;
 }
 
-.amount-badge:hover {
-  background-color: var(--accent-01);
+.amount-badge:hover, .amount-badge.selected {
+  background-color: var(--accent-01, #0e926b);
   color: #fff;
+  border-color: var(--accent-01, #0e926b);
 }
 
-.amount-badge.selected {
-  background-color: var(--accent-01);
-  color: #fff;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+.donate-button {
+  grid-column: span 2;
+  background-color: var(--accent-02, #fca00c); /* Use accent-02 for action */
+  color: white;
+  font-weight: 800;
+  font-size: 1.2rem;
+  padding: 16px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.3s;
+  margin-top: 10px;
+}
+
+.donate-button:hover {
+  background-color: #e8920a;
+  transform: translateY(-2px);
+}
+
+/* 7. RESPONSIVE QUERIES */
+
+@media (max-width: 900px) {
+  .fundraiser-info-container {
+    grid-template-columns: 1fr; /* Stack text and image */
+    text-align: center;
+  }
+
+  .fundraiser-info {
+    order: 2; /* Move text below image */
+  }
+
+  .fundraiser-image {
+    order: 1; /* Move image to top */
+  }
+
+  .fundraiser-goal {
+    margin: 1rem auto;
+  }
+
+  .donation-form {
+    grid-template-columns: 1fr; /* Single column form */
+  }
+
+  .form-group.full-width {
+    grid-column: span 1;
+  }
+
+  .donate-button {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .donate-to-fundraiser-wrapper {
+    padding: 1.5rem 1rem;
+  }
+  
+  .fundraiser-info-container {
+    padding: 1.5rem;
+    border-radius: 20px;
+  }
+
+  .quick-amounts {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 2 badges per row */
+  }
 }

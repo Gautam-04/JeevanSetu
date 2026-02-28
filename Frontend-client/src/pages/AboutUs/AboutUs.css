@@ -1,333 +1,194 @@
-/* ===== MISSION & VISION SECTION ===== */
-.mission-vision-section {
-  display: block;
-  margin: 64px 0 40px 0;
+/* 1. Global Section Wrapper */
+.mission-vision-section,
+.who-we-are-section,
+.documents-section {
   width: 100%;
+  max-width: 1200px; /* Limits width on ultra-wide screens */
+  margin: 60px auto; /* Centers the whole section */
+  padding: 0 20px;   /* Prevents content touching screen edges */
+  box-sizing: border-box;
 }
 
-.mission-block {
-  margin-left: 8vw;
-  margin-bottom: 44px;
-  max-width: 100%;
-  padding: 0 10px 0 10px;
-
-  box-shadow: none;
-  border-bottom: none;
-  padding-bottom: 38px;
-  overflow: hidden;
-  text-align: left;
-  position: relative;
+/* 2. Mission & Vision Refinement */
+.mission-block,
+.vision-block {
+  margin-bottom: 50px;
+  width: 100%;
 }
 
 .mission-block h2,
-.vision-block h2 {
-  overflow: hidden;
-  font-size: 2.2rem;
-  width: 100%;
+.vision-block h2,
+.who-we-are-section h3 {
+  font-size: clamp(1.6rem, 5vw, 2.2rem); /* Responsive font */
   font-weight: 900;
-  margin-bottom: 22px;
-  letter-spacing: 0.07em;
-  color: black;
+  overflow: hidden;
+  color: #1a1a1a;
   text-transform: uppercase;
-  display: block;
-  text-align: left;
+  letter-spacing: 0.05em;
+  margin-bottom: 25px;
 }
 
-.mission-block ul {
+.mission-block ul,
+.basic-needs-section ul {
+  list-style: none;
+  padding: 0;
   margin: 0;
-  padding-left: 38px !important;
-  list-style: none !important;
 }
 
-.mission-block ul li {
-  margin-bottom: 18px;
-  font-size: 1.25rem;
-  line-height: 1.8;
-  color: #2d3851;
+.mission-block ul li,
+.vision-block p,
+.basic-needs-section ul li,
+.summary-text p {
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  line-height: 1.7;
+  color: #334155;
+  margin-bottom: 16px;
   position: relative;
-  padding-left: 24px;
+  padding-left: 28px;
 }
 
-.mission-block ul li::before {
+.mission-block ul li::before,
+.basic-needs-section ul li::before {
   content: "";
   position: absolute;
   left: 0;
-  top: 0.8em;
-  width: 11px;
-  height: 11px;
+  top: 0.6em;
+  width: 10px;
+  height: 10px;
   background: #ff9545;
   border-radius: 50%;
-  display: inline-block;
-  transform: translateY(-50%);
-}
-
-/* Vision block unchanged */
-.vision-block {
-  margin-left: 8vw;
-  margin-bottom: 44px;
-  max-width: 100%;
-  padding: 0 10px 0 10px;
-  text-align: left;
-}
-
-.vision-block p {
-  width: 100%;
-  font-size: 1.25rem;
-  color: #2d3851;
-  line-height: 1.8;
 }
 
 .mission-block::after {
   content: "";
   display: block;
-  width: 50%;
-  margin: 35px auto 0 auto;
-  border-bottom: 2px solid #e5e8ef;
+  width: 150px;
+  height: 3px;
+  background: #e5e8ef;
+  margin: 40px 0;
 }
 
-/* Responsive Design */
-@media (max-width: 950px) {
-  .mission-block,
-  .vision-block {
-    max-width: 98%;
-    margin-left: 2vw;
-    padding: 0 4px;
-  }
-  .mission-block h2,
-  .vision-block h2 {
-    font-size: 1.4rem;
-  }
-  .mission-block ul li,
-  .vision-block p {
-    font-size: 1.07rem;
-  }
-  .mission-block::after {
-    width: 80%;
-  }
-}
-
-/* ===== WHO WE ARE SECTION ===== */
-.who-we-are-section {
-  margin: 64px 0 40px 0;
-  width: 100%;
-}
-
-.who-we-are-section h3 {
-  overflow: hidden;
-  margin-left: 8.5vw;
-  margin-bottom: 44px;
-  max-width: 100%;
-  font-size: 2.2rem;
-  font-weight: 900;
-  color: black;
-  letter-spacing: 0.09em;
-  margin-bottom: 22px;
-}
-
-.about-summary {
-  overflow: hidden;
-  margin-left: 8vw;
-  margin-bottom: 44px;
-  max-width: 80%;
+/* 3. Who We Are (The "Card" Layout) */
+.about-summary,
+.basic-needs-section {
+  background: #f1f3f6; /* Slightly softer gray */
+  border-radius: 24px;
+  padding: clamp(20px, 5vw, 45px);
   display: flex;
-  gap: 44px;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  margin-bottom: 38px;
-  background: #e1e3e7;
-  border-radius: 22px;
-  box-shadow: 0 2px 24px rgba(48, 64, 117, 0.08);
-  padding: 38px 32px;
-  position: relative;
+  gap: 40px;
+  align-items: center;
+  margin-top: 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
 .summary-text {
-  flex: 2;
-  min-width: 50px;
+  flex: 3;
 }
 
-.summary-text h4 {
+.summary-text h4,
+.basic-needs-section h4 {
+  font-size: clamp(1.3rem, 4vw, 1.7rem);
   overflow: hidden;
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: black;
-  margin-bottom: 12px;
-}
-
-.summary-text p {
-  font-size: 1.3rem;
-  line-height: 1.75;
-  color: #32353b;
-  margin-bottom: 18px;
+  margin-bottom: 15px;
+  color: #23408c;
 }
 
 .founder-name {
   display: block;
-  font-size: 1.8rem;
-  font-weight: bolder;
-  color: black;
-  margin-top: 8px;
-  letter-spacing: 0.08em;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #1a1a1a;
+  margin-top: 15px;
 }
 
+/* 4. The Image (Handled for all sizes) */
 .summary-image {
-  flex: 1;
-  min-width: 220px;
+  flex: 2;
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
 }
 
 .summary-image img {
-  overflow: hidden;
-  width: 400px;
-  height: 400px;
+  width: 100%;
+  max-width: 380px; /* Max size on desktop */
+  height: auto;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
-  border-radius: 18px;
-  background: #f7f9fb;
-  margin-left: 18px;
-  box-shadow: 0 2px 16px rgba(80, 80, 80, 0.11);
-  transition: transform 0.18s;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
 }
 
-.summary-image img:hover {
-  transform: scale(1.05);
-}
-
-/* Responsive Design for WHO WE ARE */
-@media (max-width: 1000px) {
-  .about-summary {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 28px;
-    padding: 28px 10px;
-  }
-  .summary-image {
-    justify-content: flex-start;
-    margin-top: 18px;
-  }
-  .summary-image img {
-    width: 170px;
-    height: 170px;
-  }
-}
-
-@media (max-width: 600px) {
-  .summary-image img {
-    width: 120px;
-    height: 120px;
-  }
-}
-
-/* ===== BASIC NEEDS SECTION (Styled to Match WHO WE ARE) ===== */
+/* 5. Basic Needs (Matching Style) */
 .basic-needs-section {
-  background: #e1e3e7;
-  border-radius: 22px;
-  box-shadow: 0 2px 24px rgba(48, 64, 117, 0.08);
-  padding: 38px 32px;
-  margin: 42px 0 0 8vw;
-  max-width: 80%;
-  overflow: hidden;
-  position: relative;
+  flex-direction: column; /* List stays vertical */
+  align-items: flex-start;
+  margin-left: 0; /* Removed the 8vw */
+  max-width: 100%;
 }
 
-.basic-needs-section h4 {
-  overflow: hidden;
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: black;
-  margin-bottom: 18px;
-  letter-spacing: 0.09em;
-}
-
-.basic-needs-section ul {
-  padding-left: 32px;
-  margin: 0;
-  list-style: none !important;
-}
-
-.basic-needs-section ul li {
-  font-size: 1.3rem;
-  margin-bottom: 18px;
-  line-height: 1.75;
-  position: relative;
-  padding-left: 24px;
-  color: #32353b;
-}
-
-.basic-needs-section ul li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.8em;
-  width: 11px;
-  height: 11px;
-  background: #ff9545;
-  border-radius: 50%;
-  display: inline-block;
-  transform: translateY(-50%);
-}
-
-/* Responsive Design to match WHO WE ARE */
-@media (max-width: 1000px) {
-  .basic-needs-section {
-    padding: 28px 10px;
-    max-width: 97%;
-    margin-left: 2vw;
-    border-radius: 12px;
-  }
-}
-
-@media (max-width: 600px) {
-  .basic-needs-section {
-    padding: 12px 3px;
-  }
-  .basic-needs-section ul li {
-    font-size: 1rem;
-  }
-}
-
-/* Documents Section - Center images horizontally */
-.documents-section {
-  margin: 42px 0 0 0;
-  padding: 0 16px;
-}
-
+/* 6. Documents Gallery (Modern Grid) */
 .documents-gallery {
-  display: flex;
-  gap: 38px;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 18px;
-  margin-bottom: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 25px;
+  margin-top: 30px;
 }
 
 .documents-gallery img {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 18px rgba(48, 64, 117, 0.09);
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 4;
   object-fit: contain;
-  width: 230px;
-  height: 310px;
-  border: 1px solid #e7eaf1;
-  transition: transform 0.18s, box-shadow 0.18s;
-  display: block;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease;
 }
 
-/* Responsive Design for Documents */
-@media (max-width: 1100px) {
+.documents-gallery img:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+}
+
+/* 7. RESPONSIVE QUERIES */
+
+/* Tablets & Small Desktops */
+@media (max-width: 992px) {
+  .about-summary {
+    flex-direction: column-reverse; /* Image moves to top or bottom */
+    text-align: center;
+  }
+  
+  .summary-image img {
+    max-width: 250px; /* Smaller image on mobile */
+  }
+
+  .mission-block ul li, 
+  .basic-needs-section ul li {
+    padding-left: 25px;
+    text-align: left;
+  }
+}
+
+/* Phones */
+@media (max-width: 576px) {
+  .mission-vision-section,
+  .who-we-are-section {
+    margin: 40px auto;
+  }
+
+  .about-summary,
+  .basic-needs-section {
+    padding: 20px;
+    border-radius: 16px;
+  }
+
   .documents-gallery {
-    gap: 20px;
-  }
-  .documents-gallery img {
-    width: 150px;
-    height: 210px;
+    grid-template-columns: repeat(2, 1fr); /* 2 per row on small phones */
+    gap: 15px;
   }
 }
 
-@media (max-width: 500px) {
-  .documents-gallery img {
-    width: 100px;
-    height: 140px;
-  }
-}

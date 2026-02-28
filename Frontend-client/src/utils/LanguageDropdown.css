@@ -1,0 +1,82 @@
+/* Container for the switcher */
+.language-switcher {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  user-select: none;
+  z-index: 1001; /* Higher than header-wrapper */
+}
+
+/* The currently selected language display */
+.language-current {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.language-current:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* The dropdown menu container */
+.language-options {
+  position: absolute;
+  top: 100%; 
+  right: 0;
+  margin-top: 8px; /* Gap between button and menu */
+  background-color: #ffffff;
+  min-width: 140px;
+  width: max-content; /* Prevents text from squashing */
+  box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  z-index: 9999; /* Super high to stay on top of everything */
+  overflow: hidden; 
+  animation: dropdownFadeIn 0.2s ease-out;
+  border: 1px solid #eee;
+}
+
+/* Individual language options */
+.language-options div {
+  padding: 12px 16px;
+  color: #333;
+  transition: background 0.2s;
+  text-align: left;
+  font-weight: 500;
+}
+
+.language-options div:hover {
+  background-color: #f0f4f8;
+  color: var(--accent-01, #0e926b);
+}
+
+.language-options div:not(:last-child) {
+  border-bottom: 1px solid #f0f0f0;
+}
+.language-options {
+  position: fixed; /* Changed from absolute */
+  top: 45px; /* Adjust this to match where your top bar ends */
+  right: 20px; /* Adjust to align with the button */
+  background-color: #ffffff;
+  min-width: 160px;
+  border-radius: 8px;
+  box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.2);
+  z-index: 99999;
+}
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

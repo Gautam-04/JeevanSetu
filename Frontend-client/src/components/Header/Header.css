@@ -1,78 +1,332 @@
-.header-wrapper {
-  display: flex;
-  flex-direction: column;
-}
+/* ===== HEADER SECTION ===== */
 
+/* Top Bar - Hide on very small screens or stack */
 .header-top {
   display: flex;
-  background-color: var(--accent-02);
-  color: var(--foreground-inverted);
+  background-color: var(--accent-02, #fca00c);
+  color: #fff;
   font-family: "Inter", sans-serif;
-  font-size: 1rem;
-  font-weight: medium;
-  justify-content: right;
+  font-size: 0.85rem;
+  font-weight: 500;
+  justify-content: flex-end;
+  padding: 8px 5%;
+  overflow: visible !important; /* Add this */
+  position: relative;
+  z-index: 10001; /* Higher than everything */
 }
-
+.header-wrapper,
+.header-top,
+.header-bottom {
+  overflow: visible;
+}
 .header-contacts {
-  padding-right: 1rem;
   display: flex;
-  justify-content: center;
-  align-items: center;
   gap: 1.5rem;
+  flex-wrap: wrap;
 }
 
 .header-contact {
   display: flex;
   gap: 0.5rem;
-  justify-content: center;
   align-items: center;
 }
 
+/* Main Navigation Bar */
 .header-bottom {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0rem 2rem;
+  padding: 1rem 5%;
+  height: 80px;
 }
 
 .header-title {
-  font-family: "Outfit", sans-serif;
-  font-weight: 800;
-  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
 }
 
 .header-title img {
-  width: 10rem;
+  width: clamp(120px, 15vw, 160px); /* Logo scales with screen */
+  height: auto;
 }
 
+/* Nav Links */
 .header-links {
   display: flex;
-  justify-content: center;
   align-items: center;
-  gap: 2rem;
+  gap: clamp(1rem, 2vw, 2.5rem);
   font-family: "Inter", sans-serif;
-  font-size: 1.4rem;
-  overflow: visible;
+  font-size: 1.1rem;
 }
 
 .header-links a {
-  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  white-space: nowrap; /* Prevents text from wrapping into two lines */
 }
 
 .header-links a:hover {
-  color: var(--accent-01) !important;
-  font-weight: 700;
+  color: var(--accent-01, #0e926b);
 }
 
+/* CTA Button */
 .header-links button {
+  padding: 0.6rem 1.5rem;
   border-radius: 2rem;
   font-weight: 700;
-  color: var(--foreground-inverted);
-  transition: all 0.2s ease-in-out;
+  background-color: var(--accent-01, #0e926b);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .header-links button:hover {
-  color: var(--accent-01);
-  background-color: var(--background);
-  transform: scale(1.02);
+  background-color: var(--accent-02, #fca00c);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* 7. RESPONSIVE QUERIES */
+
+@media (max-width: 1024px) {
+  .header-links {
+    font-size: 1rem;
+    gap: 1.2rem;
+  }
+}
+
+@media (max-width: 850px) {
+  /* Hide the top bar contact info to save space on mobile */
+  .header-top {
+    display: none;
+  }
+
+  .header-bottom {
+    padding: 0.5rem 5%;
+    height: 70px;
+  }
+
+  /* On mobile, navigation should typically be a drawer. 
+     This CSS hides the links. You would toggle a 'visible' class with JS.
+  */
+  .header-links {
+    display: none; /* Hide links on mobile by default */
+  }
+
+  /* Mobile menu indicator placeholder - you would add a hamburger icon in HTML */
+  .header-bottom::after {
+    content: "☰";
+    font-size: 1.8rem;
+    color: var(--accent-01);
+    cursor: pointer;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-title img {
+    width: 110px;
+  }
+}
+/* Hide hamburger on desktop */
+.hamburger {
+  display: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: var(--accent-01, #0e926b);
+}
+
+/* Mobile Styles */
+@media (max-width: 850px) {
+  .hamburger {
+    display: block;
+  }
+
+  .header-links {
+    position: absolute;
+    top: 70px;
+    right: 0;
+    background: white;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem 0;
+    display: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .header-links.active {
+    display: flex;
+  }
+}
+/* ... Keep your existing desktop styles the same until the Media Queries ... */
+
+/* Hide hamburger on desktop */
+.hamburger {
+  display: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: var(--accent-01, #0e926b);
+  z-index: 1001; /* Stay above the menu */
+}
+
+@media (max-width: 850px) {
+  /* Remove the ::after placeholder you had before */
+  .header-bottom::after {
+    display: none;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .header-top {
+    display: none;
+  }
+
+  .header-bottom {
+    padding: 0.5rem 5%;
+    height: 70px;
+    position: relative;
+  }
+
+  .header-links {
+    display: flex; /* Change from 'none' to 'flex' */
+    position: absolute;
+    top: 70px;
+    left: 0;
+    flex-direction: column;
+    background-color: #ffffff;
+    width: 100%;
+    padding: 2rem 0;
+    gap: 2rem;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+
+    /* Animation Logic */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease-in-out;
+  }
+
+  /* When JS toggles this class */
+  .header-links.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .header-links a {
+    font-size: 1.2rem;
+    width: 100%;
+    text-align: center;
+  }
+}
+@media (max-width: 850px) {
+  /* Ensure the parent doesn't clip the menu */
+  .header-wrapper {
+    overflow: visible !important;
+  }
+
+  .header-bottom {
+    position: relative; /* Anchor for the absolute menu */
+    overflow: visible;
+  }
+
+  .header-links {
+    /* Change to 'fixed' if you want it to stay put even if the user scrolls, 
+       or 'absolute' to stay attached to the header */
+    position: absolute;
+    top: 100%; /* Places it exactly at the bottom of header-bottom */
+    left: 0;
+    width: 100vw; /* Full width of the viewport */
+    height: auto; /* Let it grow with content */
+    background-color: #ffffff;
+
+    /* This ensures it sits ON TOP of your Landing page content */
+    z-index: 9999;
+
+    display: none; /* Hidden by default */
+    flex-direction: column;
+    padding: 2rem 0;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .header-links.active {
+    display: flex; /* Shows when active class is toggled */
+  }
+}
+.header-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  overflow: visible !important; /* Add this */
+}
+
+.header-bottom {
+  overflow: visible !important; /* Change from hidden */
+}
+/* Hide the mobile-only dropdown on desktop */
+.mobile-language-dropdown {
+  display: none;
+}
+
+@media (max-width: 850px) {
+  .mobile-language-dropdown {
+    display: block;
+  }
+}
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* Adds space between logo and text */
+  cursor: pointer;
+}
+
+.company-name {
+  font-family: "Inter", sans-serif; /* Or your preferred brand font */
+  font-size: 1.6rem; /* Increased size */
+  font-weight: 800; /* Extra bold for emphasis */
+  color: var(--accent-01, #0e926b); /* Using your brand green */
+  letter-spacing: -0.5px; /* Tighter professional look */
+  line-height: 1.4;
+  white-space: nowrap; /* Prevents it from breaking into two lines */
+}
+
+/* Responsive adjustment for tablets/small laptops */
+@media (max-width: 1024px) {
+  .company-name {
+    font-size: 1.3rem;
+  }
+}
+
+/* Responsive adjustment for mobile */
+@media (max-width: 480px) {
+  .company-name {
+    font-size: 1.1rem; /* Slightly smaller to fit next to logo on tiny screens */
+  }
+  .header-title img {
+    width: 40px; /* Adjust logo size if needed */
+  }
+}
+.logo-link {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Adjust spacing between logo and text */
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit; /* Keeps the text color the same as your original design */
+}
+
+.logo-link:hover {
+  opacity: 0.9; /* Slight feedback when hovering */
 }
