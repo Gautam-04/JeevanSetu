@@ -481,3 +481,6 @@ button:focus, .jsf-btn:focus {
   outline: 3px solid rgba(14, 146, 107, 0.25);
   outline-offset: 3px;
 }
+.jsf-hero__content, .jsf-root,.jsf-hero__content{
+  overflow: hidden;
+}
