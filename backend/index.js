@@ -26,11 +26,14 @@ import userRouter from "./routes/user.routes.js";
 import donationRouter from "./routes/donation.routes.js";
 import childrenRouter from "./routes/children.routes.js";
 import centreRouter from "./routes/centre.routes.js";
+import reportRouter from "./routes/report.routes.js";
 
+// use router
 app.use("/api/user", userRouter);
 app.use("/api/donation", donationRouter);
 app.use("/api/", childrenRouter);
 app.use("/api/centre", centreRouter);
+app.use("/api/report", reportRouter);
 
 //app commmands
 app.listen(PORT, () => {

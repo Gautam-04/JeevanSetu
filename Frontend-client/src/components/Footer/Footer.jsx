@@ -35,7 +35,7 @@ function Footer() {
             <IconButton href="#" className="social-icon">
               <YouTube />
             </IconButton>
-            <IconButton href="https://www.facebook.com/jsfoundationpune/" className="social-icon">
+            <IconButton href="#" className="social-icon">
               <Facebook />
             </IconButton>
             <IconButton href="#" className="social-icon">
@@ -67,10 +67,10 @@ function Footer() {
           <Link href="#" underline="none" className="footer-link">
             {t("FooterAllCampaign")}
           </Link>
-          <Link href="/joinus" underline="none" className="footer-link">
+          <Link href="#" underline="none" className="footer-link">
             {t("FooterWorkWithUs")}
           </Link>
-          <Link href="/about" underline="none" className="footer-link">
+          <Link href="#" underline="none" className="footer-link">
             {t("FooterWhoWeAre")}
           </Link>
         </Box>

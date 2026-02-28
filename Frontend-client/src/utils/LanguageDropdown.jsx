@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { useState, useRef, useEffect } from "react";
-import "./LanguageDropdown.css"
+
 function LanguageSwitcher() {
   const { i18n } = useTranslation();
   const [open, setOpen] = useState(false);
@@ -17,7 +17,7 @@ function LanguageSwitcher() {
     return "English";
   };
 
-  // Close dropdown when clicking Aoutside
+  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
