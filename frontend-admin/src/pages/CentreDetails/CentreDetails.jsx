@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import InventoryDashboard from "../Inventory/InventoryDashboard";
 import "./CentreDetails.css";
 
 const API = "http://localhost:8000/api/centre/allcentre";
@@ -8,6 +9,7 @@ const API = "http://localhost:8000/api/centre/allcentre";
 const CentreDetails = ({ centreId }) => {
   const [centre, setCentre] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [showInventory, setShowInventory] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -56,6 +58,12 @@ const CentreDetails = ({ centreId }) => {
           <span>Max Capacity: {centre.maxCapacity}</span>
           <span>Current Occupancy: {centre.currentOccupancy}</span>
         </div>
+        <button 
+  className="check-inventory-btn" 
+  onClick={() => navigate(`/dashboard/inventory/${centreId}`)}
+>
+  Check Inventory
+</button>
       </div>
     </div>
   );

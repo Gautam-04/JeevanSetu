@@ -31,11 +31,12 @@ import EditChildPage from "../UpdateChildren/EditChildPage";
 import CentresPage from "../CentresPage/CentresPage";
 import CentreDetails from "../CentreDetails/CentreDetails";
 import VaultPage from "../Vault/VaultPage";
+
 // import VaultPage from "../ChildrenFilter/VaultPage";
 // import EditChildPage from "../Children/EditChildPage";
 // import CentrePage from "../Centre/CentrePage";
 // import ManageCentres from "../Centre/ManageCentres";
-
+import ReportPage from "../Report/ReportPage";
 const Dashboard = () => {
   //   const { t } = useTranslation();
   const { tab } = useParams();
@@ -85,12 +86,7 @@ const Dashboard = () => {
       to: "housing",
       color: "white",
     },
-    {
-      name: "Inventory",
-      icon: <MdOutlineInventory2 className="sidebar-icon" />,
-      to: "inventory",
-      color: "white",
-    },
+
 
     {
       name: "CentrePage",
@@ -109,6 +105,12 @@ const Dashboard = () => {
       name: "vault",
       icon: <MdOutlineInventory2 className="sidebar-icon" />,
       to: "vault",
+      color: "white",
+    },
+        {
+      name: "Report",
+      icon: <MdOutlineInventory2 className="sidebar-icon" />,
+      to: "Report",
       color: "white",
     },
   ];
@@ -244,22 +246,10 @@ const Dashboard = () => {
             <CentreDetails centreId={centreId} />
           )}
           {dashboardPage === "vault" && <VaultPage />}
-
+          {dashboardPage === "Report" && <ReportPage />}
           {/* {dashboardPage === "forecasting" && <Forecasting />}
           {dashboardPage === "report-gen" && <ReportGen />} */}
           {dashboardPage === "housing" && (
-            <div
-              style={{
-                height: "85vh",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <h1 style={{ overflow: "hidden" }}>🚧Under Construction🚧</h1>
-            </div>
-          )}
-          {dashboardPage === "inventory" && (
             <div
               style={{
                 height: "85vh",
