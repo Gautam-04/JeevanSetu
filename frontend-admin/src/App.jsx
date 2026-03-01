@@ -8,7 +8,7 @@ import Donation from "./pages/Donation/Donation";
 // import CentresPage from "./pages/Centre/CentresPage";
 // import CentreForm from "./pages/Centre/CentreForm";
 import ChildrenForm from "./pages/AddChildren/ChildrenForm";
-
+import InventoryPage from "./pages/Inventory/InventoryPage";
 function App() {
   return (
     <>
@@ -19,6 +19,8 @@ function App() {
           path="/dashboard/childrenfilter/children"
           element={<ChildrenForm />}
         />
+        <Route path="/dashboard/inventory/:centreId" element={<InventoryPage />} />
+        
       </Routes>
       <ToastContainer
         position="top-right"

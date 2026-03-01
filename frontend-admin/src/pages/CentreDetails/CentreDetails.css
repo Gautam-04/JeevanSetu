@@ -108,7 +108,7 @@
   margin-left: 7.5%;
   padding: 0.6rem 1.4rem;
 
-  background: var(--white);
+  background: var(--primary) !important;
   color: var(--primary);
 
   border: none;
@@ -142,5 +142,68 @@
   .back-btn {
     margin-left: 0;
     align-self: center;
+  }
+}
+/* ---------- CHECK INVENTORY BUTTON ---------- */
+.check-inventory-btn {
+  grid-column: span 2; /* Spans both columns of the card */
+  margin-top: 1rem;
+  padding: 1rem;
+  
+  background: #ffffff; /* Contrast against the dark blue card */
+  color: var(--primary);
+  
+  border: none;
+  border-radius: 14px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.check-inventory-btn:hover {
+  background: var(--bg-light);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.check-inventory-btn:active {
+  transform: translateY(0);
+}
+
+/* ---------- INVENTORY SLIDE-IN CONTAINER ---------- */
+.inventory-slide-in {
+  grid-column: span 2;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  width: 100%;
+  animation: fadeInDown 0.4s ease-out;
+}
+
+/* Smooth entry animation for the inventory section */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---------- MOBILE ADJUSTMENT ---------- */
+@media (max-width: 768px) {
+  .check-inventory-btn, 
+  .inventory-slide-in {
+    grid-column: span 1; /* Adjust for single column mobile view */
   }
 }
