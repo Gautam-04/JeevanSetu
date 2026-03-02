@@ -8,11 +8,17 @@ import { Modal, Button } from "react-bootstrap"; // ✅ Import from react-bootst
 const DonateToFundraiser = () => {
   const { fundraiserId } = useParams();
   const [fundraiserInfo, setFundraiserInfo] = useState({});
+  console.log(fundraiserInfo);
+  const isFixedAmount = fundraiserInfo?.isFixedAmount;
+
   const [formData, setFormData] = useState({
     name: "",
     mobile: "",
     email: "",
-    amount: "",
+    amount: "", // If fixedAmount exists, use it; otherwise, start with an empty string
+    address: "",
+    panNumber: "",
+    dateOFBirth: "",
   });
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -24,7 +30,7 @@ const DonateToFundraiser = () => {
         `http://localhost:8000/api/donation/get-donations/${fundraiserId}`,
         config
       );
-      setFundraiserInfo(response.data.donations[0]);
+      setFundraiserInfo(response.data.fundraiser);
     } catch (error) {
       toast.error("Error fetching fundraiser details. Try again later.");
       console.error(error);
@@ -34,6 +40,17 @@ const DonateToFundraiser = () => {
   useEffect(() => {
     fetchDonations();
   }, []);
+
+  useEffect(() => {
+  if (fundraiserInfo?.isFixedAmount && fundraiserInfo?.fixedAmount) {
+    setFormData((prev) => ({
+      ...prev,
+      amount: fundraiserInfo.fixedAmount.toString(),
+    }));
+  }
+}, [fundraiserInfo]);
+  
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -46,43 +63,18 @@ const DonateToFundraiser = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (
-      !formData.name ||
-      !formData.mobile ||
-      !formData.email ||
-      !formData.amount
-    ) {
-      toast.warn("Please fill out all fields.");
-      return;
-    }
+  !formData.name ||
+  !formData.mobile ||
+  !formData.email ||
+  !formData.amount ||
+  !formData.panNumber ||
+  !formData.address
+) {
+  toast.warn("Please fill all required fields.");
+  return;
+}
     setShowModal(true); // ✅ Open modal for confirmation
   };
-
-  // const confirmDonation = async () => {
-  //   setShowModal(false);
-  //   setLoading(true);
-  //   try {
-  //     const config = { headers: { "Content-Type": "application/json" } };
-
-  //     const response = await axios.post(
-  //       `http://localhost:8000/api/donation/make-donation/${fundraiserId}`,
-  //       formData,
-  //       config
-  //     );
-
-  //     if (response.data.success) {
-  //       toast.success("Donation successful! Thank you for your contribution.");
-  //       setFormData({ name: "", mobile: "", email: "", amount: "" });
-  //       fetchDonations();
-  //     } else {
-  //       toast.error("Donation failed. Please try again.");
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //     toast.error("Something went wrong. Please try again later.");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
 
   function loadScript(src) {
     return new Promise((resolve) => {
@@ -133,10 +125,6 @@ const DonateToFundraiser = () => {
       order_id: order_id,
       handler: async function (response) {
         const data = {
-          // orderCreationId: order_id,
-          // razorpayPaymentId: response.razorpay_payment_id,
-          // razorpayOrderId: response.razorpay_order_id,
-          // razorpaySignature: response.razorpay_signature,
           razorpay_order_id: response.razorpay_order_id,
           razorpay_payment_id: response.razorpay_payment_id,
           razorpay_signature: response.razorpay_signature,
@@ -144,6 +132,9 @@ const DonateToFundraiser = () => {
           email: formData.email,
           mobileNo: formData.mobile,
           amount: formData.amount,
+          address: formData.address,
+          panNumber: formData.panNumber,
+          dateOFBirth: formData.dateOFBirth,
           fundraiserId,
         };
 
@@ -244,26 +235,66 @@ const DonateToFundraiser = () => {
           </div>
 
           <div className="form-group">
+          <label>PAN Number:</label>
+          <input
+            type="text"
+            name="panNumber"
+            value={formData.panNumber}
+            onChange={handleChange}
+            placeholder="Enter PAN number"
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Address:</label>
+          <input
+            name="address"
+            value={formData.address}
+            onChange={handleChange}
+            placeholder="Enter your address"
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Date of Birth (Optional):</label>
+          <input
+            type="date"
+            name="dateOFBirth"
+            value={formData.dateOFBirth}
+            onChange={handleChange}
+          />
+        </div>
+
+          <div className="form-group">
             <label>Quick Amounts:</label>
-            <div className="quick-amounts">
-              {[100, 500, 1000, 5000].map((amt) => (
-                <button
-                  key={amt}
-                  type="button"
-                  className={`amount-badge ${
-                    formData.amount === amt.toString() ? "selected" : ""
-                  }`}
-                  onClick={() =>
-                    setFormData((prev) => ({ ...prev, amount: amt.toString() }))
-                  }
-                >
-                  ₹{amt}
-                </button>
-              ))}
-            </div>
+                      <div className="quick-amounts">
+            {[100, 500, 1000, 5000].map((amt) => (
+              <button
+                key={amt}
+                type="button"
+                disabled={isFixedAmount}   // 🔒 LOCK HERE
+                className={`amount-badge ${
+                  formData.amount === amt.toString() ? "selected" : ""
+                }`}
+                onClick={() =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    amount: amt.toString(),
+                  }))
+                }
+              >
+                ₹{amt}
+              </button>
+            ))}
+          </div>
           </div>
 
           <div className="form-group">
+            {isFixedAmount && (
+              <p style={{ color: "#28a745", fontWeight: 500 }}>
+                This fundraiser has a fixed donation amount of ₹{fundraiserInfo?.fixedAmount}
+              </p>
+            )}
             <label>Donation Amount (₹):</label>
             <input
               type="number"
@@ -271,6 +302,7 @@ const DonateToFundraiser = () => {
               value={formData.amount}
               onChange={handleChange}
               placeholder="Enter donation amount"
+              disabled={isFixedAmount} // Disable if fixed amount
             />
           </div>
 
