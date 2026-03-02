@@ -103,6 +103,9 @@ const verifyPayment = async (req, res) => {
     email,
     mobileNo,
     amount,
+    address,
+    panNumber,
+    dateOFBirth,
     fundraiserId,
   } = req.body;
 
@@ -136,6 +139,9 @@ const verifyPayment = async (req, res) => {
         email,
         mobileNo,
         amount,
+        address,
+        panNumber,
+        dateOFBirth,
       })
     );
 
@@ -144,6 +150,15 @@ const verifyPayment = async (req, res) => {
       process.env.BLOCKCHAIN_ACCOUNT,
       donationData
     );
+
+    const fundraiser = await Fundraiser.findById(fundraiserId);
+
+    if (fundraiser.isFixedAmount && Number(amount) !== fundraiser.fixedAmount) {
+        return res.status(400).json({
+            success: false,
+            message: "Amount tampering detected"
+        });
+    }
 
     const newDonation = await Donation.create({
       serialNumber,
@@ -157,6 +172,9 @@ const verifyPayment = async (req, res) => {
         blockNumber: blockchainReceipt.blockNumber,
         dataHash: blockchainReceipt.dataHash,
       },
+      address,
+      panNumber,
+      dateOFBirth,
     });
 
     if (fundraiserId) {
@@ -235,23 +253,54 @@ const verifyPayment = async (req, res) => {
 
 const getDonations = async (req, res) => {
   const { fundraiserId } = req.params;
+
   try {
-    const query = fundraiserId ? { _id: fundraiserId } : {};
-    const donations = await Fundraiser.find(query)
+    if (!fundraiserId) {
+      return res.status(400).json({
+        success: false,
+        message: "Fundraiser ID is required",
+      });
+    }
+
+    const fundraiser = await Fundraiser.findById(fundraiserId)
       .populate("donations")
       .sort({ createdAt: -1 });
-    return res.status(200).json({ success: true, donations });
+
+    if (!fundraiser) {
+      return res.status(404).json({
+        success: false,
+        message: "Fundraiser not found",
+      });
+    }
+
+    // Separate donations from fundraiser details
+    const { donations, ...fundraiserDetails } = fundraiser.toObject();
+
+    return res.status(200).json({
+      success: true,
+      fundraiser: fundraiserDetails,
+      donations: donations || [],
+    });
+
   } catch (error) {
     console.log(error);
-    return res
-      .status(500)
-      .json({ success: false, message: "Internal server error" });
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
   }
 };
 
 const createFundraiser = async (req, res) => {
   try {
-    const { name, description, logo, hasGoal = false, goal } = req.body;
+    const { name, description, logo, hasGoal, goal, isFixedAmount, fixedAmount } = req.body;
+
+    if (isFixedAmount && !fixedAmount) {
+        return res.status(400).json({
+            success: false,
+            message: "Fixed amount is required"
+        });
+    }
 
     // Check mandatory fields
     if (!name || !description || !logo) {
@@ -272,10 +321,12 @@ const createFundraiser = async (req, res) => {
     // Create fundraiser with conditional goal handling
     const fundraiser = await Fundraiser.create({
       name,
-      description,
-      logo,
-      hasGoal,
-      goal: hasGoal ? goal : Number.MAX_SAFE_INTEGER,
+    description,
+    logo,
+    hasGoal,
+    goal: hasGoal ? goal : Number.MAX_SAFE_INTEGER,
+    isFixedAmount,
+    fixedAmount
     });
 
     return res.status(201).json({

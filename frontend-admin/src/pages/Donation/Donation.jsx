@@ -15,9 +15,17 @@ const DUMMY_DONATIONS_FLAG = false;
 
 function Donation() {
   const [donations, setDonations] = useState([]);
-  const [fundraiserInfo, setFundraiserInfo] = useState({
-    fundraiser: { name: "", description: "", createdAt: "", logo: "" },
-  });
+const [fundraiserInfo, setFundraiserInfo] = useState({
+  name: "",
+  description: "",
+  createdAt: "",
+  logo: "",
+  hasGoal: false,
+  goal: 0,
+  amountRaised: 0,
+  isFixedAmount: false,
+  fixedAmount: 0,
+});
   const [fundraiserStat, setFundraiserStat] = useState({
     data: [],
     fundraiser: { amountCollected: 0, goal: 0 },
@@ -106,107 +114,52 @@ function Donation() {
 
   // Fetch Donations
   const fetchDonations = async () => {
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-      const response = await axios.get(
-        `http://localhost:8000/api/donation/get-donations/${fundraiserId}`,
-        config
-      );
-      console.log(response.data);
-      if (response.status === 200) {
-        const { donations, ...fundraiserInfoTemp } =
-          response.data?.donations[0];
-        console.log(fundraiserInfoTemp);
-        setFundraiserInfo(fundraiserInfoTemp);
-        if (DUMMY_DONATIONS_FLAG) {
-          injectDummyDonations();
-        } else {
-          setDonations(response.data?.donations[0]?.donations);
-          if (fundraiserInfoTemp.hasGoal) {
-            setFundraiserStat({
-              data: response.data?.donations[0]?.donations,
-              fundraiser: {
-                amountCollected: fundraiserInfoTemp.amountRaised,
-                goal: fundraiserInfoTemp.goal,
-              },
-            });
-            setPieChartData({
-              amountCollected: fundraiserInfoTemp.amountRaised,
-              amountRemaining:
-                fundraiserInfoTemp.goal - fundraiserInfoTemp.amountRaised,
-            });
-          }
-        }
-        // console.log(response.data.donations[0].donations);
+  try {
+    const response = await axios.get(
+      `http://localhost:8000/api/donation/get-donations/${fundraiserId}`,
+      {
+        headers: { "Content-Type": "application/json" },
       }
-    } catch (error) {
-      // toast.error("Error fetching donations. Try again later.");
-      console.error(error);
+    );
+
+    if (response.status === 200 && response.data.success) {
+      const fundraiser = response.data.fundraiser;
+      const donationList = response.data.donations || [];
+
+      // Add serial number safely
+      const formattedDonations = donationList.map((donation, index) => ({
+        ...donation,
+        serialNumber: index + 1,
+      }));
+
+      setFundraiserInfo(fundraiser);
+      setDonations(formattedDonations);
+
+      setFundraiserStat({
+        data: formattedDonations,
+        fundraiser: {
+          amountCollected: fundraiser.amountRaised || 0,
+          goal: fundraiser.goal || 0,
+        },
+      });
+
+      if (fundraiser.hasGoal) {
+        setPieChartData({
+          amountCollected: fundraiser.amountRaised || 0,
+          amountRemaining:
+            (fundraiser.goal || 0) - (fundraiser.amountRaised || 0),
+        });
+      } else {
+        setPieChartData({
+          amountCollected: fundraiser.amountRaised || 0,
+          amountRemaining: 0,
+        });
+      }
     }
-  };
-
-  // const fetchFundraiserInfo = async () => {
-  //   try {
-  //     const config = {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     };
-  //     const response = await axios.get(
-  //       `http://localhost:8000/api/donation/get-donations/${fundraiserId}`,
-  //       config
-  //     );
-  //     if (response.status === 200) {
-  //       // console.log(response.data);
-  //       setFundraiserInfo(response.data);
-  //     }
-  //   } catch (error) {
-  //     // toast.error("Error fetching donation info. Try again later.");
-  //     console.error(error);
-  //   }
-  // };
-
-  // const fetchFundraiserStat = async () => {
-  //   try {
-  //     const config = {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     };
-  //     const response = await axios.get(
-  //       `http://localhost:8000/api/donation/get-donations/${fundraiserId}`,
-  //       config
-  //     );
-  //     console.log(response.data);
-  //     if (response.status === 200) {
-  //       // response.data.fundraiser.remaining =
-  //       //   (response.data.fundraiser?.goal || 120000) -
-  //       //     response.data.fundraiser?.amountCollected || 0;
-
-  //       // response.data.goal = response.data.fundraiser.goal || 120000;
-  //       // delete response.data.fundraiser.goal;
-  //       setFundraiserStat(response.data);
-  //       // console.log(response.data);
-  //     }
-  //   } catch (error) {
-  //     // toast.error("Error fetching donation statistics. Try again later.");
-  //     console.error(error);
-  //   }
-  // };
-
-  const injectDummyDonations = () => {
-    setFundraiserStat({
-      fundraiser: {
-        amountCollected: 12000,
-        goal: 120000,
-      },
-      data: donationsDummy,
-    });
-  };
+  } catch (error) {
+    console.error(error);
+  }
+};
 
   useEffect(() => {
     fetchDonations();
@@ -241,25 +194,19 @@ function Donation() {
   }, [fundraiserStat]);
 
   useEffect(() => {
-    setPieChartSchema({
-      labels: Object.keys(pieChartData).map((data) => data),
-      datasets: [
-        {
-          label: "Amount(₹)",
-          data: Object.values(pieChartData).map((data) => data),
-          backgroundColor: [
-            "#2b3674",
-            "whitesmoke",
-            // "#2a71d0",
-          ],
-          fill: false,
-          borderColor: "#2b3674",
-          borderWidth: 1,
-          // tension: 0.3,
-        },
-      ],
-    });
-  }, [fundraiserStat]);
+  setPieChartSchema({
+    labels: Object.keys(pieChartData),
+    datasets: [
+      {
+        label: "Amount(₹)",
+        data: Object.values(pieChartData),
+        backgroundColor: ["#2b3674", "whitesmoke"],
+        borderColor: "#2b3674",
+        borderWidth: 1,
+      },
+    ],
+  });
+}, [pieChartData]);
 
   const columns = useMemo(
     () => [
@@ -289,6 +236,22 @@ function Donation() {
           align: "left",
         },
       },
+      {
+  accessorKey: "address",
+  header: "Address",
+  size: 100,
+  muiTableBodyCellProps: {
+    align: "center",
+  },
+},
+{
+  accessorKey: "panNumber",
+  header: "PAN Number",
+  size: 100,
+  muiTableBodyCellProps: {
+    align: "center",
+  },
+},
       {
         accessorKey: "amount",
         header: "Amount (INR)",
@@ -479,31 +442,66 @@ function Donation() {
       <div ref={componentRef}>
         <div className="fundraiser-wrapper">
           <div className="fundraiser-info-container">
-            <div className="fundraiser-info">
-              <div className="fundraiser-name">
-                {/* {fundraiserInfo.fundraiser.fullForm} ( */}
-                {fundraiserInfo.name}
-                {/* ) */}
-              </div>
-              <div className="fundraiser-description">
-                <span>Description:</span> {fundraiserInfo.description}{" "}
-              </div>
-              <div className="fundraiser-date">
-                <span>Creation Date:</span>{" "}
-                {fundraiserInfo.createdAt &&
-                  fundraiserInfo.createdAt.split("T")[0]}{" "}
-              </div>
-              {fundraiserInfo?.hasGoal && (
-                <div className="fundraiser-goal">
-                  <span>Progress:</span> ₹{fundraiserInfo?.amountRaised || 0} /
-                  ₹{fundraiserInfo.goal}{" "}
-                </div>
-              )}
-            </div>
-            <div className="fundraiser-image">
-              <img src={fundraiserInfo.logo} />
-            </div>
-          </div>
+  <div className="fundraiser-info">
+
+    {/* Name */}
+    <div className="fundraiser-name">
+      {fundraiserInfo.name}
+    </div>
+
+    {/* Description */}
+    <div className="fundraiser-description">
+      <strong>Description:</strong> {fundraiserInfo.description}
+    </div>
+
+    {/* Creation Date */}
+    <div className="fundraiser-date">
+      <strong>Creation Date:</strong>{" "}
+      {fundraiserInfo.createdAt
+        ? new Date(fundraiserInfo.createdAt).toLocaleDateString()
+        : "-"}
+    </div>
+
+    {/* Goal Details */}
+    {fundraiserInfo.hasGoal && (
+      <div className="fundraiser-goal">
+        <strong>Goal:</strong> ₹{fundraiserInfo.goal}
+        <br />
+        <strong>Amount Raised:</strong> ₹{fundraiserInfo.amountRaised}
+        <br />
+        <strong>Remaining:</strong> ₹
+        {Math.max(
+          fundraiserInfo.goal - fundraiserInfo.amountRaised,
+          0
+        )}
+        <br />
+        <strong>Status:</strong>{" "}
+        {fundraiserInfo.amountRaised >= fundraiserInfo.goal
+          ? "🎉 Goal Achieved"
+          : "Active"}
+      </div>
+    )}
+
+    {/* Fixed Amount Details */}
+    {fundraiserInfo.isFixedAmount && (
+      <div className="fundraiser-description">
+        <strong>Fixed Donation Amount:</strong> ₹
+        {fundraiserInfo.fixedAmount}
+      </div>
+    )}
+
+  </div>
+
+  <div className="fundraiser-image">
+    {fundraiserInfo.logo && (
+      <img
+        src={fundraiserInfo.logo}
+        alt="Fundraiser"
+        style={{ maxWidth: "220px", borderRadius: "10px" }}
+      />
+    )}
+  </div>
+</div>
 
           <div className="donation-charts">
             <div className="charts-donation-timeline">
@@ -523,7 +521,7 @@ function Donation() {
           <div className="donation-container">
             <MaterialReactTable
               columns={columns}
-              data={fundraiserStat.data}
+              data={donations}
               enablePagination={!isPrinting}
               enableSorting={true}
               enableGlobalFilter={true}

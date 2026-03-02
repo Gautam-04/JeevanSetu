@@ -17,10 +17,12 @@ function Fundraiser() {
   const [showModal, setShowModal] = useState(false);
   const [newFundraiser, setNewFundraiser] = useState({
     name: "",
-    // fullForm: "",
     description: "",
-    // goal: "",
     logo: "",
+    hasGoal: false,
+    goal: "",
+    isFixedAmount: false,
+    fixedAmount: "",
   });
 
   const navigate = useNavigate();
@@ -42,25 +44,44 @@ function Fundraiser() {
   };
 
   // Create new fundraiser
-  const createFundraiser = async () => {
-    try {
-      const response = await axios.post(
-        "http://localhost:8000/api/donation/create-fundraiser",
-        newFundraiser,
-        {
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-      if (response.status === 201) {
-        toast.success("Fundraiser created successfully!");
-        setShowModal(false);
-        fetchFundraisers();
+const createFundraiser = async () => {
+  try {
+    const payload = {
+      ...newFundraiser,
+      goal: newFundraiser.hasGoal ? Number(newFundraiser.goal) : undefined,
+      fixedAmount: newFundraiser.isFixedAmount
+        ? Number(newFundraiser.fixedAmount)
+        : undefined,
+    };
+
+    const response = await axios.post(
+      "http://localhost:8000/api/donation/create-fundraiser",
+      payload,
+      {
+        headers: { "Content-Type": "application/json" },
       }
-    } catch (error) {
-      toast.error("Error creating fundraiser. Try again later.");
-      console.error(error);
+    );
+
+    if (response.status === 201) {
+      toast.success("Fundraiser created successfully!");
+      setShowModal(false);
+      fetchFundraisers();
+
+      setNewFundraiser({
+        name: "",
+        description: "",
+        logo: "",
+        hasGoal: false,
+        goal: "",
+        isFixedAmount: false,
+        fixedAmount: "",
+      });
     }
-  };
+  } catch (error) {
+    toast.error("Error creating fundraiser. Try again later.");
+    console.error(error);
+  }
+};
 
   // Delete fundraiser
   const deleteFundraiser = async (id) => {
@@ -211,6 +232,56 @@ function Fundraiser() {
               />
             </Form.Group>
             <Form.Group className="mb-3">
+  <Form.Label>Is this a Fixed Amount Campaign?</Form.Label>
+
+  <div>
+    <Form.Check
+      inline
+      label="Yes"
+      type="radio"
+      name="isFixedAmount"
+      value="true"
+      checked={newFundraiser.isFixedAmount === true}
+      onChange={(e) =>
+        setNewFundraiser({
+          ...newFundraiser,
+          isFixedAmount: e.target.value === "true",
+        })
+      }
+    />
+
+    <Form.Check
+      inline
+      label="No"
+      type="radio"
+      name="isFixedAmount"
+      value="false"
+      checked={newFundraiser.isFixedAmount === false}
+      onChange={(e) =>
+        setNewFundraiser({
+          ...newFundraiser,
+          isFixedAmount: e.target.value === "true",
+        })
+      }
+    />
+  </div>
+</Form.Group>
+<Form.Group className="mb-3">
+  <Form.Label>Fixed Amount (Rs.)</Form.Label>
+  <Form.Control
+    type="number"
+    placeholder="Enter fixed donation amount"
+    value={newFundraiser.fixedAmount}
+    onChange={(e) =>
+      setNewFundraiser({
+        ...newFundraiser,
+        fixedAmount: e.target.value,
+      })
+    }
+    disabled={!newFundraiser.isFixedAmount}
+  />
+</Form.Group>
+            <Form.Group className="mb-3">
               <Form.Label>Does this campaign have a Goal?</Form.Label>
 
               <div>
@@ -248,7 +319,7 @@ function Fundraiser() {
             <Form.Group className="mb-3">
               <Form.Label>{"Goal Amount"}</Form.Label>
               <Form.Control
-                type="text"
+                type="number"
                 placeholder="Enter fundraiser Goal in Rs."
                 value={newFundraiser.goal}
                 onChange={(e) =>
