@@ -37,6 +37,10 @@ import VaultPage from "../Vault/VaultPage";
 // import CentrePage from "../Centre/CentrePage";
 // import ManageCentres from "../Centre/ManageCentres";
 import ReportPage from "../Report/ReportPage";
+
+import { FaChildren } from "react-icons/fa6";
+import { IoIosDocument } from "react-icons/io";
+
 const Dashboard = () => {
   //   const { t } = useTranslation();
   const { tab } = useParams();
@@ -80,39 +84,42 @@ const Dashboard = () => {
       to: "donations",
       color: "white",
     },
+    {
+      name: "Centres",
+      icon: <LuHouse className="sidebar-icon" />,
+      to: "centrepage",
+      color: "white",
+    },
+
+    {
+      name: "Children",
+      icon: <FaChildren className="sidebar-icon" />,
+      to: "childrenfilter",
+      color: "white",
+    },
+    {
+      name: "Doc Vault",
+      icon: <IoIosDocument className="sidebar-icon" />,
+      to: "vault",
+      color: "white",
+    },
+    {
+      name: "Report",
+      icon: <MdOutlineInventory2 className="sidebar-icon" />,
+      to: "Report",
+    },
     // {
     //   name: "Housing",
     //   icon: <LuHouse className="sidebar-icon" />,
     //   to: "housing",
     //   color: "white",
     // },
-
-
-    {
-      name: "CentrePage",
-      icon: <MdOutlineInventory2 className="sidebar-icon" />,
-      to: "centrepage",
-      color: "white",
-    },
-
-    {
-      name: "Childrens",
-      icon: <MdOutlineInventory2 className="sidebar-icon" />,
-      to: "childrenfilter",
-      color: "white",
-    },
-    {
-      name: "vault",
-      icon: <MdOutlineInventory2 className="sidebar-icon" />,
-      to: "vault",
-      color: "white",
-    },
-        {
-      name: "Report",
-      icon: <MdOutlineInventory2 className="sidebar-icon" />,
-      to: "Report",
-      color: "white",
-    },
+    // {
+    //   name: "Inventory",
+    //   icon: <MdOutlineInventory2 className="sidebar-icon" />,
+    //   to: "inventory",
+    //   color: "white",
+    // },
   ];
 
   //   const sidebarContentBottom = [
