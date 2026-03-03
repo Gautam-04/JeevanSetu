@@ -30,33 +30,38 @@ No placeholders like [Your NGO Name].
 DATA:
 ${JSON.stringify(reportData, null, 2)}
 
-Structure the markdown exactly like this:
+Example markdown format:
 
-# Jeevansetu Annual Report ${reportData.year}
+# 📘 Jeevansetu Annual Report 2026
 
-## 1. Financial Summary
-- Total Donations Received: ₹<value>
-- Number of Donations: <value>
-- Net Amount After Payment Gateway Charges: ₹<value> (if provided)
+## 💰 Financial Overview
+- Total Donations: ₹5000
+- Average Donation: ₹5000
+- Monthly Average: ₹416.67
+- Platform Fee %: 2.36%
+- Net Funds Available: ₹4882
 
-Add 2-3 short analysis sentences based strictly on the numbers.
+## 👶 Children Impact
+- Total Supported: 7
+- New Admissions: 2
+- Retention Rate: 100%
+- Growth Rate: 28.57%
 
-## 2. Child Statistics
-- Total Children Supported: <value>
-- New Admissions: <value>
-- Children Left: <value>
+## 🏢 Centre Performance
+- Total Centres: 2
+- Capacity Utilization: 3.50%
+- Average Occupancy per Centre: 3.5
 
-Brief factual analysis only.
+## 📈 Fundraising Performance
+- Total Raised via Fundraisers: ₹5000
+- Combined Total Funds: ₹10000
+- Fundraiser Contribution Ratio: 50%
 
-## 3. Centre Performance
-- Total Centres: <value>
-- Occupancy Insights (if data exists)
+## 🔎 Strategic Insights
+(Generated summary paragraph here)
 
-## 4. Key Observations
-List 4–6 bullet insights derived ONLY from data.
-
-## 5. Outlook for Next Year
-Write realistic short goals based on trends.
+## 🚀 Outlook
+(Forward-looking paragraph)
 
 Important Rules:
 - Currency must be ₹.
