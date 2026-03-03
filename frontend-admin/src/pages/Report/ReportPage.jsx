@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { TbReportAnalytics } from "react-icons/tb"; // Matches your theme
-
+import "./ReportPage.css"
 const ReportPage = () => {
   const [year, setYear] = useState(new Date().getFullYear());
   const [report, setReport] = useState(null);
@@ -11,7 +11,7 @@ const ReportPage = () => {
     setLoading(true);
     try {
       // Replace with your actual API base URL
-      const response = await axios.get(`/api/reports/yearly/${year}`);
+      const response = await axios.get(`http://localhost:8000/api/yearly/${year}`);
       setReport(response.data.report);
     } catch (error) {
       console.error("Error fetching report:", error);
