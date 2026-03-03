@@ -80,12 +80,12 @@ const Dashboard = () => {
       to: "donations",
       color: "white",
     },
-    {
-      name: "Housing",
-      icon: <LuHouse className="sidebar-icon" />,
-      to: "housing",
-      color: "white",
-    },
+    // {
+    //   name: "Housing",
+    //   icon: <LuHouse className="sidebar-icon" />,
+    //   to: "housing",
+    //   color: "white",
+    // },
 
 
     {

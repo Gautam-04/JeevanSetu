@@ -12,6 +12,8 @@
   "dependencies": {
     "axios": "^1.12.2",
     "bootstrap": "^5.3.8",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^4.2.0",
     "material-react-table": "^3.2.1",
     "react": "^19.1.1",
     "react-bootstrap": "^2.10.10",
@@ -21,7 +23,8 @@
     "react-markdown": "^10.1.0",
     "react-router-dom": "^7.9.4",
     "react-to-print": "^3.2.0",
-    "react-toastify": "^11.0.5"
+    "react-toastify": "^11.0.5",
+    "recharts": "^3.7.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",

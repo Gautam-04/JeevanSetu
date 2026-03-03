@@ -29,11 +29,20 @@ export const generateYearlyReport = async (year) => {
   const totalAmount = donationData[0]?.totalAmount || 0;
   const donationCount = donationData[0]?.donationCount || 0;
 
-  // Razorpay Calculations
   const razorpayFee = totalAmount * 0.02;
   const gstOnFee = razorpayFee * 0.18;
   const totalGatewayDeduction = razorpayFee + gstOnFee;
   const netAmountReceived = totalAmount - totalGatewayDeduction;
+
+  const averageDonation =
+    donationCount > 0 ? totalAmount / donationCount : 0;
+
+  const monthlyAverageDonation = totalAmount / 12;
+
+  const platformFeePercentage =
+    totalAmount > 0
+      ? ((totalGatewayDeduction / totalAmount) * 100).toFixed(2)
+      : 0;
 
   // =============================
   // 2️⃣ Children Statistics
@@ -56,6 +65,21 @@ export const generateYearlyReport = async (year) => {
     ]
   });
 
+  const growthRate =
+    totalChildren > 0
+      ? ((childrenJoined / totalChildren) * 100).toFixed(2)
+      : 0;
+
+  const retentionRate =
+    totalChildren > 0
+      ? (((totalChildren - childrenLeft) / totalChildren) * 100).toFixed(2)
+      : 0;
+
+  const attritionRate =
+    totalChildren > 0
+      ? ((childrenLeft / totalChildren) * 100).toFixed(2)
+      : 0;
+
   // =============================
   // 3️⃣ Centre Statistics
   // =============================
@@ -77,6 +101,13 @@ export const generateYearlyReport = async (year) => {
       ? ((totalOccupancy / totalCapacity) * 100).toFixed(2)
       : 0;
 
+  const avgOccupancyPerCentre =
+    totalCentres > 0
+      ? (totalOccupancy / totalCentres).toFixed(2)
+      : 0;
+
+  const capacityUtilization = occupancyRate;
+
   // =============================
   // 4️⃣ Fundraiser Summary
   // =============================
@@ -93,6 +124,14 @@ export const generateYearlyReport = async (year) => {
   const totalFundraiserRaised =
     fundraiserData[0]?.totalRaised || 0;
 
+  const totalFundsCombined =
+    totalFundraiserRaised + totalAmount;
+
+  const fundraiserContributionRatio =
+    totalFundsCombined > 0
+      ? ((totalFundraiserRaised / totalFundsCombined) * 100).toFixed(2)
+      : 0;
+
   // =============================
   // Final Structured Report Data
   // =============================
@@ -102,29 +141,42 @@ export const generateYearlyReport = async (year) => {
     financials: {
       totalDonations: totalAmount,
       donationCount,
+      averageDonation,
+      monthlyAverageDonation,
       razorpayFee,
       gstOnFee,
       totalGatewayDeduction,
+      platformFeePercentage,
       netAmountReceived
     },
     childrenStats: {
       totalChildren,
       childrenJoined,
       childrenLeft,
-      activeChildren
+      activeChildren,
+      growthRate,
+      retentionRate,
+      attritionRate
     },
     centreStats: {
       totalCentres,
       totalCapacity,
       totalOccupancy,
-      occupancyRate
+      occupancyRate,
+      avgOccupancyPerCentre,
+      capacityUtilization
     },
     fundraiserStats: {
-      totalFundraiserRaised
+      totalFundraiserRaised,
+      totalFundsCombined,
+      fundraiserContributionRatio
     }
   };
 
   const markdown = await generateMarkdownReport(reportData);
 
-  return markdown;
+  return {
+    markdown,
+    rawData: reportData
+  };
 };
