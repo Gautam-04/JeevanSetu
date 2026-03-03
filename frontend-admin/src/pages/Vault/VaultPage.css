@@ -121,6 +121,7 @@ input[type="range"]::-moz-range-thumb {
 .filter-panel .MuiSlider-root {
   padding: 10px 0;
   color: var(--accent-yellow);
+  overflow: visible;
 }
 
 /* Track (selected range) */
@@ -291,4 +292,17 @@ input[type="range"]::-moz-range-thumb {
 
 .filter-chip span:hover {
   color: #dc2626;
+}
+
+.open-btn {
+  padding: 0.75rem 1.25rem;
+  border-radius: 2rem;
+  background: var(--panel-contrast);
+  color: white;
+  font-weight: 800;
+}
+
+.disabled-btn {
+  background-color: grey;
+  color: white;
 }
