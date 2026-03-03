@@ -37,6 +37,7 @@
   font-weight: 800;
   line-height: 1.1;
   margin-bottom: 0.5rem;
+  overflow: hidden;
 }
 
 .fundraiser-description,
@@ -195,7 +196,9 @@
   border: none;
   border-radius: 12px;
   cursor: pointer;
-  transition: transform 0.2s, background 0.3s;
+  transition:
+    transform 0.2s,
+    background 0.3s;
   margin-top: 10px;
 }
 

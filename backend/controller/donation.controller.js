@@ -2,8 +2,18 @@ import { Donation, Fundraiser } from "../model/donation.model.js";
 import { createHmac } from "node:crypto";
 import Razorpay from "razorpay";
 import Web3 from "web3";
-import moment from "moment-timezone";
 import nodemailer from "nodemailer";
+import path from "path";
+import os from "os";
+import generateDonationInvoice from "../services/receiptService/receiptService.ts";
+
+const ENABLE_REMOTE_BLOCKCHAIN_FLAG = process.env.ENABLE_REMOTE_BLOCKCHAIN_FLAG;
+const BLOCKCHAIN_PRIVATE_KEY = ENABLE_REMOTE_BLOCKCHAIN_FLAG
+  ? process.env.BLOCKCHAIN_PRIVATE_KEY
+  : process.env.FALLBACK_BLOCKCHAIN_PRIVATE_KEY;
+const BLOCKCHAIN_ACCOUNT = ENABLE_REMOTE_BLOCKCHAIN_FLAG
+  ? process.env.BLOCKCHAIN_ACCOUNT
+  : process.env.FALLBACK_BLOCKCHAIN_ACCOUNT;
 
 const razorpay = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,
@@ -37,7 +47,7 @@ const createOrder = async (req, res) => {
 class BlockchainService {
   constructor() {
     this.web3 = new Web3(
-      new Web3.providers.HttpProvider(process.env.BLOCKCHAIN_RPC_URL)
+      new Web3.providers.HttpProvider(process.env.BLOCKCHAIN_RPC_URL),
     );
   }
 
@@ -73,13 +83,13 @@ class BlockchainService {
 
       const dataHash = await this.web3.utils.sha3(JSON.stringify(data));
 
-      const privateKey = process.env.BLOCKCHAIN_PRIVATE_KEY;
+      const privateKey = BLOCKCHAIN_PRIVATE_KEY;
       const signedTx = await this.web3.eth.accounts.signTransaction(
         txObject,
-        privateKey
+        privateKey,
       );
       const receipt = await this.web3.eth.sendSignedTransaction(
-        signedTx.rawTransaction
+        signedTx.rawTransaction,
       );
       console.log(receipt);
 
@@ -112,7 +122,7 @@ const verifyPayment = async (req, res) => {
   try {
     const generate_signature = createHmac(
       "sha256",
-      process.env.RAZORPAY_KEY_SECRET
+      process.env.RAZORPAY_KEY_SECRET,
     )
       .update(`${razorpay_order_id}|${razorpay_payment_id}`)
       .digest("hex");
@@ -142,22 +152,22 @@ const verifyPayment = async (req, res) => {
         address,
         panNumber,
         dateOFBirth,
-      })
+      }),
     );
 
     const blockchainReceipt = await blockchainService.signTransaction(
       fromAddress,
-      process.env.BLOCKCHAIN_ACCOUNT,
-      donationData
+      BLOCKCHAIN_ACCOUNT,
+      donationData,
     );
 
     const fundraiser = await Fundraiser.findById(fundraiserId);
 
     if (fundraiser.isFixedAmount && Number(amount) !== fundraiser.fixedAmount) {
-        return res.status(400).json({
-            success: false,
-            message: "Amount tampering detected"
-        });
+      return res.status(400).json({
+        success: false,
+        message: "Amount tampering detected",
+      });
     }
 
     const newDonation = await Donation.create({
@@ -183,7 +193,7 @@ const verifyPayment = async (req, res) => {
       const newResponse = await Fundraiser.findByIdAndUpdate(
         fundraiserId,
         { amountRaised: updatedAmount },
-        { new: true }
+        { new: true },
       );
       if (!fundraiser || !newResponse) {
         return res
@@ -196,6 +206,31 @@ const verifyPayment = async (req, res) => {
 
     await newDonation.save();
     console.log(newDonation);
+
+    const invoicePath = path.join(
+      os.tmpdir(),
+      `donation-receipt-${newDonation.serialNumber}.pdf`,
+    );
+
+    const formattedDOB = new Date(newDonation.dateOFBirth).toLocaleDateString(
+      "en-GB",
+    );
+
+    generateDonationInvoice(
+      {
+        id: newDonation.paymentId.toString(),
+        name: newDonation.name,
+        address: newDonation.address,
+        mobile: newDonation.mobileNo,
+        email: newDonation.email,
+        pan: newDonation.panNumber,
+        dob: formattedDOB,
+        amount: newDonation.amount,
+        paymentMode: "Online Transfer",
+        date: new Date().toLocaleDateString("en-IN"),
+      },
+      invoicePath,
+    );
 
     const mailOptions = {
       from: `"Jeevan Samvardhan Foundation" <${process.env.EMAIL_USER}>`,
@@ -230,6 +265,12 @@ const verifyPayment = async (req, res) => {
       </body>
     </html>
   `,
+      attachments: [
+        {
+          filename: `donation-invoice-${newDonation.paymentId}.pdf`,
+          path: invoicePath,
+        },
+      ],
     };
 
     transporter.sendMail(mailOptions, (err, info) => {
@@ -281,7 +322,6 @@ const getDonations = async (req, res) => {
       fundraiser: fundraiserDetails,
       donations: donations || [],
     });
-
   } catch (error) {
     console.log(error);
     return res.status(500).json({
@@ -293,13 +333,21 @@ const getDonations = async (req, res) => {
 
 const createFundraiser = async (req, res) => {
   try {
-    const { name, description, logo, hasGoal, goal, isFixedAmount, fixedAmount } = req.body;
+    const {
+      name,
+      description,
+      logo,
+      hasGoal,
+      goal,
+      isFixedAmount,
+      fixedAmount,
+    } = req.body;
 
     if (isFixedAmount && !fixedAmount) {
-        return res.status(400).json({
-            success: false,
-            message: "Fixed amount is required"
-        });
+      return res.status(400).json({
+        success: false,
+        message: "Fixed amount is required",
+      });
     }
 
     // Check mandatory fields
@@ -321,12 +369,12 @@ const createFundraiser = async (req, res) => {
     // Create fundraiser with conditional goal handling
     const fundraiser = await Fundraiser.create({
       name,
-    description,
-    logo,
-    hasGoal,
-    goal: hasGoal ? goal : Number.MAX_SAFE_INTEGER,
-    isFixedAmount,
-    fixedAmount
+      description,
+      logo,
+      hasGoal,
+      goal: hasGoal ? goal : Number.MAX_SAFE_INTEGER,
+      isFixedAmount,
+      fixedAmount,
     });
 
     return res.status(201).json({

@@ -18,7 +18,7 @@ const uploadToCloudinary = async (file) => {
     {
       method: "POST",
       body: data,
-    }
+    },
   );
 
   const result = await res.json();
@@ -163,7 +163,7 @@ const EditChildPage = () => {
   };
 
   if (loading) {
-    return <p style={{ padding: "2rem" }}>Loading child data...</p>;
+    return <Spinner text="Loading data..." />;
   }
 
   return (
@@ -179,11 +179,21 @@ const EditChildPage = () => {
         <form onSubmit={handleSubmit}>
           <div className="edit-form-grid">
             <Field label="Name">
-              <input name="name" value={formData.name} onChange={handleChange} required />
+              <input
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+              />
             </Field>
 
             <Field label="Gender">
-              <select name="gender" value={formData.gender} onChange={handleChange} required>
+              <select
+                name="gender"
+                value={formData.gender}
+                onChange={handleChange}
+                required
+              >
                 <option value="">Select</option>
                 <option value="male">Male</option>
                 <option value="female">Female</option>
@@ -191,19 +201,40 @@ const EditChildPage = () => {
             </Field>
 
             <Field label="Date of Birth">
-              <input type="date" name="dob" value={formData.dob} onChange={handleChange} required />
+              <input
+                type="date"
+                name="dob"
+                value={formData.dob}
+                onChange={handleChange}
+                required
+              />
             </Field>
 
             <Field label="Height (cm)">
-              <input type="number" name="height" value={formData.height} onChange={handleChange} />
+              <input
+                type="number"
+                name="height"
+                value={formData.height}
+                onChange={handleChange}
+              />
             </Field>
 
             <Field label="Weight (kg)">
-              <input type="number" name="weight" value={formData.weight} onChange={handleChange} />
+              <input
+                type="number"
+                name="weight"
+                value={formData.weight}
+                onChange={handleChange}
+              />
             </Field>
 
             <Field label="Centre">
-              <select name="centre" value={formData.centre} onChange={handleChange} required>
+              <select
+                name="centre"
+                value={formData.centre}
+                onChange={handleChange}
+                required
+              >
                 <option value="">Select Centre</option>
                 {centres.map((c) => (
                   <option key={c._id} value={c._id}>
@@ -224,51 +255,101 @@ const EditChildPage = () => {
 
             {formData.standardofEducation?.toLowerCase() === "ssc" && (
               <Field label="SSC Marks (%)">
-                <input type="number" name="sscMarks" min="0" max="100" value={formData.sscMarks} onChange={handleChange} />
+                <input
+                  type="number"
+                  name="sscMarks"
+                  min="0"
+                  max="100"
+                  value={formData.sscMarks}
+                  onChange={handleChange}
+                />
               </Field>
             )}
 
             {formData.standardofEducation?.toLowerCase() === "hsc" && (
               <Field label="HSC Marks (%)">
-                <input type="number" name="hscMarks" min="0" max="100" value={formData.hscMarks} onChange={handleChange} />
+                <input
+                  type="number"
+                  name="hscMarks"
+                  min="0"
+                  max="100"
+                  value={formData.hscMarks}
+                  onChange={handleChange}
+                />
               </Field>
             )}
 
             <Field label="Parent Name">
-              <input name="parentName" value={formData.parentName} onChange={handleChange} />
+              <input
+                name="parentName"
+                value={formData.parentName}
+                onChange={handleChange}
+              />
             </Field>
 
             <Field label="Parent Contact">
-              <input name="parentContact" value={formData.parentContact} onChange={handleChange} />
+              <input
+                name="parentContact"
+                value={formData.parentContact}
+                onChange={handleChange}
+              />
             </Field>
 
             {/* 📸 IMAGE UPLOADS */}
             <Field label="Child Photo">
-              <input type="file" accept="image/*" onChange={(e) => setChildImage(e.target.files[0])} />
-              {existingImages.childrenImage && <small>Current image will be kept</small>}
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => setChildImage(e.target.files[0])}
+              />
+              {existingImages.childrenImage && (
+                <small>Current image will be kept</small>
+              )}
             </Field>
 
             <Field label="Aadhaar Card Image">
-              <input type="file" accept="image/*" onChange={(e) => setAadharImage(e.target.files[0])} />
-              {existingImages.aadharCardImage && <small>Current image will be kept</small>}
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => setAadharImage(e.target.files[0])}
+              />
+              {existingImages.aadharCardImage && (
+                <small>Current image will be kept</small>
+              )}
             </Field>
 
             <Field full label="Medical History">
-              <textarea name="medicalHistory" value={formData.medicalHistory} onChange={handleChange} />
+              <textarea
+                name="medicalHistory"
+                value={formData.medicalHistory}
+                onChange={handleChange}
+              />
             </Field>
 
             <Field full label="Details of Child">
-              <textarea name="detailsOfChild" value={formData.detailsOfChild} onChange={handleChange} />
+              <textarea
+                name="detailsOfChild"
+                value={formData.detailsOfChild}
+                onChange={handleChange}
+              />
             </Field>
 
             <Field full label="Achievements">
-              <textarea name="achievementsOfChild" value={formData.achievementsOfChild} onChange={handleChange} />
+              <textarea
+                name="achievementsOfChild"
+                value={formData.achievementsOfChild}
+                onChange={handleChange}
+              />
             </Field>
           </div>
 
           <div className="edit-form-actions">
             <button type="submit">Update</button>
-            <button type="button" className="cancel-btn" onClick={() => navigate(-1)}>
+            <button
+              type="button"
+              className="cancel-btn"
+              onClick={() => navigate(-1)}
+            >
               Cancel
             </button>
           </div>

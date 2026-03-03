@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./CentresPage.css";
 import { useNavigate } from "react-router-dom";
+import Spinner from "../../components/Spinner/Spinner";
 
 const CENTRE_API = "http://localhost:8000/api/centre/allcentre";
 
@@ -26,7 +27,7 @@ export default function CentresPage() {
   }, []);
 
   if (loading) {
-    return <div className="centres-loading">Loading centres...</div>;
+    return <Spinner text="Loading centres" />;
   }
 
   return (
@@ -73,15 +74,14 @@ export default function CentresPage() {
                   <span>Occupied: {occupied}</span>
                 </div>
 
-<button
-  className="view-btn"
-  onClick={() =>
-    navigate(`/dashboard/centrepage?mode=view&id=${centre._id}`)
-  }
->
-  View Details
-</button>
-
+                <button
+                  className="view-btn"
+                  onClick={() =>
+                    navigate(`/dashboard/centrepage?mode=view&id=${centre._id}`)
+                  }
+                >
+                  View Details
+                </button>
               </div>
             </div>
           );
