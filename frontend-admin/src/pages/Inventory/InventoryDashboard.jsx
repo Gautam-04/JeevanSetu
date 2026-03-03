@@ -1,9 +1,17 @@
 import { useEffect, useMemo, useState, useCallback } from "react";
 import axios from "axios";
 import { MaterialReactTable } from "material-react-table";
-import { MenuItem } from "@mui/material";
+import { 
+  MenuItem, 
+  Dialog, 
+  DialogTitle, 
+  DialogContent, 
+  DialogActions, 
+  Button, 
+  TextField 
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import ReactMarkdown from "react-markdown"; // Import the markdown handler
+import ReactMarkdown from "react-markdown";
 import "./Inventory.css";
 
 const API_BASE = "http://localhost:8000/api/centre";
@@ -12,6 +20,11 @@ const InventoryDashboard = ({ centreId }) => {
   const [inventory, setInventory] = useState([]);
   const [analysis, setAnalysis] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  // --- POP-UP STATE ---
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogData, setDialogData] = useState({ id: null, type: "", itemName: "" });
+  const [updateAmount, setUpdateAmount] = useState("");
 
   const [newItem, setNewItem] = useState({
     itemName: "",
@@ -23,7 +36,6 @@ const InventoryDashboard = ({ centreId }) => {
   const navigate = useNavigate();
 
   // --- API CALLS ---
-
   const fetchInventory = useCallback(async () => {
     if (!centreId) return;
     try {
@@ -56,6 +68,36 @@ const InventoryDashboard = ({ centreId }) => {
   }, [centreId, fetchInventory, fetchAnalysis]);
 
   // --- HANDLERS ---
+  const handleOpenDialog = (id, type, itemName) => {
+    setDialogData({ id, type, itemName });
+    setUpdateAmount(""); // Reset input
+    setDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setDialogOpen(false);
+  };
+
+  const handleConfirmUpdate = async () => {
+    const { id, type } = dialogData;
+    const qty = Number(updateAmount);
+
+    if (!qty || qty <= 0) {
+      alert("Please enter a valid quantity greater than 0");
+      return;
+    }
+
+    try {
+      const endpoint = type === "INCREASE" ? "increase" : "consume";
+      await axios.put(`${API_BASE}/${endpoint}/${id}`, { quantity: qty });
+      
+      handleCloseDialog();
+      fetchInventory();
+      fetchAnalysis();
+    } catch (err) {
+      alert(err.response?.data?.message || "Error updating stock");
+    }
+  };
 
   const handleAddInventory = async (e) => {
     e.preventDefault();
@@ -84,19 +126,6 @@ const InventoryDashboard = ({ centreId }) => {
       fetchAnalysis();
     } catch (err) {
       alert(err.response?.data?.message || "Delete failed");
-    }
-  };
-
-  const updateStock = async (id, type) => {
-    const qty = prompt(`Enter quantity to ${type}:`);
-    if (!qty) return;
-    try {
-      const endpoint = type === "INCREASE" ? "increase" : "consume";
-      await axios.put(`${API_BASE}/${endpoint}/${id}`, { quantity: Number(qty) });
-      fetchInventory();
-      fetchAnalysis();
-    } catch (err) {
-      alert(err.response?.data?.message || "Error updating stock");
     }
   };
 
@@ -208,10 +237,10 @@ const InventoryDashboard = ({ centreId }) => {
         positionActionsColumn="last"
         initialState={{ sorting: [{ id: "itemName", desc: false }] }}
         renderRowActionMenuItems={({ row }) => [
-          <MenuItem key="increase" onClick={() => updateStock(row.original._id, "INCREASE")}>
+          <MenuItem key="increase" onClick={() => handleOpenDialog(row.original._id, "INCREASE", row.original.itemName)}>
             ➕ Increase Stock
           </MenuItem>,
-          <MenuItem key="consume" onClick={() => updateStock(row.original._id, "CONSUME")}>
+          <MenuItem key="consume" onClick={() => handleOpenDialog(row.original._id, "CONSUME", row.original.itemName)}>
             ➖ Consume Stock
           </MenuItem>,
           <MenuItem key="delete" onClick={() => handleDelete(row.original._id)} style={{ color: "red" }}>
@@ -219,6 +248,36 @@ const InventoryDashboard = ({ centreId }) => {
           </MenuItem>,
         ]}
       />
+
+      {/* --- STOCK UPDATE DIALOG --- */}
+      <Dialog open={dialogOpen} onClose={handleCloseDialog} fullWidth maxWidth="xs">
+        <DialogTitle>
+          {dialogData.type === "INCREASE" ? "Restock" : "Consume"} {dialogData.itemName}
+        </DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            label="Quantity"
+            type="number"
+            fullWidth
+            variant="outlined"
+            value={updateAmount}
+            onChange={(e) => setUpdateAmount(e.target.value)}
+            placeholder={`Enter amount to ${dialogData.type === "INCREASE" ? "add" : "subtract"}`}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog} color="secondary">Cancel</Button>
+          <Button 
+            onClick={handleConfirmUpdate} 
+            variant="contained" 
+            color={dialogData.type === "INCREASE" ? "primary" : "error"}
+          >
+            Update Stock
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
