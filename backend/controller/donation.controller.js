@@ -6,6 +6,9 @@ import nodemailer from "nodemailer";
 import path from "path";
 import os from "os";
 import generateDonationInvoice from "../services/receiptService/receiptService.ts";
+import { GoogleGenerativeAI } from "@google/generative-ai";
+
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 const ENABLE_REMOTE_BLOCKCHAIN_FLAG = process.env.ENABLE_REMOTE_BLOCKCHAIN_FLAG;
 const BLOCKCHAIN_PRIVATE_KEY = ENABLE_REMOTE_BLOCKCHAIN_FLAG
@@ -292,8 +295,62 @@ const verifyPayment = async (req, res) => {
   }
 };
 
+const generateFundraiserInsights = async(reportData) => {
+  const model = genAI.getGenerativeModel({
+  model: "gemini-2.5-flash",
+  generationConfig: {
+    temperature: 0.3
+  }});
+
+const prompt = `
+Generate a very concise Fundraiser Performance Report in Markdown.
+
+STRICT RULES:
+- Maximum 250 words total
+- No introduction paragraph
+- No recommendations
+- No conclusion
+- No long explanations
+- No repeated data
+- No emojis inside paragraphs
+- No emojis only in section headings
+- Keep everything compact and website-friendly
+- Use short bullet points (max 5 per section)
+- If using tables, max 4 rows only
+
+DATA:
+${JSON.stringify(reportData, null, 2)}
+
+OUTPUT STRUCTURE ONLY:
+
+# 🎯 Fundraiser Performance Report
+
+## 💰 Financial Summary
+- Bullet insights only
+- If needed, include one small table
+
+## 📊 Donation Statistics
+- Bullet insights only
+
+## 🏆 Top Donor
+- 1–2 short lines only
+
+## 📈 Key Observations
+- 3–4 short bullet points
+
+Do NOT add any other section.
+Do NOT exceed 250 words.
+Keep it clean and minimal.
+`;
+
+  const result = await model.generateContent(prompt);
+  const response = await result.response;
+
+  return response.text();
+}
+
 const getDonations = async (req, res) => {
-  const { fundraiserId } = req.params;
+const { fundraiserId } = req.params;
 
   try {
     if (!fundraiserId) {
@@ -304,8 +361,7 @@ const getDonations = async (req, res) => {
     }
 
     const fundraiser = await Fundraiser.findById(fundraiserId)
-      .populate("donations")
-      .sort({ createdAt: -1 });
+      .populate("donations");
 
     if (!fundraiser) {
       return res.status(404).json({
@@ -314,16 +370,124 @@ const getDonations = async (req, res) => {
       });
     }
 
-    // Separate donations from fundraiser details
-    const { donations, ...fundraiserDetails } = fundraiser.toObject();
+    const donations = fundraiser.donations || [];
+
+    /* =====================================================
+       📊 Calculations
+    ===================================================== */
+
+    const donationCount = donations.length;
+
+    const totalAmount = donations.reduce(
+      (sum, d) => sum + (d.amount || 0),
+      0
+    );
+
+    const averageDonation =
+      donationCount > 0 ? totalAmount / donationCount : 0;
+
+    const highestDonation =
+      donationCount > 0
+        ? Math.max(...donations.map((d) => d.amount))
+        : 0;
+
+    const lowestDonation =
+      donationCount > 0
+        ? Math.min(...donations.map((d) => d.amount))
+        : 0;
+
+    /* =====================================================
+       📅 Monthly Average
+    ===================================================== */
+
+    const fundraiserCreated = fundraiser.createdAt;
+    const now = new Date();
+
+    const monthsRunning =
+      (now.getFullYear() - fundraiserCreated.getFullYear()) * 12 +
+      (now.getMonth() - fundraiserCreated.getMonth()) + 1;
+
+    const monthlyAverageDonation =
+      monthsRunning > 0 ? totalAmount / monthsRunning : 0;
+
+    /* =====================================================
+       💳 Gateway Calculations
+    ===================================================== */
+
+    const razorpayFee = totalAmount * 0.02;
+    const gstOnFee = razorpayFee * 0.18;
+    const totalGatewayDeduction = razorpayFee + gstOnFee;
+    const netAmountReceived = totalAmount - totalGatewayDeduction;
+    const platformFeePercentage =
+      totalAmount > 0
+        ? ((totalGatewayDeduction / totalAmount) * 100).toFixed(2)
+        : 0;
+
+    /* =====================================================
+       🏆 Top Donor
+    ===================================================== */
+
+    const donorMap = {};
+
+    donations.forEach((d) => {
+      const name = d.name || "Anonymous";
+      donorMap[name] = (donorMap[name] || 0) + d.amount;
+    });
+
+    let topDonorName = null;
+    let topDonorAmount = 0;
+
+    Object.entries(donorMap).forEach(([name, amount]) => {
+      if (amount > topDonorAmount) {
+        topDonorAmount = amount;
+        topDonorName = name;
+      }
+    });
+
+    /* =====================================================
+       📦 Raw Data Object
+    ===================================================== */
+
+    const rawData = {
+      fundraiserTitle: fundraiser.title,
+      goalAmount: fundraiser.goalAmount,
+      totalDonations: totalAmount,
+      donationCount,
+      averageDonation,
+      monthlyAverageDonation,
+      razorpayFee,
+      gstOnFee,
+      totalGatewayDeduction,
+      platformFeePercentage,
+      netAmountReceived,
+      highestDonation,
+      lowestDonation,
+      topDonorName,
+      topDonorAmount
+    };
+
+    /* =====================================================
+       🤖 Generate AI Markdown
+    ===================================================== */
+
+    const markdown = await generateFundraiserInsights(rawData);
+
+    /* =====================================================
+       📤 Response
+    ===================================================== */
+
+    const { donations: _, ...fundraiserDetails } = fundraiser.toObject();
 
     return res.status(200).json({
       success: true,
       fundraiser: fundraiserDetails,
-      donations: donations || [],
+      donations,
+      markdown,
+      rawData
     });
+
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res.status(500).json({
       success: false,
       message: "Internal server error",
