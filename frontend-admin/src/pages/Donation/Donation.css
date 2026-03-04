@@ -87,57 +87,54 @@
 
 .donation-charts {
   width: 80%;
-  height: 500px;
-  /* min-height: 40vh; */
-  flex-wrap: wrap;
-  /* background-color: salmon; */
   display: flex;
-  gap: 1rem;
-  padding: 2rem;
-  padding-inline: 0rem;
+  gap: 1.5rem;
+  padding: 2rem 0;
   justify-content: space-between;
-  align-items: center;
-  position: relative;
+  align-items: stretch;
+  /* Important */
 }
 
-.charts-donation-timeline {
-  position: relative;
-  background-color: white;
-  width: 50%;
-  height: 100%;
-  box-shadow: 2px 2px 4px var(--light-gray);
-  /* padding: 2rem; */
-  border-radius: 25px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid var(--primary-color-light);
-}
-
+/* Make BOTH chart cards identical */
+.charts-donation-timeline,
 .charts-donation-progress {
+  flex: 1;
+  /* Equal width */
+  height: 400px;
+  /* Fixed equal height */
   background-color: white;
   box-shadow: 2px 2px 4px var(--light-gray);
-  /* padding: 2rem; */
   border-radius: 25px;
-  width: 45% !important;
-  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   border: 1px solid var(--primary-color-light);
+  position: relative;
 }
 
+.charts-donation-timeline>.chart-container {
+  width: 100%;
+  height: fit-content !important;
+  padding: 1rem !important;
+}
+
+/* Remove internal size differences */
 .chart-container {
   width: 100%;
   height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  padding: 1.5rem;
 }
 
-.charts-donation-progress .chart-container {
-  width: 80%;
-  height: 80%;
+@media (max-width: 900px) {
+  .donation-charts {
+    flex-direction: column;
+  }
+
+  .charts-donation-timeline,
+  .charts-donation-progress {
+    width: 100%;
+    height: 350px;
+  }
 }
 
 .Mui-TableHeadCell-Content-Actions,
@@ -168,7 +165,89 @@
   }
 }
 
+/* ================= AI Insights Styling ================= */
+
+.fundraiser-insights {
+  width: 80%;
+  margin-top: 2rem;
+}
+
+.insights-card {
+  background: #f5f7fb;
+  border-left: 6px solid #2b3674;
+  border-radius: 12px;
+  padding: 2rem;
+  font-family: "Inter", sans-serif;
+  color: #1e293b;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* Headings */
+.analytics-main-heading {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #1e293b;
+}
+
+.analytics-section-heading {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: #2b3674;
+}
+
+/* Paragraph */
+.analytics-paragraph {
+  margin-bottom: 0.75rem;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+/* Lists */
+.analytics-list,
+.analytics-ordered-list {
+  margin-left: 1.2rem;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+.analytics-list li,
+.analytics-ordered-list li {
+  margin-bottom: 0.4rem;
+}
+
+/* Tables */
+.analytics-table-wrapper {
+  overflow-x: auto;
+  margin-top: 1rem;
+}
+
+.analytics-table-wrapper table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.analytics-table-wrapper th {
+  background-color: #2b3674;
+  color: white;
+  padding: 8px;
+  text-align: left;
+}
+
+.analytics-table-wrapper td {
+  border: 1px solid #e2e8f0;
+  padding: 8px;
+}
+
+.analytics-table-wrapper tr:nth-child(even) {
+  background-color: #f1f5f9;
+}
+
 @media print {
+
   .fundraiser-info-container,
   .donation-charts,
   .donation-container {

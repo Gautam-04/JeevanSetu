@@ -10,6 +10,7 @@ import { useParams } from "react-router-dom";
 import LineChart from "../../components/lineChart/LineChart";
 import DoughnutChart from "../../components/doughnutChart/DoughnutChart";
 import { useRef } from "react";
+import ReactMarkdown from "react-markdown";
 
 const DUMMY_DONATIONS_FLAG = false;
 
@@ -26,6 +27,9 @@ const [fundraiserInfo, setFundraiserInfo] = useState({
   isFixedAmount: false,
   fixedAmount: 0,
 });
+const [markdown, setMarkdown] = useState("");
+const [rawData, setRawData] = useState(null);
+const [analyticsChart, setAnalyticsChart] = useState(null);
   const [fundraiserStat, setFundraiserStat] = useState({
     data: [],
     fundraiser: { amountCollected: 0, goal: 0 },
@@ -121,10 +125,12 @@ const [fundraiserInfo, setFundraiserInfo] = useState({
         headers: { "Content-Type": "application/json" },
       }
     );
+    console.log(response.data);
 
     if (response.status === 200 && response.data.success) {
       const fundraiser = response.data.fundraiser;
       const donationList = response.data.donations || [];
+      
 
       // Add serial number safely
       const formattedDonations = donationList.map((donation, index) => ({
@@ -134,6 +140,8 @@ const [fundraiserInfo, setFundraiserInfo] = useState({
 
       setFundraiserInfo(fundraiser);
       setDonations(formattedDonations);
+      setMarkdown(response.data.markdown || "");
+      setRawData(response.data.rawData || null);
 
       setFundraiserStat({
         data: formattedDonations,
@@ -155,6 +163,35 @@ const [fundraiserInfo, setFundraiserInfo] = useState({
           amountRemaining: 0,
         });
       }
+
+      if (response.data.rawData) {
+  const data = response.data.rawData;
+
+  setAnalyticsChart({
+    labels: [
+      "Net Amount Received",
+      "Razorpay Fee",
+      "GST on Fee"
+    ],
+    datasets: [
+      {
+        label: "Amount (₹)",
+        data: [
+          data.netAmountReceived,
+          data.razorpayFee,
+          data.gstOnFee
+        ],
+        backgroundColor: [
+          "#2b3674",
+          "#f39c12",
+          "#e74c3c"
+        ],
+        borderColor: "#2b3674",
+        borderWidth: 1,
+      },
+    ],
+  });
+}
     }
   } catch (error) {
     console.error(error);
@@ -379,6 +416,40 @@ const [fundraiserInfo, setFundraiserInfo] = useState({
     )}
   </div>
 </div>
+{/* ================= Insights Section ================= */}
+{markdown && (
+  <div className="fundraiser-insights">
+    <h2 style={{ marginBottom: "15px" }}>📊 AI Insights & Analytics</h2>
+    <div className="insights-card">
+  <ReactMarkdown
+  components={{
+    h1: ({ node, ...props }) => (
+      <h2 className="analytics-main-heading" {...props} />
+    ),
+    h2: ({ node, ...props }) => (
+      <h3 className="analytics-section-heading" {...props} />
+    ),
+    p: ({ node, ...props }) => (
+      <p className="analytics-paragraph" {...props} />
+    ),
+    ul: ({ node, ...props }) => (
+      <ul className="analytics-list" {...props} />
+    ),
+    ol: ({ node, ...props }) => (
+      <ol className="analytics-ordered-list" {...props} />
+    ),
+    table: ({ ...props }) => (
+      <div className="analytics-table-wrapper">
+        <table {...props} />
+      </div>
+    ),
+  }}
+>
+  {markdown}
+</ReactMarkdown>
+</div>
+  </div>
+)}
 
           <div className="donation-charts">
             <div className="charts-donation-timeline">
@@ -393,6 +464,15 @@ const [fundraiserInfo, setFundraiserInfo] = useState({
                 title={"Goal Achieved"}
               />
             </div>
+            {/* ================= Financial Breakdown Chart ================= */}
+            {analyticsChart && (
+              <div className="charts-donation-progress">
+                <DoughnutChart
+                  chartData={analyticsChart}
+                  title={"Gateway & Net Amount Breakdown"}
+                />
+              </div>
+            )}
           </div>
 
           <div className="donation-container">
