@@ -2,12 +2,19 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+/* Apply smooth scrolling to the html element */
+html {
   scroll-behavior: smooth;
+}
+
+/* Prevent horizontal scroll at the root level, not on every element */
+body, html {
   overflow-x: hidden;
 }
 
 @media (min-width: 1200px) {
-
   h1,
   h2,
   h3,
@@ -20,8 +27,8 @@
   .h5,
   .h6,
   .h3,
-  h3,
   p {
+    /* You likely don't need this anymore, but leaving it if you had a specific reason */
     overflow-y: hidden;
   }
 }

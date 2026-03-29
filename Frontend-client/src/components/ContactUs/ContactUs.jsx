@@ -12,43 +12,65 @@ const galleryImages = [
   "/src/assets/q6.jpg",
 ];
 
+const EMPTY_FORM = {
+  name: "",
+  mobile: "",
+  email: "",
+  question: "",
+};
+
 const ContactUs = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    mobile: "",
-    email: "",
-    question: "",
-  });
+  const { t } = useTranslation();
+  const [formData, setFormData] = useState(EMPTY_FORM);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    // You can add API logic here (e.g., POST request)
-    toast.success("Your question has been submitted!");
-    setFormData({ name: "", mobile: "", email: "", question: "" });
-  };
+    setIsSubmitting(true);
 
-    const {t} = useTranslation();
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/contact-us", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        toast.success("Your question has been submitted!");
+        setFormData(EMPTY_FORM);
+      } else {
+        toast.error("Oops! Something went wrong. Please try again.");
+      }
+    } catch (err) {
+      console.error("Submission error:", err);
+      toast.error("Could not connect to the server. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div className="contact-us-wrapper">
       <div className="contact-us-gallery">
-        {galleryImages.map((image, index) => {
-          return (
-            <img
-              key={index}
-              className="contact-us-gallery-image"
-              src={image}
-              alt={`Gallery ${index + 1}`}
-            />
-          );
-        })}
+        {galleryImages.map((image, index) => (
+          <img
+            key={index}
+            className="contact-us-gallery-image"
+            src={image}
+            alt={`Gallery ${index + 1}`}
+          />
+        ))}
       </div>
+
       <div className="contact-us-form">
         <div className="title">{t("ContactTitle")}</div>
         <div className="sub-title">{t("ContactSubTitle")}</div>
@@ -94,7 +116,16 @@ const ContactUs = () => {
             required
           />
 
-          <button type="submit">{t("ContactSubmitButton")}</button>
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            style={{
+              opacity: isSubmitting ? 0.7 : 1,
+              cursor: isSubmitting ? "not-allowed" : "pointer",
+            }}
+          >
+            {isSubmitting ? "Sending..." : t("ContactSubmitButton")}
+          </button>
         </form>
       </div>
     </div>

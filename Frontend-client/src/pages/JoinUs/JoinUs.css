@@ -1,486 +1,480 @@
 /* =========================================
-   JoinUs.css – Jeevan Samvardhan Foundation
-   Styled to match main website theme
-   ========================================= */
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
-
-/* ── CSS Variables ── */
-:root {
-  --green-primary:  #0e926b;
-  --green-dark:     #008c68;
-  --green-deeper:   #076e50;
-  --orange:         #fca00c;
-  --white:          #ffffff;
-  --black:          #000000;
-  --text-dark:      #222222;
-  --text-body:      #444444;
-  --text-muted:     #666666;
-  --bg-light:       #f9f9f9;
-  --border-green:   #008c68;
-  --shadow-sm:      0 6px 18px rgba(0, 0, 0, 0.18);
-  --shadow-md:      0 10px 28px rgba(0, 0, 0, 0.22);
-  --shadow-card:    0 4px 10px rgba(0, 0, 0, 0.25);
-  --radius-sm:      8px;
-  --radius-md:      14px;
-  --radius-pill:    28px;
-  --font:           'Poppins', sans-serif;
-  --transition:     0.28s ease;
+   Global & Layout Setup
+========================================= */
+.ju-root {
+  font-family: inherit;
+  width: 100%;
+  overflow-x: hidden; /* Prevents horizontal scroll globally */
+  box-sizing: border-box;
 }
 
-/* ── Reset ── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-/* ── Root ── */
-.jsf-root {
-  font-family: var(--font);
-  color: var(--text-body);
-  background: var(--white);
-  line-height: 1.6;
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-}
-
-/* =====================
-   HERO
-   ===================== */
-.jsf-hero {
-  overflow: hidden;
-  position: relative;
-  background: linear-gradient(135deg, var(--green-deeper) 0%, var(--green-primary) 55%, var(--green-dark) 100%);
-  color: var(--white);
-  padding: 100px 40px 80px;
-  text-align: center;
-  overflow: hidden;
-}
-
-.jsf-hero__content {
-  overflow: hidden;
-  position: relative;
-  z-index: 2;
-  max-width: 680px;
+.ju-container {
+  max-width: 1200px;
   margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
 }
 
-.jsf-hero__tag {
-  display: inline-block;
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: #e0fff5;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 2px;
+.ju-section {
+  padding: 80px 0;
+}
+
+.ju-section--alt {
+  background-color: #f1f3f6; /* Soft modern gray */
+}
+
+.ju-section--navy {
+  background-color: #23408c; /* Brand blue */
+  color: #ffffff;
+}
+
+/* Typography & Utilities */
+.ju-section__title {
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-weight: 900;
+  color: #1a1a1a;
+  text-align: center;
+  margin-bottom: 15px;
+  text-transform: capitalize;
+  letter-spacing: -0.02em;
+}
+
+.ju-section__title--white {
+  color: #ffffff;
+}
+
+.ju-divider {
+  width: 80px;
+  height: 4px;
+  background: #23408c;
+  margin: 0 auto 25px;
+  border-radius: 4px;
+}
+
+.ju-divider--orange {
+  background: #ff9545;
+}
+
+.ju-section__sub {
+  text-align: center;
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  color: #334155;
+  margin-bottom: 50px;
+  max-width: 700px;
+  margin-inline: auto;
+  line-height: 1.6;
+}
+
+/* =========================================
+   1. NEW HERO SECTION (No Scrollbars)
+========================================= */
+.ju-hero {
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  padding: 100px 0;
+  width: 100%;
+}
+
+.ju-hero__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 50px;
+}
+
+.ju-hero__text-content {
+  flex: 1;
+  max-width: 600px;
+}
+
+.ju-tag {
+  display: inline-flex; /* Changed from inline-block */
+  align-items: center;  /* Forces vertical centering */
+  justify-content: center;
+  line-height: normal;  /* Overrides any global squished line-height */
+  background: rgba(35, 64, 140, 0.1);
+  color: #23408c;
+  padding: 8px 18px;
+  border-radius: 30px;
+  font-weight: 800;
+  font-size: 0.9rem;
+  margin-bottom: 25px;
   text-transform: uppercase;
-  padding: 6px 18px;
-  border-radius: var(--radius-pill);
+  letter-spacing: 1px;
+}
+
+.ju-hero h1 {
+  font-size: clamp(2.8rem, 6vw, 4rem);
+  font-weight: 900;
+  color: #1a1a1a;
+  margin-bottom: 20px;
+  line-height: 1.1;
+}
+
+.ju-highlight {
+  color: #23408c;
+}
+
+.ju-hero p {
+  font-size: clamp(1.1rem, 3vw, 1.25rem);
+  color: #334155;
+  margin-bottom: 40px;
+  line-height: 1.6;
+}
+
+.ju-hero__actions {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+/* Hero Visual Box */
+.ju-hero__visual {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ju-hero__image-card {
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 24px;
+  box-shadow: 0 20px 40px rgba(35, 64, 140, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border: 2px solid #f1f3f6;
+  transition: transform 0.3s ease;
+}
+
+.ju-hero__image-card:hover {
+  transform: translateY(-10px);
+}
+
+.ju-hero__icon {
+  font-size: 5rem;
   margin-bottom: 20px;
 }
 
-.jsf-hero__title {
-  font-size: clamp(2.5rem, 6vw, 3.8rem);
-  overflow: hidden;
+.ju-hero__card-text strong {
+  display: block;
+  font-size: 1.5rem;
+  color: #1a1a1a;
+  font-weight: 900;
+  margin-bottom: 5px;
+}
+
+.ju-hero__card-text span {
+  color: #ff9545;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+/* Buttons */
+.ju-btn {
+  display: inline-flex; /* Changed from inline-block */
+  align-items: center;  /* Forces vertical centering */
+  justify-content: center;
+  line-height: normal;  /* Overrides any global squished line-height */
+  background: #ff9545;
+  color: #1a1a1a;
+  padding: 16px 36px;
+  border-radius: 30px;
   font-weight: 800;
-  line-height: 1.06;
-  letter-spacing: 0.4px;
-  margin-bottom: 18px;
-  text-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
-}
-h2{
-  overflow: hidden;
-}
-
-.jsf-hero__sub {
-  font-size: 1.05rem;
-  opacity: 0.92;
-  max-width: 520px;
-  margin: 0 auto 32px;
-  line-height: 1.8;
-  color: #f0fff9;
-}
-
-/* Decorative circles */
-.jsf-hero__deco { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
-
-.jsf-deco-circle {
-  position: absolute;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-.jsf-deco-circle--1 { width: 380px; height: 380px; top: -120px; right: -100px; }
-.jsf-deco-circle--2 { width: 220px; height: 220px; bottom: -60px; left: -60px; }
-.jsf-deco-circle--3 { width: 140px; height: 140px; bottom: 40px; right: 14%; }
-
-/* =====================
-   BUTTONS
-   ===================== */
-.jsf-btn {
-  display: inline-block;
-  font-family: var(--font);
-  font-weight: 600;
-  border: none;
-  cursor: pointer;
+  font-size: 1.1rem;
   text-decoration: none;
-  transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
-  font-size: 1rem;
-  text-transform: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 2px solid #ff9545;
+  cursor: pointer;
+  text-align: center;
 }
 
-.jsf-btn--hero {
-  background: var(--orange);
-  color: var(--black);
-  padding: 12px 34px;
-  border-radius: var(--radius-sm);
-  font-size: 1rem;
-  box-shadow: 0 6px 10px rgba(252, 160, 12, 0.3);
-}
-.jsf-btn--hero:hover {
-  background: #e8900a;
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(252, 160, 12, 0.35);
+.ju-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(255, 149, 69, 0.35);
 }
 
-.jsf-btn--submit {
-  background: var(--orange);
-  color: var(--black);
-  padding: 12px 32px;
-  font-size: 0.95rem;
-  border-radius: var(--radius-sm);
-  width: 100%;
-  font-weight: 700;
-  box-shadow: 0 6px 10px rgba(252, 160, 12, 0.2);
-}
-.jsf-btn--submit:hover {
-  background: #e8900a;
-  transform: translateY(-1px);
-  box-shadow: 0 10px 20px rgba(252, 160, 12, 0.3);
+.ju-btn--outline {
+  background: transparent;
+  color: #23408c;
+  border-color: #23408c;
 }
 
-/* =====================
-   STATS
-   ===================== */
-.jsf-stats {
-  display: flex;
-  background: var(--white);
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
-  border-bottom: 3px solid #d4ede6;
+.ju-btn--outline:hover {
+  background: #23408c;
+  color: #ffffff;
+  box-shadow: 0 10px 25px rgba(35, 64, 140, 0.2);
 }
 
-.jsf-stats__item {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 28px 16px;
-  border-right: 1px solid #e5f2ee;
-  transition: background var(--transition);
+/* =========================================
+   2. How You Can Help (Cards)
+========================================= */
+.ju-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
 }
-.jsf-stats__item:last-child { border-right: none; }
-.jsf-stats__item:hover { background: #f0faf6; }
 
-.jsf-stats__num {
-  font-family: var(--font);
-  font-size: 1.85rem;
+.ju-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 40px 30px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid #f8fafc;
+}
+
+.ju-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+}
+
+.ju-card__icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 20px;
+}
+
+.ju-card h3 {
+  font-size: 1.4rem;
+  color: #23408c;
+  margin-bottom: 15px;
   font-weight: 800;
-  color: var(--green-primary);
-}
-.jsf-stats__label {
-  font-size: 0.72rem;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 1.2px;
-  margin-top: 4px;
-  font-weight: 600;
 }
 
-/* =====================
-   SECTIONS
-   ===================== */
-.jsf-section { padding: 80px 20px; }
-.jsf-section--light { background: var(--bg-light); }
-.jsf-section--green {
-  background-color: var(--green-primary);
-  color: var(--white);
-}
-
-.jsf-container { max-width: 1140px; margin: 0 auto; }
-
-.jsf-section-title {
-  text-align: center;
-  margin-bottom: 54px;
-}
-
-.jsf-section-title h2 {
-  font-size: clamp(1.6rem, 3vw, 2.4rem);
-  color: var(--black);
-  font-weight: 700;
-}
-.jsf-section-title--white h2 { color: var(--white); }
-
-.jsf-section-title p {
-  color: var(--text-muted);
-  margin-top: 12px;
-  max-width: 700px;
-  margin-inline: auto;
-  font-size: 16px;
-  line-height: 1.8;
-}
-
-.jsf-divider {
-  width: 56px;
-  height: 4px;
-  background: var(--green-primary);
-  border-radius: 2px;
-  margin: 14px auto 0;
-}
-.jsf-divider--white {
-  background: rgba(255, 255, 255, 0.5);
-}
-
-/* =====================
-   CARDS
-   ===================== */
-.jsf-cards {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 28px;
-  justify-content: center;
-}
-
-.jsf-card {
-  background: var(--white);
-  border-radius: var(--radius-md);
-  padding: 36px 28px;
-  flex: 1 1 220px;
-  max-width: 260px;
-  text-align: center;
-  box-shadow: var(--shadow-sm);
-  border: 2px solid var(--border-green);
-  transition: transform var(--transition), box-shadow var(--transition);
-}
-.jsf-card:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-md);
-}
-
-.jsf-card__icon { font-size: 2.4rem; margin-bottom: 14px; }
-.jsf-card__title {
-  color: var(--green-dark);
+.ju-card p {
+  color: #334155;
+  line-height: 1.6;
   font-size: 1.05rem;
-  font-weight: 700;
-  margin-bottom: 10px;
-}
-.jsf-card__desc {
-  font-size: 0.88rem;
-  color: var(--text-body);
-  line-height: 1.65;
+  margin: 0;
 }
 
-/* =====================
-   DONATE
-   ===================== */
-.jsf-donate {
+/* =========================================
+   3. Donate Section (Blob Layout)
+========================================= */
+.ju-donate {
   display: flex;
-  flex-wrap: wrap;
-  gap: 48px;
   align-items: center;
+  justify-content: space-between;
+  gap: 50px;
+  background: #ffffff;
+  padding: 60px;
+  border-radius: 24px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.05);
 }
 
-.jsf-donate__text { flex: 1 1 400px; }
-.jsf-donate__text h3 {
-  font-size: 1.55rem;
-  font-weight: 700;
-  color: var(--black);
-  margin-bottom: 18px;
-}
-.jsf-donate__text p {
-  color: var(--text-body);
-  line-height: 1.85;
-  margin-bottom: 14px;
-  font-size: 15.5px;
-  text-align: justify;
+.ju-donate__text {
+  flex: 1.2;
 }
 
-.jsf-donate__visual { flex: 1 1 260px; text-align: center; }
+.ju-donate__text h3 {
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  color: #1a1a1a;
+  margin-bottom: 20px;
+  font-weight: 900;
+}
 
-.jsf-donate__blob {
-  display: inline-flex;
+.ju-donate__text p {
+  color: #334155;
+  font-size: 1.15rem;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.ju-donate__blob {
+  flex: 0 0 320px;
+  height: 320px;
+  background: #f1f3f6;
+  border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 260px;
-  height: 260px;
-  background: linear-gradient(145deg, #d4ede6, #f0faf6);
-  border-radius: 50% 44% 56% 40% / 48% 52% 44% 56%;
-  box-shadow: var(--shadow-sm);
-  border: 2px solid var(--green-dark);
-  padding: 24px;
-}
-.jsf-donate__emoji { font-size: 3.5rem; margin-bottom: 10px; }
-.jsf-donate__blob p {
-  font-size: 1rem;
-  color: var(--green-deeper);
-  font-weight: 700;
   text-align: center;
-  margin-bottom: 4px;
-}
-.jsf-donate__blob small {
-  color: var(--green-primary);
-  font-size: 0.82rem;
-  font-weight: 500;
+  padding: 30px;
+  box-sizing: border-box;
+  box-shadow: inset 0 0 50px rgba(255, 149, 69, 0.15);
+  animation: blob-float 8s ease-in-out infinite alternate;
 }
 
-/* =====================
-   VOLUNTEER
-   ===================== */
-.jsf-volunteer {
+@keyframes blob-float {
+  0% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; transform: translateY(0); }
+  100% { border-radius: 60% 40% 30% 70% / 50% 60% 40% 50%; transform: translateY(-15px); }
+}
+
+.ju-donate__blob span { font-size: 4.5rem; margin-bottom: 10px; }
+.ju-donate__blob p { font-weight: 900; color: #23408c; font-size: 1.3rem; margin-bottom: 5px; }
+.ju-donate__blob small { color: #334155; font-size: 1rem; font-weight: 500; }
+
+/* =========================================
+   4. Volunteer & Form Section
+========================================= */
+.ju-volunteer {
   display: flex;
-  flex-wrap: wrap;
-  gap: 48px;
-  align-items: flex-start;
+  gap: 60px;
+  align-items: center;
+  margin-top: 50px;
 }
 
-.jsf-volunteer__info { flex: 1 1 380px; }
-.jsf-volunteer__info h3 {
-  font-size: 1.7rem;
-  font-weight: 700;
-  color: var(--white);
-  margin-bottom: 18px;
-}
-.jsf-volunteer__info p {
-  color: rgba(255, 255, 255, 0.9);
-  line-height: 1.85;
-  margin-bottom: 14px;
-  font-size: 15px;
+.ju-volunteer__info {
+  flex: 1;
 }
 
-.jsf-volunteer__list {
+.ju-volunteer__info h3 {
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  margin-bottom: 20px;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.ju-volunteer__info p {
+  font-size: 1.15rem;
+  line-height: 1.7;
+  margin-bottom: 30px;
+  color: #e2e8f0; 
+}
+
+.ju-volunteer__info ul {
   list-style: none;
-  margin-top: 12px;
+  padding: 0;
+  margin: 0;
 }
-.jsf-volunteer__list li {
-  color: rgba(255, 255, 255, 0.93);
-  padding: 9px 0;
-  font-size: 0.95rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+
+.ju-volunteer__info ul li {
+  font-size: 1.1rem;
+  margin-bottom: 18px;
+  padding-left: 35px;
+  position: relative;
+  color: #ffffff;
   line-height: 1.5;
 }
-.jsf-volunteer__list li:last-child { border-bottom: none; }
 
-/* =====================
-   FORM CARD
-   ===================== */
-.jsf-form-card {
-  flex: 1 1 320px;
-  max-width: 420px;
-  background: var(--white);
-  border-radius: var(--radius-md);
-  padding: 36px 32px;
-  box-shadow: 0 6px 28px rgba(0, 0, 0, 0.2);
+.ju-volunteer__info ul li::before {
+  content: "✔";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #ff9545;
+  font-weight: 900;
+  font-size: 1.2rem;
 }
 
-.jsf-form-card__heading {
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: var(--green-dark);
-  margin-bottom: 24px;
+/* Form Card */
+.ju-form-card {
+  flex: 1;
+  background: #ffffff;
+  padding: 45px 40px;
+  border-radius: 24px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+  color: #1a1a1a;
+  box-sizing: border-box;
 }
 
-.jsf-field { margin-bottom: 16px; }
-
-.jsf-field label {
-  display: block;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--text-dark);
-  margin-bottom: 6px;
-}
-
-.jsf-field input,
-.jsf-field select,
-.jsf-field textarea {
-  width: 100%;
-  padding: 12px 14px;
-  border: 1.5px solid #c5e0d8;
-  border-radius: var(--radius-sm);
-  font-family: var(--font);
-  font-size: 0.9rem;
-  color: var(--text-dark);
-  background: #fafffe;
-  outline: none;
-  transition: border-color var(--transition), box-shadow var(--transition);
-  appearance: auto;
-}
-
-.jsf-field input::placeholder,
-.jsf-field textarea::placeholder { color: #aac7be; }
-
-.jsf-field input:focus,
-.jsf-field select:focus,
-.jsf-field textarea:focus {
-  border-color: var(--green-primary);
-  box-shadow: 0 0 0 3px rgba(14, 146, 107, 0.15);
-  background: var(--white);
-}
-
-.jsf-field textarea {
-  height: 110px;
-  resize: vertical;
-}
-
-/* =====================
-   FOOTER
-   ===================== */
-.jsf-footer {
-  background: #000;
-  color: #aaaaaa;
+.ju-form-card h2 {
+  font-size: 2.2rem;
+  color: #23408c;
+  margin-bottom: 30px;
+  font-weight: 900;
   text-align: center;
-  padding: 32px 20px;
-  font-size: 0.9rem;
-}
-.jsf-footer strong { color: var(--green-primary); }
-.jsf-footer__sub {
-  color: #666;
-  font-size: 0.82rem;
-  margin-top: 6px;
 }
 
-/* =====================
-   RESPONSIVE
-   ===================== */
-@media (max-width: 768px) {
-  .jsf-hero { 
-    padding: 70px 24px 60px;
-  overflow: hidden; }
+.ju-field {
+  margin-bottom: 22px;
+  text-align: left;
+}
 
-  .jsf-stats { flex-wrap: wrap; }
-  .jsf-stats__item {
-    flex: 1 1 50%;
-    border-right: none;
-    border-bottom: 1px solid #e5f2ee;
+.ju-field label {
+  display: block;
+  font-weight: 800;
+  margin-bottom: 8px;
+  color: #334155;
+  font-size: 0.95rem;
+}
+
+.ju-field input,
+.ju-field select,
+.ju-field textarea {
+  width: 100%;
+  padding: 15px 18px;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-family: inherit;
+  color: #1a1a1a;
+  background: #f8fafc;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.ju-field input:focus,
+.ju-field select:focus,
+.ju-field textarea:focus {
+  outline: none;
+  border-color: #23408c;
+  background: #ffffff;
+  box-shadow: 0 4px 15px rgba(35, 64, 140, 0.08);
+}
+
+.ju-field textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.ju-btn--submit {
+  width: 100%;
+  margin-top: 15px;
+}
+
+/* =========================================
+   5. Responsive Adjustments
+========================================= */
+@media (max-width: 992px) {
+  .ju-hero__inner {
+    flex-direction: column;
+    text-align: center;
   }
-  .jsf-stats__item:nth-child(odd) { border-right: 1px solid #e5f2ee; }
+  
+  .ju-hero__actions {
+    justify-content: center;
+  }
 
-  .jsf-card { max-width: 100%; flex: 1 1 200px; }
+  .ju-donate,
+  .ju-volunteer {
+    flex-direction: column;
+    gap: 50px;
+    text-align: center;
+  }
+  
+  .ju-donate__blob {
+    flex: 0 0 280px;
+    height: 280px;
+    margin: 0 auto;
+  }
 
-  .jsf-donate__blob { width: 200px; height: 200px; }
-
-  .jsf-form-card { max-width: 100%; }
-
-  .jsf-section { padding: 56px 16px; }
+  .ju-volunteer__info ul li {
+    text-align: left;
+    display: inline-block;
+    width: 100%;
+    max-width: 400px;
+  }
 }
 
-@media (max-width: 480px) {
-  .jsf-stats__item { flex: 1 1 100%; border-right: none; }
-  .jsf-volunteer__info h3 { font-size: 1.4rem; }
-  .jsf-hero__title { font-size: 2rem; }
-}
+@media (max-width: 768px) {
+  .ju-section { padding: 60px 0; }
+  .ju-hero { padding: 80px 0; }
+  
+  .ju-cards {
+    grid-template-columns: 1fr;
+  }
 
-/* accessibility focus */
-button:focus, .jsf-btn:focus {
-  outline: 3px solid rgba(14, 146, 107, 0.25);
-  outline-offset: 3px;
-}
-.jsf-hero__content, .jsf-root,.jsf-hero__content{
-  overflow: hidden;
+  .ju-donate {
+    padding: 40px 20px;
+  }
+  
+  .ju-form-card {
+    padding: 35px 25px;
+    width: 100%;
+  }
 }

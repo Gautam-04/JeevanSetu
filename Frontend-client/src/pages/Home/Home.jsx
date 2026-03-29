@@ -69,7 +69,9 @@ function Home() {
 
       {/* ===== WELCOME SECTION ===== */}
       <Box className="welcome-section">
-        <Typography variant="h4">Welcome to Jeevan Samvardhan</Typography>
+        <Typography variant="h4">
+          Welcome to Jeevan Samvardhan Foundation
+        </Typography>
 
         <Typography variant="body1">
           Jeevan Samvardhan Foundation (JSJF), founded by Sadeshiv Chavan, is
