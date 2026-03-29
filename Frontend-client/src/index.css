@@ -1,49 +1,30 @@
+/* 1. Universal reset (Keep it clean) */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  scroll-behavior: smooth;
-  overflow-x: hidden;
 }
 
+/* 2. Apply smooth scrolling and prevent horizontal scroll ONLY on the body/html */
+html, body {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* 3. Safe Link defaults */
 a {
   text-decoration: none !important;
   color: var(--foreground) !important;
-  overflow: hidden;
+  /* Removed overflow: hidden */
 }
 
-button {
-  cursor: pointer;
-  padding: 0.5rem 1.2rem;
-  background-color: var(--accent-01);
-  border: 3px solid var(--foreground);
-  outline: none;
-}
-
+/* 4. Button & Button-like Links */
+button,
 .buttonized-link {
   cursor: pointer;
   padding: 0.5rem 1.2rem;
   background-color: var(--accent-01);
   border: 3px solid var(--foreground);
   outline: none;
-}
-
-@media (min-width: 1200px) {
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  .h1,
-  .h2,
-  .h4,
-  .h5,
-  .h6,
-  .h3,
-  h3,
-  p {
-    overflow-y: hidden;
-  }
 }

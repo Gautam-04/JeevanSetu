@@ -1,3 +1,6 @@
 h2{
-    overflow: hidden;
+    overflow: hidden !important     ; 
+}
+li{
+    overflow: hidden !important;
 }

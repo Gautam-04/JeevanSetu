@@ -11,7 +11,7 @@ i18n
     resources: {
       en: {
         translation: {
-            headerTitle: "Jeevan Samvardhan",
+            headerTitle: "Jeevan Samvardhan Foundation",
             HeaderHomeLink: "Home",
             HeaderAboutUsLink: "About Us",
             HeaderNewsLink: "News",
@@ -25,7 +25,7 @@ i18n
             HeroCard2Title: "Aamhalahi shikudya",
             HeroCard2Content: "Educational campaigns to guide underprivileged children towards learning, skill development, and a brighter future.",
             //welcome banner
-            WelcomeBannerTitle: "Welcome to Jeevan Samvardhan",
+            WelcomeBannerTitle: "Welcome to Jeevan Samvardhan Foundation",
             WelcomeBannerDesc:"Jeevan Samvardhan Foundation (JSF), founded by Sadashiv Chavan, is dedicated to uplifting homeless and underprivileged children. Rooted in rural Maharashtra, JSF provides education, nutrition, health awareness, sanitation, and vocational training—empowering children, youth, and women towards a dignified and self-reliant future.",
             WelcomeBannerGetInvolved: "Get Involved",
             WelcomeBannerDonateNow: "Donate Now",
@@ -35,7 +35,7 @@ FeaturedTitle: "Featured Campaigns",
 FeaturedSubTitle:"Growth often comes through challenges. By letting go of what is not essential, we create space for meaningful change.",
 //contact us
 ContactTitle: "Questions? Ask.",
-ContactSubTitle:"When you donate to Jeevan Samvardhan, you can be sure that your contribution is used responsibly. If you have questions before making a donation, please feel free to contact us.",
+ContactSubTitle:"When you donate to Jeevan Samvardhan Foundation , you can be sure that your contribution is used responsibly. If you have questions before making a donation, please feel free to contact us.",
 ContactNameLabel: "Name",
 ContactNamePlaceholder: "Your Name",
 ContactMobileLabel: "Mobile Number",
@@ -49,7 +49,7 @@ ContactSubmitButton: "Submit",
 TransparencyTitle: "Committed to Transparency",
 TransparencyDesc:"84% of our total operating expenses directly fund programs for children in the communities we serve. When you make a monthly gift or donation, the majority of your contribution goes exactly where you intend — supporting children in poverty.",
 //footer
-FooterLogoText: "Jeevan Samvardhan",
+FooterLogoText: "Jeevan Samvardhan Foundation",
 FooterConnect: "Connect with Us",
 FooterQuickLinks: "Quick Links",
 FooterFindUs: "Find us at",

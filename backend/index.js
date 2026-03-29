@@ -27,13 +27,18 @@ import donationRouter from "./routes/donation.routes.js";
 import childrenRouter from "./routes/children.routes.js";
 import centreRouter from "./routes/centre.routes.js";
 import reportRouter from "./routes/report.routes.js";
-
+import joinUsRouter from "./routes/joinUs.routes.js"
+import contactUsRouter from "./routes/contactUs.routes.js"
+import paymentFailedRouter from "./routes/paymentFailed.routes.js"
 // use router
 app.use("/api/user", userRouter);
 app.use("/api/donation", donationRouter);
 app.use("/api/", childrenRouter);
 app.use("/api/centre", centreRouter);
 app.use("/api/report", reportRouter);
+app.use("/api", joinUsRouter);
+app.use("/api", contactUsRouter);
+app.use("/api", paymentFailedRouter);
 
 //app commmands
 app.listen(PORT, () => {

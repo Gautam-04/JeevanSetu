@@ -1,194 +1,441 @@
-/* 1. Global Section Wrapper */
-.mission-vision-section,
-.who-we-are-section,
-.documents-section {
-  width: 100%;
-  max-width: 1200px; /* Limits width on ultra-wide screens */
-  margin: 60px auto; /* Centers the whole section */
-  padding: 0 20px;   /* Prevents content touching screen edges */
-  box-sizing: border-box;
+/* ============================================================
+   AboutUs.css — Jeevan Samvardhan Foundation
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,500&family=DM+Sans:wght@300;400;500&display=swap');
+
+:root {
+  --au-saffron:    #f5a623;
+  --au-saffron-lt: #fdf0d8;
+  --au-teal:       #0e6b6b;
+  --au-teal-dk:    #094f4f;
+  --au-teal-lt:    #e4f4f4;
+  --au-navy:       #12263a;
+  --au-cream:      #faf8f4;
+  --au-border:     #e8e0d4;
+  --au-text:       #2a2118;
+  --au-text-muted: #6b6258;
+  --au-serif:      'Playfair Display', Georgia, serif;
+  --au-sans:       'DM Sans', sans-serif;
 }
 
-/* 2. Mission & Vision Refinement */
+/* ============================================================
+   PAGE WRAPPER — fixes the off-center / edge-bleeding issues
+   ============================================================ */
+.about-page-wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 48px 32px 64px;
+}
+
+@media (max-width: 768px) {
+  .about-page-wrapper {
+    padding: 32px 18px 48px;
+  }
+}
+
+/* ============================================================
+   SECTION INTRO — shared heading style
+   ============================================================ */
+.au-section-label {
+  font-family: var(--au-sans);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--au-saffron);
+  margin: 0 0 10px;
+}
+
+/* ============================================================
+   MISSION & VISION
+   ============================================================ */
+.mission-vision-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin: 0 0 60px;
+}
+
+@media (max-width: 720px) {
+  .mission-vision-section {
+    grid-template-columns: 1fr;
+  }
+}
+
 .mission-block,
 .vision-block {
-  margin-bottom: 50px;
-  width: 100%;
+  background: #ffffff;
+  border: 1.5px solid var(--au-border);
+  border-radius: 20px;
+  padding: 36px 32px 32px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.05);
 }
+
+/* Coloured top bar */
+.mission-block::before,
+.vision-block::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  border-radius: 20px 20px 0 0;
+}
+.mission-block::before { background: var(--au-saffron); }
+.vision-block::before  { background: var(--au-teal); }
+
+/* Faint watermark icon in the corner */
+.mission-block::after,
+.vision-block::after {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  opacity: 0.05;
+}
+.mission-block::after { background: var(--au-saffron); }
+.vision-block::after  { background: var(--au-teal); }
 
 .mission-block h2,
-.vision-block h2,
-.who-we-are-section h3 {
-  font-size: clamp(1.6rem, 5vw, 2.2rem); /* Responsive font */
-  font-weight: 900;
-  overflow: hidden;
-  color: #1a1a1a;
+.vision-block h2 {
+  font-family: var(--au-serif);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 25px;
+  margin: 0 0 22px;
 }
+.mission-block h2 { color: var(--au-navy); }
+.vision-block h2  { color: var(--au-teal-dk); }
 
-.mission-block ul,
-.basic-needs-section ul {
+/* Mission list */
+.mission-block ul {
   list-style: none;
-  padding: 0;
   margin: 0;
-}
-
-.mission-block ul li,
-.vision-block p,
-.basic-needs-section ul li,
-.summary-text p {
-  font-size: clamp(1rem, 2.5vw, 1.2rem);
-  line-height: 1.7;
-  color: #334155;
-  margin-bottom: 16px;
-  position: relative;
-  padding-left: 28px;
-}
-
-.mission-block ul li::before,
-.basic-needs-section ul li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.6em;
-  width: 10px;
-  height: 10px;
-  background: #ff9545;
-  border-radius: 50%;
-}
-
-.mission-block::after {
-  content: "";
-  display: block;
-  width: 150px;
-  height: 3px;
-  background: #e5e8ef;
-  margin: 40px 0;
-}
-
-/* 3. Who We Are (The "Card" Layout) */
-.about-summary,
-.basic-needs-section {
-  background: #f1f3f6; /* Slightly softer gray */
-  border-radius: 24px;
-  padding: clamp(20px, 5vw, 45px);
+  padding: 0;
   display: flex;
-  gap: 40px;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.mission-block ul li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-family: var(--au-sans);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--au-text);
+  font-weight: 300;
+}
+
+.mission-block ul li::before {
+  content: '';
+  flex-shrink: 0;
+  margin-top: 8px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--au-saffron);
+}
+
+.vision-block p {
+  font-family: var(--au-sans);
+  font-size: 0.95rem;
+  line-height: 1.95;
+  color: var(--au-text-muted);
+  font-weight: 300;
+  font-style: italic;
+  padding: 16px 20px;
+  margin: 0;
+  background: var(--au-teal-lt);
+  border-left: 4px solid var(--au-teal);
+  border-radius: 0 10px 10px 0;
+}
+
+/* ============================================================
+   WHO WE ARE
+   ============================================================ */
+.who-we-are-section {
+  margin: 0 0 60px;
+}
+
+.who-we-are-section h3 {
+  font-family: var(--au-serif);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--au-navy);
+  letter-spacing: -0.02em;
+  margin: 0 0 6px;
+  padding: 0;
+  display: inline-block;
+}
+
+.who-we-are-section .au-section-label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.who-we-are-heading-bar {
+  width: 52px;
+  height: 4px;
+  border-radius: 4px;
+  background: var(--au-saffron);
+  margin: 10px 0 28px;
+}
+
+.about-summary {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 48px;
   align-items: center;
-  margin-top: 30px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-}
-
-.summary-text {
-  flex: 3;
-}
-
-.summary-text h4,
-.basic-needs-section h4 {
-  font-size: clamp(1.3rem, 4vw, 1.7rem);
+  background: var(--au-cream);
+  border: 1.5px solid var(--au-border);
+  border-radius: 22px;
+  padding: 44px 48px;
+  position: relative;
   overflow: hidden;
-  margin-bottom: 15px;
-  color: #23408c;
+  box-shadow: 0 4px 28px rgba(0, 0, 0, 0.06);
+}
+
+/* Subtle radial bg accents */
+.about-summary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 5% 95%, rgba(245, 166, 35, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 95% 5%,  rgba(14, 107, 107, 0.06) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+@media (max-width: 860px) {
+  .about-summary {
+    grid-template-columns: 1fr;
+    padding: 32px 28px;
+    gap: 32px;
+  }
+  .summary-image {
+    order: -1;
+    max-width: 200px;
+    margin: 0 auto;
+  }
+}
+
+.summary-text { position: relative; }
+
+.summary-text h4 {
+  font-family: var(--au-serif);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--au-teal-dk);
+  margin: 0 0 16px;
+}
+
+.summary-text p {
+  font-family: var(--au-sans);
+  font-size: 0.9rem;
+  line-height: 1.9;
+  color: var(--au-text-muted);
+  font-weight: 300;
+  margin: 0 0 28px;
 }
 
 .founder-name {
-  display: block;
-  font-size: 1.4rem;
-  font-weight: 800;
-  color: #1a1a1a;
-  margin-top: 15px;
+  display: inline-block;
+  font-family: var(--au-serif);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--au-teal);
+  border-top: 1px solid var(--au-border);
+  padding: 14px 0 0;
+  width: 100%;
+  background: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+  margin: 0;
 }
 
-/* 4. The Image (Handled for all sizes) */
-.summary-image {
-  flex: 2;
-  display: flex;
-  justify-content: center;
-}
+.summary-image { position: relative; }
 
 .summary-image img {
   width: 100%;
-  max-width: 380px; /* Max size on desktop */
-  height: auto;
-  aspect-ratio: 1 / 1;
+  height: 300px;
   object-fit: cover;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease;
+  object-position: top center;
+  border-radius: 16px;
+  display: block;
+  border: 4px solid #ffffff;
+  box-shadow: 8px 8px 0 var(--au-saffron), 0 16px 40px rgba(0, 0, 0, 0.12);
 }
 
-/* 5. Basic Needs (Matching Style) */
+/* ============================================================
+   BASIC NEEDS
+   ============================================================ */
 .basic-needs-section {
-  flex-direction: column; /* List stays vertical */
-  align-items: flex-start;
-  margin-left: 0; /* Removed the 8vw */
-  max-width: 100%;
+  margin: 0 0 60px;
+  background: var(--au-teal);
+  border-radius: 22px;
+  padding: 48px 52px;
+  position: relative;
+  overflow: hidden;
 }
 
-/* 6. Documents Gallery (Modern Grid) */
+/* Decorative rings */
+.basic-needs-section::before,
+.basic-needs-section::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.basic-needs-section::before {
+  width: 380px;
+  height: 380px;
+  border: 48px solid rgba(255, 255, 255, 0.06);
+  top: -130px;
+  right: -90px;
+}
+.basic-needs-section::after {
+  width: 220px;
+  height: 220px;
+  border: 32px solid rgba(255, 255, 255, 0.05);
+  bottom: -90px;
+  left: -50px;
+}
+
+.basic-needs-section h4 {
+  font-family: var(--au-serif);
+  font-size: 1.55rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 32px;
+  position: relative;
+}
+
+.basic-needs-section ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 14px;
+  position: relative;
+}
+
+.basic-needs-section ul li {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 12px;
+  padding: 16px 18px;
+  font-family: var(--au-sans);
+  font-size: 0.88rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.93);
+  line-height: 1.6;
+  transition: background 0.2s, transform 0.2s;
+  cursor: default;
+}
+
+.basic-needs-section ul li:hover {
+  background: rgba(255, 255, 255, 0.22);
+  transform: translateY(-3px);
+}
+
+@media (max-width: 640px) {
+  .basic-needs-section {
+    padding: 32px 24px;
+  }
+  .basic-needs-section ul {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================
+   DOCUMENTS
+   ============================================================ */
+.documents-section {
+  margin: 0;
+}
+
+.documents-section-title {
+  font-family: var(--au-serif);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--au-navy);
+  margin: 0 0 6px;
+}
+
+.documents-heading-bar {
+  width: 40px;
+  height: 4px;
+  border-radius: 4px;
+  background: var(--au-saffron);
+  margin: 10px 0 24px;
+}
+
 .documents-gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 25px;
-  margin-top: 30px;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.documents-gallery a {
+  display: block;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1.5px solid var(--au-border);
+  position: relative;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.25s, transform 0.25s;
+  color: inherit;
+}
+
+.documents-gallery a::after {
+  content: '↗ View Document';
+  position: absolute;
+  inset: 0;
+  background: rgba(9, 79, 79, 0.84);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-family: var(--au-sans);
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+.documents-gallery a:hover {
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.14);
+  transform: translateY(-4px);
+}
+
+.documents-gallery a:hover::after {
+  opacity: 1;
 }
 
 .documents-gallery img {
   width: 100%;
-  height: auto;
-  aspect-ratio: 3 / 4;
-  object-fit: contain;
-  background: #fff;
-  border: 1px solid #eee;
-  border-radius: 12px;
-  padding: 10px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-  transition: transform 0.3s ease;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  transition: transform 0.35s;
 }
 
-.documents-gallery img:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+.documents-gallery a:hover img {
+  transform: scale(1.05);
 }
-
-/* 7. RESPONSIVE QUERIES */
-
-/* Tablets & Small Desktops */
-@media (max-width: 992px) {
-  .about-summary {
-    flex-direction: column-reverse; /* Image moves to top or bottom */
-    text-align: center;
-  }
-  
-  .summary-image img {
-    max-width: 250px; /* Smaller image on mobile */
-  }
-
-  .mission-block ul li, 
-  .basic-needs-section ul li {
-    padding-left: 25px;
-    text-align: left;
-  }
-}
-
-/* Phones */
-@media (max-width: 576px) {
-  .mission-vision-section,
-  .who-we-are-section {
-    margin: 40px auto;
-  }
-
-  .about-summary,
-  .basic-needs-section {
-    padding: 20px;
-    border-radius: 16px;
-  }
-
-  .documents-gallery {
-    grid-template-columns: repeat(2, 1fr); /* 2 per row on small phones */
-    gap: 15px;
-  }
-}
-
