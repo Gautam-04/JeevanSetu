@@ -181,27 +181,37 @@ const DonateToFundraiser = () => {
 
     const paymentObject = new window.Razorpay(options);
 
-    // ✅ UPDATED: payment.failed handler now notifies admin via email
     paymentObject.on("payment.failed", async function (response) {
+      const err = response.error || {};
+
       try {
         await axios.post("http://localhost:8000/api/payment-failed", {
+          // Donor info
           name: formData.name,
           email: formData.email,
           mobile: formData.mobile,
           amount: formData.amount,
+          address: formData.address,
+          panNumber: formData.panNumber,
+          dateOfBirth: formData.dateOFBirth,
           fundraiserName: fundraiserInfo.name,
-          errorCode: response.error?.code || "",
-          errorDescription: response.error?.description || "Unknown error",
+          // All Razorpay error fields
+          errorCode: err.code || "",
+          errorDescription: err.description || "Unknown error",
+          errorReason: err.reason || "",
+          errorSource: err.source || "",
+          errorStep: err.step || "",
+          errorMetadata: err.metadata || null,
         });
-      } catch (err) {
-        console.error("Failed to notify admin of payment failure:", err);
+      } catch (notifyErr) {
+        console.error("Failed to notify admin of payment failure:", notifyErr);
       }
 
       setShowModal(false);
       setPaymentResult({
         status: "failed",
-        error: response.error?.description || "Payment could not be completed.",
-        code: response.error?.code || "",
+        error: err.description || "Payment could not be completed.",
+        code: err.code || "",
       });
     });
 
