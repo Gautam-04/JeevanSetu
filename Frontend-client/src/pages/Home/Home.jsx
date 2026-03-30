@@ -7,7 +7,7 @@ import DonationContainer from "../../components/DonationContainer/DonationContai
 import { Box, Typography, Button, Card, CardContent } from "@mui/material";
 
 import heroBg from "../../assets/figmachildrens.jpg";
-import chalaGhariImg from "../../assets/lostandfound.jpg";
+// import chalaGhariImg from "../../assets/lostandfound.jpg";
 import aamlahiImg from "../../assets/4.png";
 import bhuk from "../../assets/bhuk.jpg";
 import croppedCircleImg from "../../assets/cropped_circle_image.png";
@@ -30,8 +30,8 @@ function Home() {
             We change the lives of those who have no hope.
           </Typography>
 
-          <Box className="hero-cards">
-            <Card className="hero-card">
+          {/* <Box className="hero-cards"> */}
+            {/* <Card className="hero-card">
               <img src={chalaGhariImg} alt="Chala Ghari" />
               <CardContent>
                 <Typography variant="h6" className="hero-card-title">
@@ -46,9 +46,9 @@ function Home() {
                   Learn More
                 </Button>
               </CardContent>
-            </Card>
+            </Card> */}
 
-            <Card className="hero-card">
+            {/* <Card className="hero-card">
               <img src={aamlahiImg} alt="Aamhalahi Shikudya" />
               <CardContent>
                 <Typography variant="h6" className="hero-card-title">
@@ -62,8 +62,8 @@ function Home() {
                   Learn More
                 </Button>
               </CardContent>
-            </Card>
-          </Box>
+            </Card> */}
+          {/* </Box> */}
         </Box>
       </Box>
 

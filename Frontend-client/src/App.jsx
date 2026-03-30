@@ -9,6 +9,7 @@ import Footer from "./components/Footer/Footer";
 import DonateToFundraiser from "./pages/DonateToFundraiser/DonateToFundraiser";
 import News from "./pages/News/News";
 import JoinUs from "./pages/JoinUs/JoinUs";
+import Awards from "./components/Awards/Awards";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/joinus" element ={<JoinUs />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/donations" element={<Donation />} />
+        <Route path="/awards" element={<Awards />} />
       </Routes>
       <Footer />
       <ToastContainer

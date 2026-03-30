@@ -13,6 +13,7 @@ const Header = () => {
   const menuRef = useRef(null);
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
   const closeMenu = () => setIsMenuOpen(false);
+
   // Close menu on outside click
   useEffect(() => {
     const handleOutsideClick = (e) => {
@@ -29,7 +30,9 @@ const Header = () => {
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
     document.body.style.overflow = isMenuOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [isMenuOpen]);
 
   return (
@@ -54,11 +57,7 @@ const Header = () => {
       {/* ── Bottom Nav Bar ── */}
       <div className="header-bottom">
         {/* Logo */}
-        <Link
-          to="/"
-          className="logo-link"
-          onClick={closeMenu}
-        >
+        <Link to="/" className="logo-link" onClick={closeMenu}>
           <img src="/src/assets/JSLogoNoBG.png" alt="JeevanSamvardhan" />
           <span className="company-name">{t("headerTitle")}</span>
         </Link>
@@ -75,25 +74,39 @@ const Header = () => {
 
         {/* Nav Links */}
         <div className={`header-links ${isMenuOpen ? "active" : ""}`}>
-          <a href="/"              onClick={closeMenu}>{t("HeaderHomeLink")}</a>
-          <a href="/about"         onClick={closeMenu}>{t("HeaderAboutUsLink")}</a>
-          <a href="/news"          onClick={closeMenu}>{t("HeaderNewsLink")}</a>
-          <a href="/joinus"        onClick={closeMenu}>{t("HeaderJoinUsLink")}</a>
-          <a href="/#contact-section" onClick={closeMenu}>{t("HeaderContactLink")}</a>
+          <a href="/" onClick={closeMenu}>
+            {t("HeaderHomeLink")}
+          </a>
+          <a href="/about" onClick={closeMenu}>
+            {t("HeaderAboutUsLink")}
+          </a>
+          <a href="/news" onClick={closeMenu}>
+            {t("HeaderNewsLink")}
+          </a>
+
+          {/* ── Awards link (NEW) ── */}
+          <a href="/awards" onClick={closeMenu} className="header-awards-link">
+            {t("HeaderAwardsLink", "Awards")}
+          </a>
+
+          <a href="/joinus" onClick={closeMenu}>
+            {t("HeaderJoinUsLink")}
+          </a>
+          <a href="/#contact-section" onClick={closeMenu}>
+            {t("HeaderContactLink")}
+          </a>
 
           <button
             className="header-donate-now"
-            onClick={() => { navigate("/donations"); closeMenu(); }}
+            onClick={() => {
+              navigate("/donations");
+              closeMenu();
+            }}
           >
             {t("HeaderDonateNowLink")}
           </button>
 
-          {/*
-            Mobile-only language dropdown.
-            Wrapped in a div that breaks OUT of the nav's overflow
-            by using position: static and letting the dropdown
-            use a fixed/absolute strategy (see CSS).
-          */}
+          {/* Mobile-only language dropdown */}
           <div className="mobile-language-wrapper">
             <LanguageDropdown isMobile />
           </div>

@@ -78,7 +78,9 @@
 }
 .logo-link {
   gap: 10px;
-  flex-shrink: 0;
+  /* Key fix: allow logo to shrink but don't let it steal hamburger space */
+  flex-shrink: 1;
+  min-width: 0;        /* allows children to shrink below their natural size */
   cursor: pointer;
   text-decoration: none;
   color: inherit;
@@ -93,6 +95,7 @@
 .header-title img,
 .logo-link img {
   width: clamp(120px, 15vw, 160px);
+  flex-shrink: 0; /* logo image never shrinks */
   height: auto;
 }
 .company-name {
@@ -101,6 +104,10 @@
   letter-spacing: -0.5px;
   line-height: 1.4;
   white-space: nowrap;
+  /* Truncate with ellipsis if it overflows */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
 }
 .header-links {
   display: flex;
@@ -144,6 +151,8 @@
   cursor: pointer;
   color: var(--accent-01, #0e926b);
   z-index: 1001;
+  /* Never shrink — hamburger always gets its space */
+  flex-shrink: 0;
 }
 @media (max-width: 1024px) {
   .header-links {
@@ -254,11 +263,35 @@
     background-color: #f0fdf8 !important;
   }
 }
-@media (max-width: 480px) {
-  .logo-link img {
-    width: 40px;
-  }
+
+/* ── Tablet / large mobile ───────────────────────────── */
+@media (max-width: 768px) {
   .company-name {
     font-size: 1.1rem;
+  }
+
+  .logo-link img {
+    width: clamp(36px, 10vw, 48px);
+  }
+}
+
+/* ── Small mobile ────────────────────────────────────── */
+@media (max-width: 480px) {
+  .logo-link img {
+    width: 36px;
+  }
+
+  .company-name {
+    font-size: 0.95rem;
+    /* On very small screens show only first two words via max-width trick */
+    max-width: calc(100vw - 120px); /* 36px img + 10px gap + 44px hamburger + padding */
+  }
+}
+
+/* ── Very small (≤ 360px) ────────────────────────────── */
+@media (max-width: 360px) {
+  .company-name {
+    font-size: 0.85rem;
+    max-width: calc(100vw - 110px);
   }
 }
