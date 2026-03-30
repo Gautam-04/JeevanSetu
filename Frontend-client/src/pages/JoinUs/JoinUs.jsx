@@ -1,75 +1,38 @@
 import { useState, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import "./JoinUs.css";
 
-const CARDS = [
-  {
-    icon: "📚",
-    title: "Most Trusted",
-    desc: "Spend time with children, teaching them useful disciplines and life skills that shape their futures.",
-  },
-  {
-    icon: "🌱",
-    title: "Super Growth",
-    desc: "Bring your ideas to improve our programs and help us scale our impact to more communities.",
-  },
-  {
-    icon: "🏛️",
-    title: "Our Foundation",
-    desc: "Contribute your motivation and energy to support our mission through awareness and outreach.",
-  },
-  {
-    icon: "✨",
-    title: "Awesome Work",
-    desc: "Participate financially or in-kind — every contribution, big or small, creates a real difference.",
-  },
-];
-
-const ACTIVITIES = [
-  "📖 Teaching and tutoring sessions",
-  "🎨 Art, music & recreational activities",
-  "💼 Skill development workshops",
-  "📣 Awareness campaigns & fundraising",
-  "🏕️ Weekend outreach programs",
-];
-
-const FORM_FIELDS = [
-  {
-    label: "Name",
-    name: "user_name",
-    type: "text",
-    placeholder: "Enter your name",
-  },
-  {
-    label: "Mobile Number",
-    name: "user_mobile",
-    type: "tel",
-    placeholder: "Enter mobile number",
-  },
-  {
-    label: "Email Address",
-    name: "user_email",
-    type: "email",
-    placeholder: "Enter your email",
-  },
-  {
-    label: "Location",
-    name: "user_location",
-    type: "text",
-    placeholder: "Enter your location",
-  },
-];
-
-const EMPTY_FORM = {
-  user_name: "",
-  user_mobile: "",
-  user_email: "",
-  user_location: "",
-  user_role: "",
-  user_comments: "",
-};
-
 export default function JoinUs() {
+  const { t } = useTranslation();
   const formRef = useRef();
+
+  const CARDS = [
+    { icon: "📚", titleKey: "JoinUsCard1Title", descKey: "JoinUsCard1Desc" },
+    { icon: "🌱", titleKey: "JoinUsCard2Title", descKey: "JoinUsCard2Desc" },
+    { icon: "🏛️", titleKey: "JoinUsCard3Title", descKey: "JoinUsCard3Desc" },
+    { icon: "✨", titleKey: "JoinUsCard4Title", descKey: "JoinUsCard4Desc" },
+  ];
+
+  const ACTIVITIES = [
+    { icon: "📖", key: "JoinUsActivity1" },
+    { icon: "🎨", key: "JoinUsActivity2" },
+    { icon: "💼", key: "JoinUsActivity3" },
+    { icon: "📣", key: "JoinUsActivity4" },
+    { icon: "🏕️", key: "JoinUsActivity5" },
+  ];
+
+  const FORM_FIELDS = [
+    { labelKey: "JoinUsNameLabel",     name: "user_name",     type: "text",  placeholderKey: "JoinUsNamePlaceholder" },
+    { labelKey: "JoinUsMobileLabel",   name: "user_mobile",   type: "tel",   placeholderKey: "JoinUsMobilePlaceholder" },
+    { labelKey: "JoinUsEmailLabel",    name: "user_email",    type: "email", placeholderKey: "JoinUsEmailPlaceholder" },
+    { labelKey: "JoinUsLocationLabel", name: "user_location", type: "text",  placeholderKey: "JoinUsLocationPlaceholder" },
+  ];
+
+  const EMPTY_FORM = {
+    user_name: "", user_mobile: "", user_email: "",
+    user_location: "", user_role: "", user_comments: "",
+  };
+
   const [form, setForm] = useState(EMPTY_FORM);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -81,33 +44,22 @@ export default function JoinUs() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-
     try {
-      // NOTE: Make sure this URL matches your backend environment.
-      // If you use a proxy in vite/CRA, you can just use "/api/join-us"
       const response = await fetch("http://127.0.0.1:8000/api/join-us", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-
       const data = await response.json();
-
       if (data.success) {
-        alert(
-          "Thank you for joining us! Your message has been sent successfully.",
-        );
+        alert("Thank you for joining us! Your message has been sent successfully.");
         setForm(EMPTY_FORM);
       } else {
         alert("Oops! Something went wrong. Please try again.");
       }
     } catch (err) {
       console.error("Submission error:", err);
-      alert(
-        "Oops! Something went wrong. Please check your connection and try again.",
-      );
+      alert("Oops! Something went wrong. Please check your connection and try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -115,36 +67,27 @@ export default function JoinUs() {
 
   return (
     <div className="ju-root">
-      {/* ── NEW CLEAN HERO ── */}
+      {/* ── HERO ── */}
       <section className="ju-hero">
         <div className="ju-container ju-hero__inner">
           <div className="ju-hero__text-content">
-            <span className="ju-tag">Jeevan Samvardhan Foundation</span>
+            <span className="ju-tag">{t("JoinUsTag")}</span>
             <h1>
-              Become a Part of <br />
-              <span className="ju-highlight">Our Mission</span>
+              {t("JoinUsHeroTitle")} <br />
+              <span className="ju-highlight">{t("JoinUsHeroHighlight")}</span>
             </h1>
-            <p>
-              Your time, energy, and resources can transform the lives of
-              underprivileged children across India. Join our community of
-              changemakers today.
-            </p>
+            <p>{t("JoinUsHeroDesc")}</p>
             <div className="ju-hero__actions">
-              <a href="#join-form" className="ju-btn">
-                Get Involved →
-              </a>
-              <a href="#how-to-help" className="ju-btn ju-btn--outline">
-                Learn More
-              </a>
+              <a href="#join-form" className="ju-btn">{t("JoinUsGetInvolved")}</a>
+              <a href="#how-to-help" className="ju-btn ju-btn--outline">{t("JoinUsLearnMore")}</a>
             </div>
           </div>
-
           <div className="ju-hero__visual">
             <div className="ju-hero__image-card">
               <span className="ju-hero__icon">🤝</span>
               <div className="ju-hero__card-text">
-                <strong>Together we rise</strong>
-                <span>Join 500+ Volunteers</span>
+                <strong>{t("JoinUsTogetherWeRise")}</strong>
+                <span>{t("JoinUsJoin500")}</span>
               </div>
             </div>
           </div>
@@ -154,18 +97,15 @@ export default function JoinUs() {
       {/* ── HOW YOU CAN HELP ── */}
       <section className="ju-section" id="how-to-help">
         <div className="ju-container">
-          <h2 className="ju-section__title">How Can We Help You Help Us?</h2>
+          <h2 className="ju-section__title">{t("JoinUsHowTitle")}</h2>
           <div className="ju-divider" />
-          <p className="ju-section__sub">
-            Everybody can help Jeevan Samvardhan Foundation. Check the different
-            ways to get involved.
-          </p>
+          <p className="ju-section__sub">{t("JoinUsHowSub")}</p>
           <div className="ju-cards">
             {CARDS.map((c) => (
-              <div className="ju-card" key={c.title}>
+              <div className="ju-card" key={c.titleKey}>
                 <span className="ju-card__icon">{c.icon}</span>
-                <h3>{c.title}</h3>
-                <p>{c.desc}</p>
+                <h3>{t(c.titleKey)}</h3>
+                <p>{t(c.descKey)}</p>
               </div>
             ))}
           </div>
@@ -175,24 +115,18 @@ export default function JoinUs() {
       {/* ── DONATE ── */}
       <section className="ju-section ju-section--alt">
         <div className="ju-container">
-          <h2 className="ju-section__title">Make Something You Can Donate</h2>
+          <h2 className="ju-section__title">{t("JoinUsDonateTitle")}</h2>
           <div className="ju-divider" />
           <div className="ju-donate">
             <div className="ju-donate__text">
-              <h3>Not All Needs Are Financial</h3>
-              <p>
-                Many charities collect and distribute clothing or handmade items
-                for a variety of services.
-              </p>
-              <p>
-                Your skills — however modest you think they are — can bring
-                warmth, comfort, and dignity to someone in need.
-              </p>
+              <h3>{t("JoinUsDonateSubTitle")}</h3>
+              <p>{t("JoinUsDonateDesc1")}</p>
+              <p>{t("JoinUsDonateDesc2")}</p>
             </div>
             <div className="ju-donate__blob">
               <span>🤝</span>
-              <p>Donate &amp; Make a Difference</p>
-              <small>Your gift changes lives</small>
+              <p>{t("JoinUsDonateBlob")}</p>
+              <small>{t("JoinUsDonateGift")}</small>
             </div>
           </div>
         </div>
@@ -202,36 +136,33 @@ export default function JoinUs() {
       <section className="ju-section ju-section--navy" id="join-form">
         <div className="ju-container">
           <h2 className="ju-section__title ju-section__title--white">
-            Become a Volunteer
+            {t("JoinUsVolunteerTitle")}
           </h2>
           <div className="ju-divider ju-divider--orange" />
           <div className="ju-volunteer">
             {/* Left info */}
             <div className="ju-volunteer__info">
-              <h3>Your Time Can Change Lives</h3>
-              <p>
-                Millions of underprivileged children in India are deprived of
-                their basic rights.
-              </p>
+              <h3>{t("JoinUsVolunteerSub")}</h3>
+              <p>{t("JoinUsVolunteerDesc")}</p>
               <ul>
                 {ACTIVITIES.map((a) => (
-                  <li key={a}>{a}</li>
+                  <li key={a.key}>{a.icon} {t(a.key)}</li>
                 ))}
               </ul>
             </div>
 
             {/* Right form */}
             <div className="ju-form-card">
-              <h2>Join Us</h2>
+              <h2>{t("JoinUsFormTitle")}</h2>
               <form ref={formRef} onSubmit={handleSubmit}>
-                {FORM_FIELDS.map(({ label, name, type, placeholder }) => (
+                {FORM_FIELDS.map(({ labelKey, name, type, placeholderKey }) => (
                   <div className="ju-field" key={name}>
-                    <label htmlFor={name}>{label}</label>
+                    <label htmlFor={name}>{t(labelKey)}</label>
                     <input
                       id={name}
                       name={name}
                       type={type}
-                      placeholder={placeholder}
+                      placeholder={t(placeholderKey)}
                       value={form[name]}
                       onChange={handleChange}
                       required
@@ -240,7 +171,7 @@ export default function JoinUs() {
                 ))}
 
                 <div className="ju-field">
-                  <label htmlFor="user_role">I want to be</label>
+                  <label htmlFor="user_role">{t("JoinUsRoleLabel")}</label>
                   <select
                     id="user_role"
                     name="user_role"
@@ -248,20 +179,20 @@ export default function JoinUs() {
                     onChange={handleChange}
                     required
                   >
-                    <option value="">-- Please Select --</option>
-                    <option value="volunteer">Volunteer</option>
-                    <option value="donor">Donor</option>
-                    <option value="mentor">Mentor</option>
-                    <option value="partner">Partner Organization</option>
+                    <option value="">{t("JoinUsRoleDefault")}</option>
+                    <option value="volunteer">{t("JoinUsRoleVolunteer")}</option>
+                    <option value="donor">{t("JoinUsRoleDonor")}</option>
+                    <option value="mentor">{t("JoinUsRoleMentor")}</option>
+                    <option value="partner">{t("JoinUsRolePartner")}</option>
                   </select>
                 </div>
 
                 <div className="ju-field">
-                  <label htmlFor="user_comments">Comments</label>
+                  <label htmlFor="user_comments">{t("JoinUsCommentsLabel")}</label>
                   <textarea
                     id="user_comments"
                     name="user_comments"
-                    placeholder="Type your comments here..."
+                    placeholder={t("JoinUsCommentsPlaceholder")}
                     value={form.user_comments}
                     onChange={handleChange}
                     rows={4}
@@ -277,7 +208,7 @@ export default function JoinUs() {
                     cursor: isSubmitting ? "not-allowed" : "pointer",
                   }}
                 >
-                  {isSubmitting ? "Submitting..." : "Submit →"}
+                  {isSubmitting ? t("JoinUsSubmitting") : t("JoinUsSubmit")}
                 </button>
               </form>
             </div>

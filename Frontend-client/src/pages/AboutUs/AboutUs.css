@@ -1,26 +1,10 @@
 /* ============================================================
    AboutUs.css — Jeevan Samvardhan Foundation
+   Remapped to project design system (variables.css)
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,500&family=DM+Sans:wght@300;400;500&display=swap');
-
-:root {
-  --au-saffron:    #f5a623;
-  --au-saffron-lt: #fdf0d8;
-  --au-teal:       #0e6b6b;
-  --au-teal-dk:    #094f4f;
-  --au-teal-lt:    #e4f4f4;
-  --au-navy:       #12263a;
-  --au-cream:      #faf8f4;
-  --au-border:     #e8e0d4;
-  --au-text:       #2a2118;
-  --au-text-muted: #6b6258;
-  --au-serif:      'Playfair Display', Georgia, serif;
-  --au-sans:       'DM Sans', sans-serif;
-}
-
 /* ============================================================
-   PAGE WRAPPER — fixes the off-center / edge-bleeding issues
+   PAGE WRAPPER
    ============================================================ */
 .about-page-wrapper {
   max-width: 1100px;
@@ -38,12 +22,12 @@
    SECTION INTRO — shared heading style
    ============================================================ */
 .au-section-label {
-  font-family: var(--au-sans);
+  font-family: 'Outfit', 'Inter', sans-serif;
   font-size: 0.72rem;
   font-weight: 500;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--au-saffron);
+  color: var(--accent-02);
   margin: 0 0 10px;
 }
 
@@ -65,8 +49,8 @@
 
 .mission-block,
 .vision-block {
-  background: #ffffff;
-  border: 1.5px solid var(--au-border);
+  background: var(--background);
+  border: 1.5px solid var(--grey);
   border-radius: 20px;
   padding: 36px 32px 32px;
   position: relative;
@@ -85,10 +69,10 @@
   height: 5px;
   border-radius: 20px 20px 0 0;
 }
-.mission-block::before { background: var(--au-saffron); }
-.vision-block::before  { background: var(--au-teal); }
+.mission-block::before { background: var(--accent-02); }
+.vision-block::before  { background: var(--accent-01); }
 
-/* Faint watermark icon in the corner */
+/* Faint watermark circle in the corner */
 .mission-block::after,
 .vision-block::after {
   content: '';
@@ -100,20 +84,20 @@
   border-radius: 50%;
   opacity: 0.05;
 }
-.mission-block::after { background: var(--au-saffron); }
-.vision-block::after  { background: var(--au-teal); }
+.mission-block::after { background: var(--accent-02); }
+.vision-block::after  { background: var(--accent-01); }
 
 .mission-block h2,
 .vision-block h2 {
-  font-family: var(--au-serif);
-  font-size: 1.15rem;
-  font-weight: 700;
+  font-family: 'Monomaniac One', 'Orelega One', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 400;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   margin: 0 0 22px;
 }
-.mission-block h2 { color: var(--au-navy); }
-.vision-block h2  { color: var(--au-teal-dk); }
+.mission-block h2 { color: var(--dark); }
+.vision-block h2  { color: var(--accent-01-dark); }
 
 /* Mission list */
 .mission-block ul {
@@ -129,11 +113,11 @@
   display: flex;
   align-items: flex-start;
   gap: 12px;
-  font-family: var(--au-sans);
+  font-family: 'Atkinson Hyperlegible', 'Inter', sans-serif;
   font-size: 0.9rem;
   line-height: 1.7;
-  color: var(--au-text);
-  font-weight: 300;
+  color: var(--foreground);
+  font-weight: 400;
 }
 
 .mission-block ul li::before {
@@ -143,20 +127,21 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: var(--au-saffron);
+  background: var(--accent-02);
 }
 
 .vision-block p {
-  font-family: var(--au-sans);
+  font-family: 'Atkinson Hyperlegible', 'Inter', sans-serif;
   font-size: 0.95rem;
   line-height: 1.95;
-  color: var(--au-text-muted);
-  font-weight: 300;
+  color: var(--foreground);
+  opacity: 0.7;
+  font-weight: 400;
   font-style: italic;
   padding: 16px 20px;
   margin: 0;
-  background: var(--au-teal-lt);
-  border-left: 4px solid var(--au-teal);
+  background: var(--accent-01-light);
+  border-left: 4px solid var(--accent-01);
   border-radius: 0 10px 10px 0;
 }
 
@@ -168,10 +153,10 @@
 }
 
 .who-we-are-section h3 {
-  font-family: var(--au-serif);
+  font-family: 'Orelega One', 'Monomaniac One', sans-serif;
   font-size: 2rem;
-  font-weight: 700;
-  color: var(--au-navy);
+  font-weight: 400;
+  color: var(--dark);
   letter-spacing: -0.02em;
   margin: 0 0 6px;
   padding: 0;
@@ -187,7 +172,7 @@
   width: 52px;
   height: 4px;
   border-radius: 4px;
-  background: var(--au-saffron);
+  background: var(--accent-02);
   margin: 10px 0 28px;
 }
 
@@ -196,8 +181,8 @@
   grid-template-columns: 1fr 280px;
   gap: 48px;
   align-items: center;
-  background: var(--au-cream);
-  border: 1.5px solid var(--au-border);
+  background: var(--creme);
+  border: 1.5px solid var(--grey);
   border-radius: 22px;
   padding: 44px 48px;
   position: relative;
@@ -205,14 +190,13 @@
   box-shadow: 0 4px 28px rgba(0, 0, 0, 0.06);
 }
 
-/* Subtle radial bg accents */
 .about-summary::before {
   content: '';
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 5% 95%, rgba(245, 166, 35, 0.08) 0%, transparent 50%),
-    radial-gradient(circle at 95% 5%,  rgba(14, 107, 107, 0.06) 0%, transparent 50%);
+    radial-gradient(circle at 5% 95%, rgba(252, 160, 12, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 95% 5%,  rgba(14, 146, 107, 0.06) 0%, transparent 50%);
   pointer-events: none;
 }
 
@@ -232,29 +216,30 @@
 .summary-text { position: relative; }
 
 .summary-text h4 {
-  font-family: var(--au-serif);
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: var(--au-teal-dk);
+  font-family: 'Orelega One', 'Monomaniac One', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: var(--accent-01-dark);
   margin: 0 0 16px;
 }
 
 .summary-text p {
-  font-family: var(--au-sans);
+  font-family: 'Atkinson Hyperlegible', 'Inter', sans-serif;
   font-size: 0.9rem;
   line-height: 1.9;
-  color: var(--au-text-muted);
-  font-weight: 300;
+  color: var(--foreground);
+  opacity: 0.65;
+  font-weight: 400;
   margin: 0 0 28px;
 }
 
 .founder-name {
   display: inline-block;
-  font-family: var(--au-serif);
+  font-family: 'Atkinson Hyperlegible', 'Inter', sans-serif;
   font-style: italic;
   font-size: 1rem;
-  color: var(--au-teal);
-  border-top: 1px solid var(--au-border);
+  color: var(--accent-01);
+  border-top: 1px solid var(--grey);
   padding: 14px 0 0;
   width: 100%;
   background: none;
@@ -273,16 +258,16 @@
   object-position: top center;
   border-radius: 16px;
   display: block;
-  border: 4px solid #ffffff;
-  box-shadow: 8px 8px 0 var(--au-saffron), 0 16px 40px rgba(0, 0, 0, 0.12);
+  border: 4px solid var(--background);
+  box-shadow: 8px 8px 0 var(--accent-02), 0 16px 40px rgba(0, 0, 0, 0.12);
 }
 
 /* ============================================================
-   BASIC NEEDS
+   BASIC NEEDS — redesigned with icon chips
    ============================================================ */
 .basic-needs-section {
   margin: 0 0 60px;
-  background: var(--au-teal);
+  background: var(--accent-01);
   border-radius: 22px;
   padding: 48px 52px;
   position: relative;
@@ -312,10 +297,22 @@
   left: -50px;
 }
 
+/* Eyebrow label */
+.basic-needs-label {
+  font-family: 'Outfit', 'Inter', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0 0 8px;
+  position: relative;
+}
+
 .basic-needs-section h4 {
-  font-family: var(--au-serif);
-  font-size: 1.55rem;
-  font-weight: 700;
+  font-family: 'Orelega One', 'Monomaniac One', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 400;
   color: #ffffff;
   margin: 0 0 32px;
   position: relative;
@@ -326,28 +323,58 @@
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 14px;
   position: relative;
 }
 
 .basic-needs-section ul li {
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  border-radius: 12px;
-  padding: 16px 18px;
-  font-family: var(--au-sans);
-  font-size: 0.88rem;
+  background: rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 14px;
+  padding: 20px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-family: 'Atkinson Hyperlegible', 'Inter', sans-serif;
+  font-size: 0.85rem;
   font-weight: 400;
-  color: rgba(255, 255, 255, 0.93);
-  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.88);
+  line-height: 1.65;
   transition: background 0.2s, transform 0.2s;
   cursor: default;
 }
 
+/* Suppress the dot bullet from mission-block if styles bleed */
+.basic-needs-section ul li::before {
+  display: none;
+}
+
 .basic-needs-section ul li:hover {
-  background: rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.20);
   transform: translateY(-3px);
+}
+
+/* Icon chip */
+.bn-icon-chip {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.bn-icon-chip svg {
+  width: 16px;
+  height: 16px;
+  stroke: rgba(255, 255, 255, 0.9);
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 @media (max-width: 640px) {
@@ -367,10 +394,10 @@
 }
 
 .documents-section-title {
-  font-family: var(--au-serif);
+  font-family: 'Orelega One', 'Monomaniac One', sans-serif;
   font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--au-navy);
+  font-weight: 400;
+  color: var(--dark);
   margin: 0 0 6px;
 }
 
@@ -378,7 +405,7 @@
   width: 40px;
   height: 4px;
   border-radius: 4px;
-  background: var(--au-saffron);
+  background: var(--accent-02);
   margin: 10px 0 24px;
 }
 
@@ -392,7 +419,7 @@
   display: block;
   border-radius: 16px;
   overflow: hidden;
-  border: 1.5px solid var(--au-border);
+  border: 1.5px solid var(--grey);
   position: relative;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
   transition: box-shadow 0.25s, transform 0.25s;
@@ -403,12 +430,12 @@
   content: '↗ View Document';
   position: absolute;
   inset: 0;
-  background: rgba(9, 79, 79, 0.84);
+  background: rgba(11, 115, 84, 0.84);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
-  font-family: var(--au-sans);
+  color: var(--foreground-inverted);
+  font-family: 'Outfit', 'Inter', sans-serif;
   font-size: 0.88rem;
   font-weight: 500;
   letter-spacing: 0.04em;
