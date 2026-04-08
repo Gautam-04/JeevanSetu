@@ -74,9 +74,9 @@ const Header = () => {
 
         {/* Nav Links */}
         <div className={`header-links ${isMenuOpen ? "active" : ""}`}>
-          <a href="/" onClick={closeMenu}>
+          {/* <a href="/" onClick={closeMenu}>
             {t("HeaderHomeLink")}
-          </a>
+          </a> */}
           <a href="/about" onClick={closeMenu}>
             {t("HeaderAboutUsLink")}
           </a>

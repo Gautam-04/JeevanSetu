@@ -1,27 +1,76 @@
-/* ===== FOOTER SECTION ===== */
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@400;500;600&display=swap");
+
 .footer-container {
-  background-color: #f8f9fa; /* Slightly cleaner off-white */
+  font-family: "DM Sans", sans-serif;
+  background-color: #fafaf8;
   color: #1a1a1a;
-  font-family: "Roboto", "Outfit", sans-serif;
   border-top: 1px solid #e0e0e0;
+  overflow: hidden;
+  width: 100%;
 }
 
-/* Main Content Area */
+/* ── Impact Strip ── */
+.footer-impact-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background: linear-gradient(155deg, #0a1628 0%, #0e3d2e 55%, #1a5c44 100%);
+}
+
+.footer-impact-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 2.2rem 1rem;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.footer-impact-item:last-child {
+  border-right: none;
+}
+
+.footer-impact-accent {
+  display: block;
+  width: 28px;
+  height: 2px;
+  background: #fca00c;
+  border-radius: 2px;
+  margin-bottom: 0.2rem;
+}
+
+.footer-impact-num {
+  font-family: "Playfair Display", serif;
+  font-size: 2.4rem;
+  font-weight: 900;
+  color: #fff;
+  line-height: 1;
+}
+
+.footer-impact-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  text-align: center;
+}
+
+/* ── Main Content (HORIZONTALLY ALIGNED) ── */
 .footer-content {
   display: grid;
-  /* Desktop: Logo | Links | Links | Address */
-  grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
-  gap: 40px;
-  max-width: 1200px;
+  /* Balanced 3-column layout to keep everything on one line */
+  grid-template-columns: 1.5fr 1fr 1.5fr; 
+  gap: 4rem;
+  max-width: 1300px;
   margin: 0 auto;
-  padding: 60px 20px;
+  padding: 1.5rem 1.5rem;
+  align-items: flex-start; /* Keeps tops of columns level */
 }
 
-/* Left Section (Branding) */
+/* Left - Logo & Socials */
 .footer-left {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 1.2rem;
 }
 
 .footer-logo-section {
@@ -31,24 +80,35 @@
 }
 
 .footer-logo {
-  width: clamp(100px, 10vw, 130px);
+  width: 180px;
   height: auto;
-  filter: grayscale(20%); /* Optional: makes logo look more integrated */
+  margin-bottom: 5px;
 }
 
 .footer-logo-text {
-  font-weight: 700;
-  font-size: 16px;
-  color: #000;
-  letter-spacing: 0.02em;
+  font-family: "Playfair Display", serif !important;
+  font-weight: 900 !important;
+  font-size: 1.5rem !important;
+  color: #0a1628 !important;
+  line-height: 1.2 !important;
+  margin: 0 !important;
+}
+
+.footer-tagline {
+  font-size: 0.95rem !important;
+  color: #555 !important;
+  line-height: 1.6 !important;
+  max-width: 320px;
+  margin: 0 !important;
 }
 
 .connect-text {
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 0.75rem;
   text-transform: uppercase;
-  color: #666;
-  margin-bottom: -10px;
+  letter-spacing: 0.15em;
+  color: #999;
+  margin-top: 0.5rem;
 }
 
 .social-icons {
@@ -57,116 +117,153 @@
 }
 
 .social-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  background: #eee;
-  border-radius: 50%;
+  width: 36px !important;
+  height: 36px !important;
+  background: #f0f0f0 !important;
   color: #333 !important;
-  transition: all 0.3s ease;
-  text-decoration: none;
+  transition: all 0.3s ease !important;
 }
 
 .social-icon:hover {
-  background-color: #0e926b;
+  background: #0e926b !important;
   color: #fff !important;
-  transform: translateY(-3px);
+  transform: translateY(-3px) !important;
 }
 
-/* Center Sections (Link Columns) */
+.footer-ngo-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(14, 146, 107, 0.07);
+  border: 1px solid rgba(14, 146, 107, 0.25);
+  border-radius: 999px;
+  padding: 0.4rem 1.2rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #0e926b;
+  width: fit-content;
+  margin-top: 0.5rem;
+}
+
+/* ── Middle - Quick Links ── */
 .footer-links {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 0.8rem;
 }
 
 .footer-heading {
-  font-weight: 700;
-  font-size: 1.1rem;
-  margin-bottom: 8px;
-  color: #000;
+  font-family: "Playfair Display", serif !important;
+  font-weight: 700 !important;
+  font-size: 1.25rem !important;
+  color: #0a1628 !important;
   position: relative;
+  padding-bottom: 10px;
+  margin-bottom: 0.5rem !important;
 }
 
-/* Small accent line under heading */
 .footer-heading::after {
-  content: '';
+  content: "";
   display: block;
-  width: 30px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 35px;
   height: 2px;
   background: #fca00c;
-  margin-top: 4px;
 }
 
 .footer-link {
-  color: #444;
-  font-size: 15px;
-  text-decoration: none;
-  transition: all 0.2s ease;
+  color: #555 !important;
+  font-size: 0.95rem !important;
+  text-decoration: none !important;
+  transition: color 0.2s ease !important;
 }
 
 .footer-link:hover {
-  color: #0e926b;
-  padding-left: 5px; /* Subtle movement effect */
+  color: #0e926b !important;
 }
 
-/* Right Section (Address) */
+/* ── Right - Find Us At ── */
 .footer-address {
-  font-size: 14px;
-  line-height: 1.6;
-  color: #444;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
 }
 
-.footer-address p {
-  margin-bottom: 10px;
+.footer-contact-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
 }
 
-/* Bottom Bar */
-.footer-bottom {
-  background-color: #fca00c;
+.footer-contact-row {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 1rem !important;
+}
+
+.footer-contact-icon {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  background: #0e926b;
+  border-radius: 6px;
   color: #fff;
-  text-align: center;
-  padding: 15px 20px;
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.05em;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* 7. RESPONSIVE QUERIES */
+.footer-contact-text {
+  font-size: 0.95rem !important;
+  color: #555 !important;
+  line-height: 1.6 !important;
+  margin: 0 !important;
+}
 
+/* Divider & Bottom Bar */
+.footer-divider {
+  border-top: 1px solid #eee !important;
+  margin: 0 2rem !important;
+}
+
+.footer-bottom {
+  background-color: #fca00c !important;
+  padding: 1.2rem 2rem !important;
+  display: flex !important;
+  justify-content: space-between !important;
+}
+
+.footer-bottom-text {
+  font-size: 0.85rem !important;
+  color: #fff !important;
+}
+
+/* ── Responsive ── */
 @media (max-width: 1024px) {
   .footer-content {
-    grid-template-columns: 1fr 1fr; /* 2x2 grid on tablets */
-    gap: 50px 30px;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 3rem;
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .footer-content {
-    grid-template-columns: 1fr; /* Stack everything */
+    grid-template-columns: 1fr;
     text-align: center;
-    padding: 40px 20px;
+    gap: 3rem;
   }
-
-  .footer-logo-section, 
-  .social-icons,
-  .footer-heading::after {
-    align-items: center;
+  .footer-logo-section, .social-icons, .footer-ngo-badge, .footer-contact-row {
     justify-content: center;
-    margin: 0 auto;
+    align-items: center;
   }
-
   .footer-heading::after {
-    margin: 4px auto 0 auto;
+    left: 50%;
+    transform: translateX(-50%);
   }
-
-  .footer-address {
-    max-width: 100%;
-  }
-
-  .footer-link:hover {
-    padding-left: 0; /* Disable movement on mobile */
+  .footer-tagline {
+    margin: 0 auto !important;
   }
 }

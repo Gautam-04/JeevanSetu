@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./Donation.css";
-import PageBlueprint from "../../components/utilities/PageBlueprint/PageBlueprint";
 import DonationCard from "../../components/DonationCard/DonationCard";
 import { MdOutlineContentCopy } from "react-icons/md";
 import { toast } from "react-toastify";
@@ -51,9 +50,46 @@ const dummyDonationData = [
   },
 ];
 
+/* ── Intersection-observer reveal (same pattern as News.jsx) ── */
+function useReveal(threshold = 0.12) {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setVisible(true);
+      },
+      { threshold }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+  return [ref, visible];
+}
+
+function RevealSection({ className = "", children, delay = 0, style = {} }) {
+  const [ref, visible] = useReveal();
+  return (
+    <div
+      ref={ref}
+      className={`dn-reveal ${visible ? "dn-reveal--in" : ""} ${className}`}
+      style={{ transitionDelay: `${delay}ms`, ...style }}
+    >
+      {children}
+    </div>
+  );
+}
+
 function Donation() {
+  const { t } = useTranslation();
   const [fundraisers, setFundraisers] = useState(dummyDonationData);
+  const [heroVisible, setHeroVisible] = useState(false);
   const upiId = "jeeva75069@barodampay";
+
+  useEffect(() => {
+    const timer = setTimeout(() => setHeroVisible(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleCopy = () => {
     navigator.clipboard
@@ -76,90 +112,128 @@ function Donation() {
 
   const getAllFundraisers = async () => {
     try {
-      const fundraiserURL =
-        "http://127.0.0.1:8000/api/donation/get-fundraisers";
-      try {
-        const response = await axios({
-          method: "get",
-          url: fundraiserURL,
-          headers: { "Access-Control-Allow-Origin": "*" },
-        });
-
-        console.log(response);
-        setFundraisers(response.data.fundraisers);
-      } catch (error) {
-        console.log(error);
-      }
+      const fundraiserURL = "http://127.0.0.1:8000/api/donation/get-fundraisers";
+      const response = await axios({
+        method: "get",
+        url: fundraiserURL,
+        headers: { "Access-Control-Allow-Origin": "*" },
+      });
+      setFundraisers(response.data.fundraisers);
     } catch (error) {
       console.log("Error fetching fundraisers:", error);
     }
   };
 
   useEffect(() => {
-    if (DUMMY_DONATIONS_FLAG == false) {
+    if (DUMMY_DONATIONS_FLAG === false) {
       getAllFundraisers();
     }
   }, []);
 
-  const {t} = useTranslation();
+  const bankDetails = [
+    { label: t("BankAccountNameLabel"),  value: "Jeevan Samvardhan Foundation Bank" },
+    { label: t("BankBankNameLabel"),      value: "State Bank of India" },
+    { label: t("BankAccountNumberLabel"), value: "123456789012" },
+    { label: t("BankAccountTypeLabel"),   value: "Current Account" },
+    { label: t("BankIFSCLabel"),          value: "SBIN0001234" },
+    { label: t("BankBranchLabel"),        value: "Shivaji Nagar Branch, Pune" },
+    { label: t("BankMICRLabel"),          value: "411002345" },
+  ];
 
   return (
-    <PageBlueprint title={t("donateTitle")}>
-      <div className="ongoing-campaigns">
-        <h3>{t("ongoingCampaigns")}</h3>
+    <div className="dn-page">
+
+      {/* ── Hero ── */}
+      <section className={`dn-hero ${heroVisible ? "dn-hero--visible" : ""}`}>
+        <div className="dn-hero-bg">
+          <div className="dn-hero-orb dn-hero-orb--1" />
+          <div className="dn-hero-orb dn-hero-orb--2" />
+          <div className="dn-hero-orb dn-hero-orb--3" />
+        </div>
+        <div className="dn-hero-content">
+          <span className="dn-hero-eyebrow">{t("donateEyebrow") || "Make a Difference"}</span>
+          <h1 className="dn-hero-title">
+            {t("donateTitle") || "Donate"}
+            <br />
+            <em>{t("donateHeroEm") || "To Us"}</em>
+          </h1>
+          <p className="dn-hero-subtitle">
+            {t("donateHeroSubtitle") || "Your generosity powers our mission — protecting children, supporting tribal communities, and building a better tomorrow."}
+          </p>
+        </div>
+        <div className="dn-hero-scroll-hint">
+          <span>{t("AwardsHeroScrollHint") || "Scroll to explore"}</span>
+          <div className="dn-hero-scroll-arrow" />
+        </div>
+      </section>
+
+      {/* ── Main Content ── */}
+      <div className="dn-content-wrap">
+
+        {/* ── Section: Ongoing Campaigns ── */}
+        <RevealSection>
+          <span className="dn-eyebrow">{t("FeaturedPreTitle") || "Active Now"}</span>
+          <h2 className="dn-section-heading">{t("ongoingCampaigns") || "Our Ongoing Campaigns"}</h2>
+          <div className="dn-heading-line" />
+        </RevealSection>
+
         {fundraisers && (
-          <div className="featured-campaigns-cards">
+          <div className="dn-cards-grid">
             {fundraisers.map((donation, index) => (
-              <DonationCard key={index} donation={donation} />
+              <RevealSection key={index} delay={index * 100} className="dn-card-wrap">
+                <DonationCard donation={donation} />
+              </RevealSection>
             ))}
           </div>
         )}
-      </div>
-      <div className="bank-credentials">
-        <h3>{t("BankTitle")}</h3>
-        <div className="credentials-wrapper">
-          <div className="details-wrapper">
-            <div className="neft-details">
-              {t("BankIntro")}
-              <br />
-              <div>
-                {t("BankAccountNameLabel")} <span>Jeevan Samvardhan Foundation Bank</span>
-                <br />
-                {t("BankBankNameLabel")}<span>State Bank of India</span>
-                <br />
-                {t("BankAccountNumberLabel")}<span>123456789012</span>
-                <br />
-                {t("BankAccountTypeLabel")} <span>Current Account</span>
-                <br />
-                {t("BankIFSCLabel")}<span>SBIN0001234</span>
-                <br />
-                {t("BankBranchLabel")} <span>Shivaji Nagar Branch, Pune</span>
-                <br />
-                {t("BankMICRLabel")} <span>411002345</span>
-              </div>
-              💡 {t("BankNote")}
+
+        {/* ── Section: Bank Details ── */}
+        <RevealSection style={{ marginTop: "5rem" }}>
+          <span className="dn-eyebrow dn-eyebrow--amber">{t("BankEyebrow") || "Transfer Directly"}</span>
+          <h2 className="dn-section-heading">{t("BankTitle") || "Bank Details"}</h2>
+          <div className="dn-heading-line dn-heading-line--amber" />
+        </RevealSection>
+
+        <RevealSection className="dn-bank-layout" delay={80}>
+
+          {/* Left: NEFT Details */}
+          <div className="dn-neft-card">
+            <p className="dn-bank-intro">{t("BankIntro") || "You can transfer funds directly to our bank account using NEFT / RTGS / IMPS:"}</p>
+            <div className="dn-bank-rows">
+              {bankDetails.map((row, i) => (
+                <div className="dn-bank-row" key={i}>
+                  <span className="dn-bank-label">{row.label}</span>
+                  <span className="dn-bank-value">{row.value}</span>
+                </div>
+              ))}
             </div>
-            <div className="upi-details">
-              <div className="upi-card">
-                <div className="upi-qr-code">
-                  <img
-                    src="https://cdn.qrcode-ai.com/qrcode/preview/33e0a6f0cad9822a49ecf1c58385051a-1761940257840.png"
-                    alt=""
-                  />
-                </div>
-                <div className="upi-id">
-                  {upiId}
-                  <MdOutlineContentCopy
-                    style={{ cursor: "pointer" }}
-                    onClick={handleCopy}
-                  />
-                </div>
+            <p className="dn-bank-note">
+              💡 {t("BankNote") || "Please email us after transferring so we can acknowledge your donation."}
+            </p>
+          </div>
+
+          {/* Right: UPI */}
+          <div className="dn-upi-col">
+            <div className="dn-upi-card">
+              <div className="dn-upi-badge">UPI / QR Pay</div>
+              <div className="dn-upi-qr">
+                <img
+                  src="https://cdn.qrcode-ai.com/qrcode/preview/33e0a6f0cad9822a49ecf1c58385051a-1761940257840.png"
+                  alt="UPI QR Code"
+                />
               </div>
+              <button className="dn-upi-id" onClick={handleCopy} aria-label="Copy UPI ID">
+                <span>{upiId}</span>
+                <MdOutlineContentCopy className="dn-copy-icon" />
+              </button>
+              <p className="dn-upi-hint">Tap to copy UPI ID</p>
             </div>
           </div>
-        </div>
+
+        </RevealSection>
+
       </div>
-    </PageBlueprint>
+    </div>
   );
 }
 
